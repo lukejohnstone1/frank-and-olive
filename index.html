@@ -618,6 +618,7 @@ body {
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
       <h3 class="card-title">&#x1F9EA; Components Stock</h3>
       <span id="comp-low-count" style="font-size:.85rem;color:#c0392b;font-weight:600"></span>
+        <button onclick="openRestockModal()" style="background:var(--rose);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600;">+ Restock</button>
     </div>
     <div id="comp-stock-panel"><div style="text-align:center;padding:1rem;color:#999">Loading&#8230;</div></div>
   </div>
@@ -1365,7 +1366,7 @@ function showToast(msg, type='success') {
 
   //    COMPONENTS                                   
   function loadComponents() {
-    api({action:'getComponents'}).then(function(comps) { if(comps && !comps.error) renderComponents(comps); });
+    api({action:'getComponents'}).then(function(comps) { if(comps && !comps.error) { window.allComponents = comps; renderComponents(comps); } });
   }
   function renderComponents(comps) {
     if (!comps || !comps.length) return;
@@ -1392,6 +1393,63 @@ function showToast(msg, type='success') {
     }).join('');
     el.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr style="border-bottom:2px solid #eee"><th style="padding:.4rem .6rem;text-align:left;color:#999;font-size:.78rem">ID</th><th style="padding:.4rem .6rem;text-align:left;color:#999;font-size:.78rem">COMPONENT</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">STOCK</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">MIN</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">STATUS</th></tr></thead><tbody>' + rows + '</tbody></table>';
   }
+
+  // ── Restock Modal ─────────────────────────────────────────
+  function openRestockModal() {
+    var modal = document.getElementById('restock-modal');
+    var select = document.getElementById('restock-comp-select');
+    select.innerHTML = '';
+    (window.allComponents || []).forEach(function(c) {
+      var opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name + ' (stock: ' + c.stock + ')';
+      select.appendChild(opt);
+    });
+    document.getElementById('restock-qty-input').value = '';
+    document.getElementById('restock-msg').textContent = '';
+    modal.style.display = 'flex';
+  }
+  function closeRestockModal() {
+    document.getElementById('restock-modal').style.display = 'none';
+  }
+  function submitRestock() {
+    var id = document.getElementById('restock-comp-select').value;
+    var qty = parseInt(document.getElementById('restock-qty-input').value, 10);
+    var msg = document.getElementById('restock-msg');
+    if (!id || !qty || qty < 1) { msg.textContent = 'Please select a component and enter a valid quantity.'; return; }
+    msg.textContent = 'Saving...';
+    api({action:'addComponentStock', id:id, quantity:qty}).then(function(res) {
+      if (res && res.success) {
+        msg.style.color = 'green';
+        msg.textContent = 'Saved! New stock: ' + res.newStock;
+        setTimeout(function() {
+          closeRestockModal();
+          api({action:'getComponents'}).then(function(comps) {
+            if (comps && !comps.error) { window.allComponents = comps; renderComponents(comps); }
+          });
+        }, 1200);
+      } else {
+        msg.style.color = 'red';
+        msg.textContent = 'Error: ' + (res && res.error ? res.error : 'Unknown error');
+      }
+    }).catch(function(e) { msg.style.color='red'; msg.textContent = 'Error: ' + e.message; });
+  }
 </script>
+
+  <!-- Restock Modal -->
+  <div id="restock-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:12px;padding:28px 28px 24px;width:360px;max-width:92vw;box-shadow:0 8px 32px rgba(0,0,0,0.18);">
+      <h3 style="margin:0 0 18px;font-family:inherit;font-size:18px;">+ Restock Component</h3>
+      <label style="display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:#444;">Component</label>
+      <select id="restock-comp-select" style="width:100%;padding:9px 10px;border:1px solid #ddd;border-radius:6px;margin-bottom:14px;font-family:inherit;font-size:14px;"></select>
+      <label style="display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:#444;">Quantity to Add</label>
+      <input id="restock-qty-input" type="number" min="1" placeholder="e.g. 100" style="width:100%;padding:9px 10px;border:1px solid #ddd;border-radius:6px;margin-bottom:20px;font-family:inherit;font-size:14px;box-sizing:border-box;">
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button onclick="closeRestockModal()" style="padding:9px 18px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;font-family:inherit;font-size:14px;">Cancel</button>
+        <button onclick="submitRestock()" style="padding:9px 18px;background:var(--rose);color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;">Save</button>
+      </div>
+      <div id="restock-msg" style="margin-top:12px;font-size:13px;color:#666;min-height:18px;"></div>
+    </div>
+  </div>
 </body>
 </html>
