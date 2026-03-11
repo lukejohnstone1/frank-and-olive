@@ -1365,8 +1365,7 @@ function showToast(msg, type='success') {
 
   //    COMPONENTS                                   
   function loadComponents() {
-        api({action:'getComponents'}).then(function(comps) { if(comps && !comps.error) renderComponents(comps); });
-      });
+    api({action:'getComponents'}).then(function(comps) { if(comps && !comps.error) renderComponents(comps); });
   }
   function renderComponents(comps) {
     if (!comps || !comps.length) return;
