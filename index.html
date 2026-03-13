@@ -586,9 +586,7 @@ body {
       </div>
     </div>
 
-    <div class="alert-bar hidden" id="low-stock-alert">
-      ⚠️ <span id="low-stock-msg">Loading...</span>
-    </div>
+
   <div id="comp-alert" class="alert-bar hidden" style="background:#fff3cd;color:#856404;border-left:4px solid #ffc107;">
     >🧪 Components low: <span id="comp-alert-msg"></span>
   </div>
@@ -597,22 +595,13 @@ body {
       <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading stats…</div>
     </div>
 
-    <div class="grid2">
-      <div class="card">
+    <div class="card">
         <div class="card-hd">
           <div class="card-title">Recent Orders</div>
           <div class="card-link" onclick="nav('orders')">View all →</div>
         </div>
         <div id="recent-orders"><div class="loading"><div class="spinner"></div> Loading…</div></div>
       </div>
-      <div class="card">
-        <div class="card-hd">
-          <div class="card-title">Stock Levels</div>
-          <div class="card-link" onclick="nav('inventory')">Manage →</div>
-        </div>
-        <div id="dash-stock"><div class="loading"><div class="spinner"></div> Loading…</div></div>
-      </div>
-    </div>
   
   <div class="card" style="margin-top:1.5rem">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
@@ -907,22 +896,14 @@ function renderStats(s) {
       <div class="stat-note ${s.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
     </div>
     <div class="stat s4">
-      <div class="stat-icon">🚨</div>
-      <div class="stat-lbl">Low Stock Alerts</div>
-      <div class="stat-val">${s.lowStockCount}</div>
-      <div class="stat-note ${s.lowStockCount > 0 ? 'warn' : ''}">Products need restocking</div>
+      <div class="stat-icon">🧪</div>
+      <div class="stat-lbl">Components Low</div>
+      <div class="stat-val" id="comp-low-stat-val">—</div>
+      <div class="stat-note" id="comp-low-stat-note">Loading...</div>
     </div>
   `;
 
-  if (s.lowStockCount > 0) {
-    const names = s.lowStockItems.map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
-    document.getElementById('low-stock-alert').classList.remove('hidden');
-    document.getElementById('low-stock-msg').innerHTML = `Low stock: ${names}`;
-    document.getElementById('badge-stock').style.display = 'inline-block';
 
-    document.getElementById('inv-alert').classList.remove('hidden');
-    document.getElementById('inv-alert-msg').innerHTML = `${s.lowStockCount} product(s) are running low: ${names}. Time to restock!`;
-  }
 }
 
 // ── RECENT ORDERS (dashboard) ──────────────
@@ -1391,6 +1372,10 @@ function showToast(msg, type='success') {
     }
     var lc = document.getElementById('comp-low-count');
     if (lc) lc.textContent = low.length ? low.length + ' LOW ⚠️' : '✅ All OK';
+    var sv = document.getElementById('comp-low-stat-val');
+    var sn = document.getElementById('comp-low-stat-note');
+    if (sv) sv.textContent = low.length;
+    if (sn) { sn.textContent = low.length > 0 ? 'Need restocking' : 'All stocked ✓'; if (low.length > 0) sn.classList.add('warn'); else sn.classList.remove('warn'); }
     var el = document.getElementById('comp-stock-panel');
     if (!el) return;
     var rows = comps.map(function(x){
