@@ -1401,12 +1401,21 @@ function showToast(msg, type='success') {
         + '<td style="padding:.4rem .6rem;text-align:center;font-weight:700">' + x.stock + '</td>'
         + '<td style="padding:.4rem .6rem;text-align:center;color:#888">' + x.lowThreshold + '</td>'
         + '<td style="padding:.4rem .6rem;text-align:center"><span style="background:' + (isLow ? '#c0392b' : '#27ae60') + ';color:#fff;padding:2px 7px;border-radius:999px;font-size:.73rem">' + (isLow ? 'LOW' : 'OK') + '</span></td>'
+        + '<td style="padding:.4rem .6rem;text-align:center"><button onclick="subtractStockPrompt(\'' + x.id + '\',\'' + x.name.replace(/'/g, \"\\'\" ) + '\')" style="background:#e74c3c;color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:.85rem;font-weight:700;line-height:1">−</button></td>'
         + '</tr>';
     }).join('');
-    el.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr style="border-bottom:2px solid #eee"><th style="padding:.4rem .6rem;text-align:left;color:#999;font-size:.78rem">ID</th><th style="padding:.4rem .6rem;text-align:left;color:#999;font-size:.78rem">COMPONENT</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">STOCK</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">MIN</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">STATUS</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    el.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr style="border-bottom:2px solid #eee"><th style="padding:.4rem .6rem;text-align:left;color:#999;font-size:.78rem">ID</th><th style="padding:.4rem .6rem;text-align:left;color:#999;font-size:.78rem">COMPONENT</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">STOCK</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">MIN</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">STATUS</th><th style="padding:.4rem .6rem;text-align:center;color:#999;font-size:.78rem">ADJUST</th></tr></thead><tbody>' + rows + '</tbody></table>';
   }
 
   // ── Restock Modal ─────────────────────────────────────────
+  function subtractStockPrompt(id, name) {
+    var qty = prompt('How many units to subtract from ' + name + '?');
+    if (!qty || isNaN(qty) || Number(qty) <= 0) return;
+    api({action:'subtractComponentStock', id:id, quantity:Number(qty)}).then(function(r){
+      if (r && r.success) { showToast('Subtracted ' + qty + ' from ' + name, 'success'); loadComponents(); }
+      else { showToast('Error: ' + (r && r.error ? r.error : 'Unknown'), 'error'); }
+    });
+  }
   function openRestockModal() {
     var modal = document.getElementById('restock-modal');
     var select = document.getElementById('restock-comp-select');
