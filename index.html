@@ -1247,7 +1247,7 @@ function nav(page) {
 
   document.getElementById('pg-' + page).classList.add('active');
 
-  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5 };
+  const map = { dashboard:0, orders:1, analytics:2, products:3, suppliers:4 };
   const items = document.querySelectorAll('.sb-item');
   if (map[page] !== undefined) items[map[page]].classList.add('active');
 
