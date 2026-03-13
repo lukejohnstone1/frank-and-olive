@@ -560,7 +560,6 @@ body {
     <div class="sb-section">Main</div>
     <div class="sb-item active" onclick="nav('dashboard')"><span class="si">🏠</span> Dashboard</div>
     <div class="sb-item" onclick="nav('orders')"><span class="si">📦</span> Orders <span class="sb-badge" id="badge-orders">…</span></div>
-    <div class="sb-item" onclick="nav('inventory')"><span class="si">🗃️</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
     <div class="sb-section">Insights</div>
     <div class="sb-item" onclick="nav('analytics')"><span class="si">📊</span> Analytics</div>
     <div class="sb-section">Settings</div>
@@ -638,24 +637,6 @@ body {
   </div>
 
   <!-- INVENTORY -->
-  <div id="pg-inventory" class="page">
-    <div class="ph">
-      <div>
-        <div class="ph-title">Inventory</div>
-        <div class="ph-sub" id="inv-sub">Loading stock levels…</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-green" onclick="openStockModal()">+ Receive Stock</button>
-      </div>
-    </div>
-    <div class="alert-bar hidden" id="inv-alert">
-      🚨 <span id="inv-alert-msg"></span>
-    </div>
-    <div id="inv-grid" class="prod-grid">
-      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
-    </div>
-  </div>
-
   <!-- ANALYTICS -->
   <div id="pg-analytics" class="page">
     <div class="ph">
@@ -868,7 +849,7 @@ async function loadAll() {
 
   if (statsData && !statsData.error) renderStats(statsData);
   if (ordersData && Array.isArray(ordersData)) { allOrders = ordersData; renderRecentOrders(); renderOrdersTable(); renderAnalytics(); }
-  if (productsData && Array.isArray(productsData)) { allProducts = productsData; renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts(); }
+  if (productsData && Array.isArray(productsData)) { allProducts = productsData; renderProductsTable(); populateProductSelects(); renderAnalyticsProducts(); }
 
   updateBadges();
 
@@ -997,59 +978,6 @@ async function changeStatus(orderId, newStatus) {
   }
 }
 
-// ── INVENTORY ──────────────────────────────
-function renderInventory() {
-  const active = allProducts.filter(p => p.active === 'Yes');
-  document.getElementById('inv-sub').textContent = `${active.length} products · ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
-
-  const emojis = { 'Gift Box':'🎁','Mini':'🍬','Bundle':'🎀','Budget':'💝','default':'🍫' };
-
-  document.getElementById('inv-grid').innerHTML = active.map(p => {
-    const stock     = Number(p.stock);
-    const threshold = Number(p.lowThreshold);
-    const maxVal    = Math.max(threshold * 6, 30);
-    const pct       = Math.min(100, Math.round((stock / maxVal)*100));
-    const status    = stock <= threshold ? 'low' : stock <= threshold*2 ? 'medium' : 'good';
-    const emoji     = emojis[p.category] || emojis.default;
-    const isLow     = stock <= threshold;
-
-    return `
-      <div class="prod-card ${isLow?'low':''}">
-        ${isLow ? '<div class="low-tag">LOW STOCK</div>' : ''}
-        <div class="prod-emoji">${emoji}</div>
-        <div class="prod-name">${p.name}</div>
-        <div class="prod-desc">${p.description || ''}</div>
-        <div class="stock-bar"><div class="stock-fill ${status}" style="width:${pct}%"></div></div>
-        <div class="prod-meta">
-          <div>
-            <div class="prod-qty">${stock} <span style="font-size:11px;color:var(--text-soft)">units</span></div>
-            <div style="font-size:10px;color:${isLow?'var(--rose)':'var(--text-soft)'}">Alert at: ${threshold}</div>
-          </div>
-          <div class="prod-price">R${p.sellingPrice}</div>
-        </div>
-        <div class="add-stock-row">
-          <input class="qty-input" type="number" id="qty-${p.id}" value="10" min="1">
-          <button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="quickAddStock('${p.id}','${p.name}')">+ Add</button>
-        </div>
-      </div>`;
-  }).join('');
-}
-
-async function quickAddStock(productId, productName) {
-  const qty = parseInt(document.getElementById('qty-' + productId).value);
-  if (!qty || qty < 1) { showToast('Enter a valid quantity', 'error'); return; }
-  const res = await apiPost({ action: 'addStock', productId, qty, supplier: 'Manual', notes: 'Quick add from dashboard' });
-  if (res.success) {
-    const p = allProducts.find(x => x.id === productId);
-    if (p) p.stock = res.newStock;
-    renderInventory();
-    showToast(`${productName}: stock updated to ${res.newStock}`, 'success');
-  } else {
-    showToast('Failed to update stock', 'error');
-  }
-}
-
-// ── ANALYTICS ──────────────────────────────
 function renderAnalytics() {
   const total = allOrders.filter(o => o.status !== 'Cancelled').length;
   const revenue = allOrders.filter(o => o.status !== 'Cancelled').reduce((s,o) => s + Number(o.totalPrice||0), 0);
