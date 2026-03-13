@@ -585,6 +585,7 @@ body {
         <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
       </div>
     </div>
+    <div id="comp-alert" class="hidden" style="background:#c0392b;color:#fff;padding:10px 24px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;border-radius:8px;margin:12px 24px 0 24px;">⚠️&nbsp;<span id="comp-alert-msg"></span></div>
 
 
   <div id="comp-alert" class="alert-bar hidden" style="background:#fff3cd;color:#856404;border-left:4px solid #ffc107;">
@@ -867,7 +868,7 @@ async function loadAll() {
 
   if (statsData && !statsData.error) renderStats(statsData);
   if (ordersData && Array.isArray(ordersData)) { allOrders = ordersData; renderRecentOrders(); renderOrdersTable(); renderAnalytics(); }
-  if (productsData && Array.isArray(productsData)) { allProducts = productsData; renderDashStock(); renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts(); }
+  if (productsData && Array.isArray(productsData)) { allProducts = productsData; renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts(); }
 
   updateBadges();
 
@@ -927,25 +928,6 @@ function renderRecentOrders() {
   `).join('');
 }
 
-// ── DASH STOCK SUMMARY ─────────────────────
-function renderDashStock() {
-  if (!allProducts.length) return;
-  const html = `
-    <table class="tbl">
-      <tr><th>Product</th><th>Stock</th><th>Status</th></tr>
-      ${allProducts.filter(p=>p.active==='Yes').map(p => {
-        const pct = Math.min(100, Math.round((p.stock / Math.max(p.lowThreshold*4, 1))*100));
-        const status = p.stock <= p.lowThreshold ? 'low' : p.stock <= p.lowThreshold*2 ? 'medium' : 'good';
-        const label  = status === 'low' ? '⚠ Low' : status === 'medium' ? '~ OK' : '✓ Good';
-        return `<tr>
-          <td>${p.name}</td>
-          <td><strong>${p.stock}</strong></td>
-          <td><span class="pill pill-${status}">${label}</span></td>
-        </tr>`;
-      }).join('')}
-    </table>`;
-  document.getElementById('dash-stock').innerHTML = html;
-}
 
 // ── ORDERS TABLE ───────────────────────────
 function renderOrdersTable() {
@@ -1061,7 +1043,6 @@ async function quickAddStock(productId, productName) {
     const p = allProducts.find(x => x.id === productId);
     if (p) p.stock = res.newStock;
     renderInventory();
-    renderDashStock();
     showToast(`${productName}: stock updated to ${res.newStock}`, 'success');
   } else {
     showToast('Failed to update stock', 'error');
