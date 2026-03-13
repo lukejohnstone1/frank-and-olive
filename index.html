@@ -1055,11 +1055,12 @@ function renderProductsTable() {
 // ── SUPPLIERS TABLE ────────────────────────
 async function loadSuppliers() {
   const data = await api({ action: 'getSuppliers' });
-  if (!data.success) return;
+  const suppliers = Array.isArray(data) ? data : (data.suppliers || []);
+  if (!suppliers.length) return;
   document.getElementById('suppliers-table').innerHTML = `
     <table class="tbl-full" style="width:100%">
       <tr><th>Supplier</th><th>Contact Person</th><th>Phone</th><th>Products</th><th>Last Order</th></tr>
-      ${data.suppliers.map(s => `<tr>
+      ${suppliers.map(s => `<tr>
         <td><strong>${s.name}</strong></td>
         <td>${s.contact}</td>
         <td>${s.phone}</td>
