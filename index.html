@@ -974,14 +974,24 @@ async function loadAll() {
     api({ action: 'getOrders' }),
     api({ action: 'getProducts' }),
     api({ action: 'getComponents' }),
-    api({ action: 'getPurchaseOrders' })
+    api({ action: 'getPurchaseOrders' }).catch(() => [])
   ]);
 
-  if (statsData.success)     renderStats(statsData.stats);
-  if (ordersData.success)    { allOrders = ordersData.orders; renderRecentOrders(); renderOrdersTable(); renderAnalytics(); }
-  if (productsData.success)  { allProducts = productsData.products; renderDashStock(); renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts(); }
-  if (componentsData.success){ allComponents = componentsData.components; populateComponentSelect(); }
-  if (poData.success)        { allPurchaseOrders = poData.orders; renderPurchaseOrders(); renderDashPendingPOs(); }
+  // Backend returns flat stats object directly (no success wrapper)
+  if (statsData && !statsData.error) renderStats(statsData);
+
+  // Backend returns raw arrays directly
+  allOrders = Array.isArray(ordersData) ? ordersData : (ordersData.orders || []);
+  renderRecentOrders(); renderOrdersTable(); renderAnalytics();
+
+  allProducts = Array.isArray(productsData) ? productsData : (productsData.products || []);
+  renderDashStock(); renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts();
+
+  allComponents = Array.isArray(componentsData) ? componentsData : (componentsData.components || []);
+  populateComponentSelect();
+
+  allPurchaseOrders = Array.isArray(poData) ? poData : (poData.orders || []);
+  renderPurchaseOrders(); renderDashPendingPOs();
 
   updateBadges();
 }
