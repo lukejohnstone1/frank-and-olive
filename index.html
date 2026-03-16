@@ -1307,7 +1307,7 @@ function openAddSupplierModal() {
 function populateComponentSelect() {
   if (!allComponents.length) return;
   const opts = allComponents.map(c =>
-    `<option value="${c['Component ID']}" data-name="${c['Component Name']}">${c['Component Name']}</option>`
+    `<option value="${c.id}" data-name="${c.name}">${c.name}</option>`
   ).join('');
   const sel = document.getElementById('po-component');
   if (sel) sel.innerHTML = opts;
