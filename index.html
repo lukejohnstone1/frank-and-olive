@@ -1264,15 +1264,16 @@ function renderProductsTable() {
 // ── SUPPLIERS TABLE ────────────────────────
 async function loadSuppliers() {
   const data = await api({ action: 'getSuppliers' });
-  if (!data.success) return;
-  if (!data.suppliers.length) {
+  if (data && data.error) return;
+  const suppliers = Array.isArray(data) ? data : (data.suppliers || []);
+  if (!suppliers.length) {
     document.getElementById('suppliers-table').innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-soft)">No suppliers yet. Add your first one!</div>';
     return;
   }
   document.getElementById('suppliers-table').innerHTML = `
     <table class="tbl-full" style="width:100%">
       <tr><th>Supplier</th><th>Contact Person</th><th>Phone</th><th>Notes</th></tr>
-      ${data.suppliers.map(s => `<tr>
+      ${suppliers.map(s => `<tr>
         <td><strong>${s.name}</strong></td>
         <td>${s.contact || '—'}</td>
         <td>${s.phone || '—'}</td>
@@ -1398,7 +1399,7 @@ async function receivePO(poId, componentName, qty) {
     renderDashPendingPOs();
     // Reload components so inventory reflects new stock
     const compData = await api({ action: 'getComponents' });
-    if (compData.success) { allComponents = compData.components; }
+    allComponents = Array.isArray(compData) ? compData : (compData.components || allComponents);
   } else {
     showToast('Error: ' + (res.error || 'Could not mark as received'), 'error');
   }
@@ -1428,8 +1429,9 @@ async function submitPurchaseOrder() {
   if (res.success) {
     showToast(`Order placed! ${quantity}× ${componentName} coming soon. 📦`, 'success');
     closeModals();
-    const poData = await api({ action: 'getPurchaseOrders' });
-    if (poData.success) { allPurchaseOrders = poData.orders; renderPurchaseOrders(); renderDashPendingPOs(); }
+    const poData = await api({ action: 'getPurchaseOrders' }).catch(() => []);
+    allPurchaseOrders = Array.isArray(poData) ? poData : (poData.orders || allPurchaseOrders);
+    renderPurchaseOrders(); renderDashPendingPOs();
     updateBadges();
   } else {
     showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
