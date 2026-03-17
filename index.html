@@ -40,7 +40,7 @@ body {
   display: flex;
 }
 
-/* ── SIDEBAR ─────────────────────────────── */
+/* ââ SIDEBAR âââââââââââââââââââââââââââââââ */
 .sidebar {
   width: 230px;
   background: var(--choc);
@@ -134,7 +134,7 @@ body {
 
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-/* ── MAIN ────────────────────────────────── */
+/* ââ MAIN ââââââââââââââââââââââââââââââââââ */
 .main { margin-left: 230px; flex:1; padding: 30px 32px; }
 
 .page { display:none; animation: fadeUp 0.3s ease; }
@@ -145,7 +145,7 @@ body {
   to   { opacity:1; transform:translateY(0); }
 }
 
-/* ── PAGE HEADER ─────────────────────────── */
+/* ââ PAGE HEADER âââââââââââââââââââââââââââ */
 .ph {
   display: flex;
   align-items: flex-start;
@@ -184,7 +184,7 @@ body {
 
 .btn-row { display:flex; gap:10px; align-items:center; }
 
-/* ── ALERT BANNER ────────────────────────── */
+/* ââ ALERT BANNER ââââââââââââââââââââââââââ */
 .alert-bar {
   background: linear-gradient(135deg, #FFF8E7, #FFEFC0);
   border: 1.5px solid var(--gold-light);
@@ -200,7 +200,7 @@ body {
 
 .alert-bar.hidden { display: none; }
 
-/* ── STATS GRID ──────────────────────────── */
+/* ââ STATS GRID ââââââââââââââââââââââââââââ */
 .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
 
 .stat {
@@ -232,11 +232,11 @@ body {
 .stat-note { font-size: 11px; color: var(--mint); margin-top: 5px; font-weight: 500; }
 .stat-note.warn { color: var(--rose); }
 
-/* ── TWO COL ─────────────────────────────── */
+/* ââ TWO COL âââââââââââââââââââââââââââââââ */
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
 .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 18px; }
 
-/* ── CARD ────────────────────────────────── */
+/* ââ CARD ââââââââââââââââââââââââââââââââââ */
 .card {
   background: var(--white);
   border-radius: var(--radius);
@@ -260,7 +260,7 @@ body {
 
 .card-link { font-size: 12px; color: var(--rose); cursor: pointer; font-weight: 600; }
 
-/* ── TABLE ───────────────────────────────── */
+/* ââ TABLE âââââââââââââââââââââââââââââââââ */
 .tbl { width:100%; border-collapse: collapse; }
 
 .tbl th {
@@ -296,7 +296,7 @@ body {
 .tbl-full td { padding: 13px 14px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
 .tbl-full tr:hover td { background: var(--rose-pale); }
 
-/* ── PILLS ───────────────────────────────── */
+/* ââ PILLS âââââââââââââââââââââââââââââââââ */
 .pill {
   display: inline-block;
   padding: 3px 10px;
@@ -315,7 +315,7 @@ body {
 .pill-low       { background: #FFE0E6; color: #B8203C; }
 .pill-medium    { background: #FFF3D0; color: #9A6800; }
 
-/* ── BAR CHART ───────────────────────────── */
+/* ââ BAR CHART âââââââââââââââââââââââââââââ */
 .bars { display:flex; flex-direction:column; gap:13px; }
 .bar-row { display:flex; align-items:center; gap:12px; }
 .bar-lbl { font-size:12.5px; color:var(--text); width:150px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -324,7 +324,7 @@ body {
 @keyframes grow { from{width:0 !important} }
 .bar-num { font-size:12px; font-weight:700; color:var(--choc); width:36px; text-align:right; }
 
-/* ── ORDER ITEMS ─────────────────────────── */
+/* ââ ORDER ITEMS âââââââââââââââââââââââââââ */
 .order-row {
   display: flex;
   align-items: center;
@@ -340,7 +340,7 @@ body {
 .order-detail { font-size:11.5px; color:var(--text-soft); margin-top:2px; }
 .order-price { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:700; color:var(--choc); }
 
-/* ── PRODUCT CARDS ───────────────────────── */
+/* ââ PRODUCT CARDS âââââââââââââââââââââââââ */
 .prod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
 
 .prod-card {
@@ -380,7 +380,7 @@ body {
   letter-spacing:0.06em;
 }
 
-/* ── ANALYTICS ───────────────────────────── */
+/* ââ ANALYTICS âââââââââââââââââââââââââââââ */
 .insight-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:20px; }
 
 .insight {
@@ -396,7 +396,7 @@ body {
 .insight-val { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--choc); }
 .insight-sub { font-size:11px; color:var(--mint); font-weight:600; margin-top:3px; }
 
-/* ── FILTER ROW ──────────────────────────── */
+/* ââ FILTER ROW ââââââââââââââââââââââââââââ */
 .filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
 .filter-btn {
   padding: 7px 15px;
@@ -417,7 +417,7 @@ body {
   color: #fff;
 }
 
-/* ── LOADING ─────────────────────────────── */
+/* ââ LOADING âââââââââââââââââââââââââââââââ */
 .loading {
   display: flex;
   align-items: center;
@@ -438,7 +438,7 @@ body {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── MODAL ───────────────────────────────── */
+/* ââ MODAL âââââââââââââââââââââââââââââââââ */
 .overlay {
   display: none;
   position: fixed; inset:0;
@@ -503,7 +503,7 @@ body {
   margin-top:6px;
 }
 
-/* ── TOAST ───────────────────────────────── */
+/* ââ TOAST âââââââââââââââââââââââââââââââââ */
 .toast {
   position: fixed;
   bottom: 28px; right: 28px;
@@ -521,10 +521,10 @@ body {
 }
 
 .toast.show { transform: translateY(0); opacity:1; }
-.toast.success::before { content:'✅  '; }
-.toast.error::before   { content:'❌  '; }
+.toast.success::before { content:'â  '; }
+.toast.error::before   { content:'â  '; }
 
-/* ── ADD STOCK INLINE ────────────────────── */
+/* ââ ADD STOCK INLINE ââââââââââââââââââââââ */
 .add-stock-row {
   display: flex;
   align-items: center;
@@ -545,7 +545,7 @@ body {
 
 .qty-input:focus { border-color: var(--mint); }
 
-/* ── RECEIVE BUTTON ──────────────────────── */
+/* ââ RECEIVE BUTTON ââââââââââââââââââââââââ */
 .btn-receive {
   display: inline-flex;
   align-items: center;
@@ -569,36 +569,36 @@ body {
 </head>
 <body>
 
-<!-- ── SIDEBAR ── -->
+<!-- ââ SIDEBAR ââ -->
 <nav class="sidebar">
   <div class="sb-brand">
-    <div class="sb-logo">🍬</div>
+    <div class="sb-logo">ð¬</div>
     <div class="sb-name">Frank &amp;<br>Olive</div>
     <div class="sb-tagline">Luxury Confectioners</div>
   </div>
   <div class="sb-nav">
     <div class="sb-section">Main</div>
-    <div class="sb-item active" onclick="nav('dashboard')"><span class="si">🏠</span> Dashboard</div>
-    <div class="sb-item" onclick="nav('orders')"><span class="si">📦</span> Orders <span class="sb-badge" id="badge-orders">…</span></div>
-    <div class="sb-item" onclick="nav('inventory')"><span class="si">🗃️</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
+    <div class="sb-item active" onclick="nav('dashboard')"><span class="si">ð </span> Dashboard</div>
+    <div class="sb-item" onclick="nav('orders')"><span class="si">ð¦</span> Orders <span class="sb-badge" id="badge-orders">â¦</span></div>
+    <div class="sb-item" onclick="nav('inventory')"><span class="si">ðï¸</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
     <div class="sb-section">Insights</div>
-    <div class="sb-item" onclick="nav('analytics')"><span class="si">📊</span> Analytics</div>
+    <div class="sb-item" onclick="nav('analytics')"><span class="si">ð</span> Analytics</div>
     <div class="sb-section">Settings</div>
-    <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
-    <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
-    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
+    <div class="sb-item" onclick="nav('products')"><span class="si">ð</span> Products</div>
+    <div class="sb-item" onclick="nav('suppliers')"><span class="si">ð</span> Suppliers</div>
+    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">ð</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
   </div>
-  <div class="sb-footer"><span class="status-dot"></span>Live · Google Sheets</div>
+  <div class="sb-footer"><span class="status-dot"></span>Live Â· Google Sheets</div>
 </nav>
 
-<!-- ── MAIN ── -->
+<!-- ââ MAIN ââ -->
 <main class="main">
 
   <!-- DASHBOARD -->
   <div id="pg-dashboard" class="page active">
     <div class="ph">
       <div>
-        <div class="ph-title" id="greeting">Good morning! 🌸</div>
+        <div class="ph-title" id="greeting">Good morning! ð¸</div>
         <div class="ph-sub">Here's everything happening at Frank & Olive today.</div>
       </div>
       <div class="btn-row">
@@ -608,33 +608,33 @@ body {
     </div>
 
     <div class="alert-bar hidden" id="low-stock-alert">
-      ⚠️ <span id="low-stock-msg">Loading...</span>
+      â ï¸ <span id="low-stock-msg">Loading...</span>
     </div>
 
     <div class="stats" id="stats-grid">
-      <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading stats…</div>
+      <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading statsâ¦</div>
     </div>
 
     <div class="grid2">
       <div class="card">
         <div class="card-hd">
           <div class="card-title">Recent Orders</div>
-          <div class="card-link" onclick="nav('orders')">View all →</div>
+          <div class="card-link" onclick="nav('orders')">View all â</div>
         </div>
-        <div id="recent-orders"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+        <div id="recent-orders"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
       </div>
       <div class="card">
         <div class="card-hd">
           <div class="card-title">Stock Levels</div>
-          <div class="card-link" onclick="nav('inventory')">Manage →</div>
+          <div class="card-link" onclick="nav('inventory')">Manage â</div>
         </div>
-        <div id="dash-stock"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+        <div id="dash-stock"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
       </div>
     </div>
     <div class="card" id="dash-po-card" style="margin-bottom:18px">
       <div class="card-hd">
-        <div class="card-title">📦 Incoming Stock</div>
-        <div class="card-link" onclick="nav('purchaseorders')">View all →</div>
+        <div class="card-title">ð¦ Incoming Stock</div>
+        <div class="card-link" onclick="nav('purchaseorders')">View all â</div>
       </div>
       <div id="dash-pending-pos"><div style="padding:16px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries.</div></div>
     </div>
@@ -645,7 +645,7 @@ body {
     <div class="ph">
       <div>
         <div class="ph-title">Orders</div>
-        <div class="ph-sub" id="orders-subtitle">Loading orders…</div>
+        <div class="ph-sub" id="orders-subtitle">Loading ordersâ¦</div>
       </div>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
@@ -659,7 +659,7 @@ body {
       <button class="filter-btn" onclick="filterOrders('Delivered',this)">Delivered</button>
     </div>
     <div class="card">
-      <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading orders…</div></div>
+      <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading ordersâ¦</div></div>
     </div>
   </div>
 
@@ -668,17 +668,17 @@ body {
     <div class="ph">
       <div>
         <div class="ph-title">Inventory</div>
-        <div class="ph-sub" id="inv-sub">Loading stock levels…</div>
+        <div class="ph-sub" id="inv-sub">Loading stock levelsâ¦</div>
       </div>
       <div class="btn-row">
         <button class="btn btn-green" onclick="openStockModal()">+ Receive Stock</button>
       </div>
     </div>
     <div class="alert-bar hidden" id="inv-alert">
-      🚨 <span id="inv-alert-msg"></span>
+      ð¨ <span id="inv-alert-msg"></span>
     </div>
     <div id="inv-grid" class="prod-grid">
-      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
+      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loadingâ¦</div>
     </div>
   </div>
 
@@ -688,7 +688,7 @@ body {
       <div><div class="ph-title">Analytics</div><div class="ph-sub">Sales performance & insights</div></div>
     </div>
     <div class="insight-grid" id="insight-grid">
-      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
+      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loadingâ¦</div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -709,7 +709,7 @@ body {
       <button class="btn btn-primary" onclick="openAddProductModal()">+ Add Product</button>
     </div>
     <div class="card">
-      <div id="products-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+      <div id="products-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
     </div>
   </div>
 
@@ -720,7 +720,7 @@ body {
       <button class="btn btn-primary" onclick="openAddSupplierModal()">+ Add Supplier</button>
     </div>
     <div class="card">
-      <div id="suppliers-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+      <div id="suppliers-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
     </div>
   </div>
 
@@ -732,22 +732,22 @@ body {
     </div>
     <div class="filters">
       <button class="filter-btn active" onclick="filterPOs('all',this)">All</button>
-      <button class="filter-btn" onclick="filterPOs('Pending',this)">📦 Coming Soon</button>
-      <button class="filter-btn" onclick="filterPOs('Received',this)">✅ Received</button>
+      <button class="filter-btn" onclick="filterPOs('Pending',this)">ð¦ Coming Soon</button>
+      <button class="filter-btn" onclick="filterPOs('Received',this)">â Received</button>
     </div>
     <div class="card">
-      <div id="po-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+      <div id="po-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
     </div>
   </div>
 
 </main>
 
-<!-- ── MODALS ── -->
+<!-- ââ MODALS ââ -->
 
 <!-- NEW ORDER MODAL -->
 <div class="overlay" id="order-modal">
   <div class="modal">
-    <div class="modal-title">🎁 New Order</div>
+    <div class="modal-title">ð New Order</div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Customer Name</label>
@@ -777,7 +777,7 @@ body {
     <div class="form-hint" id="order-total-preview">Select products to see total</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitOrder()">Save Order →</button>
+      <button class="btn btn-primary" onclick="submitOrder()">Save Order â</button>
     </div>
   </div>
 </div>
@@ -785,7 +785,7 @@ body {
 <!-- ADD STOCK MODAL -->
 <div class="overlay" id="stock-modal">
   <div class="modal">
-    <div class="modal-title">📦 Receive Stock</div>
+    <div class="modal-title">ð¦ Receive Stock</div>
     <div class="form-group">
       <label class="form-label">Product</label>
       <select class="form-select" id="s-product"></select>
@@ -804,10 +804,10 @@ body {
       <label class="form-label">Notes</label>
       <input class="form-input" id="s-notes" placeholder="e.g. February delivery">
     </div>
-    <div class="form-hint">💾 Stock will be added and logged in Stock Movements automatically.</div>
+    <div class="form-hint">ð¾ Stock will be added and logged in Stock Movements automatically.</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-green" onclick="submitStock()">Add Stock →</button>
+      <button class="btn btn-green" onclick="submitStock()">Add Stock â</button>
     </div>
   </div>
 </div>
@@ -815,7 +815,7 @@ body {
 <!-- ADD PRODUCT MODAL -->
 <div class="overlay" id="addproduct-modal">
   <div class="modal">
-    <div class="modal-title">🍫 Add New Product</div>
+    <div class="modal-title">ð« Add New Product</div>
     <div class="form-group">
       <label class="form-label">Product Name</label>
       <input class="form-input" id="ap-name" placeholder="e.g. Luxury Gift Box (Large)">
@@ -841,7 +841,7 @@ body {
       </div>
       <div class="form-group">
         <label class="form-label">Low Stock Alert At</label>
-        <input class="form-input" id="ap-threshold" type="number" placeholder="5">
+        <input class="form-input" id="ap-threshold" type="number" placeholder="20">
       </div>
     </div>
     <div class="form-group">
@@ -855,7 +855,7 @@ body {
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitProduct()">Add Product →</button>
+      <button class="btn btn-primary" onclick="submitProduct()">Add Product â</button>
     </div>
   </div>
 </div>
@@ -863,7 +863,7 @@ body {
 <!-- ADD SUPPLIER MODAL -->
 <div class="overlay" id="addsupplier-modal">
   <div class="modal">
-    <div class="modal-title">🚚 Add Supplier</div>
+    <div class="modal-title">ð Add Supplier</div>
     <div class="form-group">
       <label class="form-label">Supplier Name</label>
       <input class="form-input" id="sup-name" placeholder="e.g. SA Confectionery Wholesale">
@@ -880,11 +880,11 @@ body {
     </div>
     <div class="form-group">
       <label class="form-label">Notes (Optional)</label>
-      <input class="form-input" id="sup-notes" placeholder="e.g. Delivery takes 3–5 days">
+      <input class="form-input" id="sup-notes" placeholder="e.g. Delivery takes 3â5 days">
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitSupplier()">Save Supplier →</button>
+      <button class="btn btn-primary" onclick="submitSupplier()">Save Supplier â</button>
     </div>
   </div>
 </div>
@@ -892,7 +892,7 @@ body {
 <!-- NEW PURCHASE ORDER MODAL -->
 <div class="overlay" id="newpo-modal">
   <div class="modal">
-    <div class="modal-title">📋 New Purchase Order</div>
+    <div class="modal-title">ð New Purchase Order</div>
     <div class="form-group">
       <label class="form-label">Supplier Name</label>
       <input class="form-input" id="po-supplier" placeholder="e.g. SA Confectionery Wholesale">
@@ -900,6 +900,10 @@ body {
     <div class="form-group">
       <label class="form-label">Component</label>
       <select class="form-select" id="po-component"></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">For (Customer)</label>
+      <input class="form-input" id="po-for" placeholder="e.g. Jane Smith">
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -915,10 +919,10 @@ body {
       <label class="form-label">Notes (Optional)</label>
       <input class="form-input" id="po-notes" placeholder="e.g. February restock">
     </div>
-    <div class="form-hint">📦 This order will show as <strong>Coming Soon</strong> until you mark it as received.</div>
+    <div class="form-hint">ð¦ This order will show as <strong>Coming Soon</strong> until you mark it as received.</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitPurchaseOrder()">Place Order →</button>
+      <button class="btn btn-primary" onclick="submitPurchaseOrder()">Place Order â</button>
     </div>
   </div>
 </div>
@@ -929,7 +933,7 @@ body {
 <script>
 const API = "https://script.google.com/macros/s/AKfycbxM6am2Mf1A-QXC5Ki2nITZVaK71iyCyWW0rO-XRQ8Dkrn5S3Ftll1Wrm2u0JLknKu5/exec";
 
-// ── STATE ──────────────────────────────────
+// ââ STATE ââââââââââââââââââââââââââââââââââ
 let allOrders        = [];
 let allProducts      = [];
 let allComponents    = [];
@@ -937,7 +941,7 @@ let allPurchaseOrders = [];
 let currentFilter    = 'all';
 let currentPOFilter  = 'all';
 
-// ── INIT ───────────────────────────────────
+// ââ INIT âââââââââââââââââââââââââââââââââââ
 window.addEventListener('DOMContentLoaded', () => {
   setGreeting();
   loadAll();
@@ -948,11 +952,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function setGreeting() {
   const h = new Date().getHours();
-  const g = h < 12 ? 'Good morning! 🌸' : h < 17 ? 'Good afternoon! 🍬' : 'Good evening! ✨';
+  const g = h < 12 ? 'Good morning! ð¸' : h < 17 ? 'Good afternoon! ð¬' : 'Good evening! â¨';
   document.getElementById('greeting').textContent = g;
 }
 
-// ── FETCH HELPER ───────────────────────────
+// ââ FETCH HELPER âââââââââââââââââââââââââââ
 async function api(params) {
   const qs = Object.entries(params).map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join('&');
   const res = await fetch(`${API}?${qs}`);
@@ -967,7 +971,7 @@ async function apiPost(body) {
   return res.json();
 }
 
-// ── LOAD ALL DATA ──────────────────────────
+// ââ LOAD ALL DATA ââââââââââââââââââââââââââ
 async function loadAll() {
   const [statsData, ordersData, productsData, componentsData, poData] = await Promise.all([
     api({ action: 'getStats' }),
@@ -996,29 +1000,29 @@ async function loadAll() {
   updateBadges();
 }
 
-// ── STATS ──────────────────────────────────
+// ââ STATS ââââââââââââââââââââââââââââââââââ
 function renderStats(s) {
   document.getElementById('stats-grid').innerHTML = `
     <div class="stat s1">
-      <div class="stat-icon">📦</div>
+      <div class="stat-icon">ð¦</div>
       <div class="stat-lbl">Orders This Month</div>
       <div class="stat-val">${s.monthOrders}</div>
       <div class="stat-note">Active this month</div>
     </div>
     <div class="stat s2">
-      <div class="stat-icon">💰</div>
+      <div class="stat-icon">ð°</div>
       <div class="stat-lbl">Revenue This Month</div>
       <div class="stat-val">R${s.monthRevenue.toLocaleString()}</div>
       <div class="stat-note">From confirmed orders</div>
     </div>
     <div class="stat s3">
-      <div class="stat-icon">⏳</div>
+      <div class="stat-icon">â³</div>
       <div class="stat-lbl">Pending Deliveries</div>
       <div class="stat-val">${s.pendingOrders}</div>
       <div class="stat-note ${s.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
     </div>
     <div class="stat s4">
-      <div class="stat-icon">🚨</div>
+      <div class="stat-icon">ð¨</div>
       <div class="stat-lbl">Low Stock Alerts</div>
       <div class="stat-val">${s.lowStockCount}</div>
       <div class="stat-note ${s.lowStockCount > 0 ? 'warn' : ''}">Products need restocking</div>
@@ -1036,20 +1040,20 @@ function renderStats(s) {
   }
 }
 
-// ── RECENT ORDERS (dashboard) ──────────────
+// ââ RECENT ORDERS (dashboard) ââââââââââââââ
 function renderRecentOrders() {
   const recent = [...allOrders].reverse().slice(0, 5);
   if (!recent.length) { document.getElementById('recent-orders').innerHTML = '<div style="padding:20px;color:var(--text-soft);text-align:center">No orders yet</div>'; return; }
 
   const colors = ['#FDE8EC','#E8F4FF','#EEF8F5','#FFF3E0','#F0E8FF'];
-  const emojis = ['🎀','🎁','🍫','🌟','🍬'];
+  const emojis = ['ð','ð','ð«','ð','ð¬'];
 
   document.getElementById('recent-orders').innerHTML = recent.map((o, i) => `
     <div class="order-row">
       <div class="order-av" style="background:${colors[i%5]}">${emojis[i%5]}</div>
       <div class="order-info">
         <div class="order-name">${o.customerName}</div>
-        <div class="order-detail">${o.products} · Due ${o.deliveryDate || '—'}</div>
+        <div class="order-detail">${o.products} Â· Due ${o.deliveryDate || 'â'}</div>
       </div>
       <span class="pill pill-${o.status.toLowerCase()}">${o.status}</span>
       <div class="order-price">R${Number(o.totalPrice).toLocaleString()}</div>
@@ -1057,7 +1061,7 @@ function renderRecentOrders() {
   `).join('');
 }
 
-// ── DASH STOCK SUMMARY ─────────────────────
+// ââ DASH STOCK SUMMARY âââââââââââââââââââââ
 function renderDashStock() {
   if (!allProducts.length) return;
   const html = `
@@ -1066,7 +1070,7 @@ function renderDashStock() {
       ${allProducts.filter(p=>p.active==='Yes').map(p => {
         const pct = Math.min(100, Math.round((p.stock / Math.max(p.lowThreshold*4, 1))*100));
         const status = p.stock <= p.lowThreshold ? 'low' : p.stock <= p.lowThreshold*2 ? 'medium' : 'good';
-        const label  = status === 'low' ? '⚠ Low' : status === 'medium' ? '~ OK' : '✓ Good';
+        const label  = status === 'low' ? 'â  Low' : status === 'medium' ? '~ OK' : 'â Good';
         return `<tr>
           <td>${p.name}</td>
           <td><strong>${p.stock}</strong></td>
@@ -1077,10 +1081,10 @@ function renderDashStock() {
   document.getElementById('dash-stock').innerHTML = html;
 }
 
-// ── ORDERS TABLE ───────────────────────────
+// ââ ORDERS TABLE âââââââââââââââââââââââââââ
 function renderOrdersTable() {
   const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
-  document.getElementById('orders-subtitle').textContent = `${allOrders.length} total orders · ${filtered.length} shown`;
+  document.getElementById('orders-subtitle').textContent = `${allOrders.length} total orders Â· ${filtered.length} shown`;
 
   if (!filtered.length) {
     document.getElementById('orders-table').innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-soft)">No orders found</div>';
@@ -1101,7 +1105,7 @@ function renderOrdersTable() {
           <td>${o.customerName}<br><span style="font-size:11px;color:var(--text-soft)">${o.customerPhone}</span></td>
           <td style="max-width:180px">${o.products}</td>
           <td>${o.orderDate}</td>
-          <td>${o.deliveryDate || '—'}</td>
+          <td>${o.deliveryDate || 'â'}</td>
           <td><strong>R${Number(o.totalPrice).toLocaleString()}</strong></td>
           <td><span class="pill pill-${o.status.toLowerCase()}">${o.status}</span></td>
           <td>
@@ -1126,19 +1130,19 @@ async function changeStatus(orderId, newStatus) {
   if (res.success) {
     const o = allOrders.find(x => x.id === orderId);
     if (o) o.status = newStatus;
-    showToast('Order ' + orderId + ' → ' + newStatus, 'success');
+    showToast('Order ' + orderId + ' â ' + newStatus, 'success');
     renderRecentOrders();
   } else {
     showToast('Failed to update order', 'error');
   }
 }
 
-// ── INVENTORY ──────────────────────────────
+// ââ INVENTORY ââââââââââââââââââââââââââââââ
 function renderInventory() {
   const active = allProducts.filter(p => p.active === 'Yes');
-  document.getElementById('inv-sub').textContent = `${active.length} products · ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
+  document.getElementById('inv-sub').textContent = `${active.length} products Â· ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
 
-  const emojis = { 'Gift Box':'🎁','Mini':'🍬','Bundle':'🎀','Budget':'💝','default':'🍫' };
+  const emojis = { 'Gift Box':'ð','Mini':'ð¬','Bundle':'ð','Budget':'ð','default':'ð«' };
 
   document.getElementById('inv-grid').innerHTML = active.map(p => {
     const stock     = Number(p.stock);
@@ -1186,7 +1190,7 @@ async function quickAddStock(productId, productName) {
   }
 }
 
-// ── ANALYTICS ──────────────────────────────
+// ââ ANALYTICS ââââââââââââââââââââââââââââââ
 function renderAnalytics() {
   const total = allOrders.filter(o => o.status !== 'Cancelled').length;
   const revenue = allOrders.filter(o => o.status !== 'Cancelled').reduce((s,o) => s + Number(o.totalPrice||0), 0);
@@ -1200,12 +1204,12 @@ function renderAnalytics() {
   const monthRev = thisMonth.reduce((s,o) => s + Number(o.totalPrice||0), 0);
 
   document.getElementById('insight-grid').innerHTML = `
-    <div class="insight"><div class="insight-emoji">📦</div><div class="insight-lbl">Total Orders</div><div class="insight-val">${total}</div><div class="insight-sub">All time</div></div>
-    <div class="insight"><div class="insight-emoji">💰</div><div class="insight-lbl">Total Revenue</div><div class="insight-val">R${revenue.toLocaleString()}</div><div class="insight-sub">All time</div></div>
-    <div class="insight"><div class="insight-emoji">📊</div><div class="insight-lbl">Avg Order Value</div><div class="insight-val">R${avg}</div><div class="insight-sub">Per order</div></div>
-    <div class="insight"><div class="insight-emoji">📅</div><div class="insight-lbl">This Month</div><div class="insight-val">${thisMonth.length} orders</div><div class="insight-sub">R${monthRev.toLocaleString()} revenue</div></div>
-    <div class="insight"><div class="insight-emoji">✅</div><div class="insight-lbl">Delivered</div><div class="insight-val">${allOrders.filter(o=>o.status==='Delivered').length}</div><div class="insight-sub">Completed orders</div></div>
-    <div class="insight"><div class="insight-emoji">⏳</div><div class="insight-lbl">In Progress</div><div class="insight-val">${allOrders.filter(o=>['Pending','Confirmed','Packed'].includes(o.status)).length}</div><div class="insight-sub">Awaiting delivery</div></div>
+    <div class="insight"><div class="insight-emoji">ð¦</div><div class="insight-lbl">Total Orders</div><div class="insight-val">${total}</div><div class="insight-sub">All time</div></div>
+    <div class="insight"><div class="insight-emoji">ð°</div><div class="insight-lbl">Total Revenue</div><div class="insight-val">R${revenue.toLocaleString()}</div><div class="insight-sub">All time</div></div>
+    <div class="insight"><div class="insight-emoji">ð</div><div class="insight-lbl">Avg Order Value</div><div class="insight-val">R${avg}</div><div class="insight-sub">Per order</div></div>
+    <div class="insight"><div class="insight-emoji">ð</div><div class="insight-lbl">This Month</div><div class="insight-val">${thisMonth.length} orders</div><div class="insight-sub">R${monthRev.toLocaleString()} revenue</div></div>
+    <div class="insight"><div class="insight-emoji">â</div><div class="insight-lbl">Delivered</div><div class="insight-val">${allOrders.filter(o=>o.status==='Delivered').length}</div><div class="insight-sub">Completed orders</div></div>
+    <div class="insight"><div class="insight-emoji">â³</div><div class="insight-lbl">In Progress</div><div class="insight-val">${allOrders.filter(o=>['Pending','Confirmed','Packed'].includes(o.status)).length}</div><div class="insight-sub">Awaiting delivery</div></div>
   `;
 }
 
@@ -1239,7 +1243,7 @@ function renderAnalyticsProducts() {
   }</div>`;
 }
 
-// ── PRODUCTS TABLE ─────────────────────────
+// ââ PRODUCTS TABLE âââââââââââââââââââââââââ
 function renderProductsTable() {
   document.getElementById('products-table').innerHTML = `
     <table class="tbl-full" style="width:100%">
@@ -1261,7 +1265,7 @@ function renderProductsTable() {
     </table>`;
 }
 
-// ── SUPPLIERS TABLE ────────────────────────
+// ââ SUPPLIERS TABLE ââââââââââââââââââââââââ
 async function loadSuppliers() {
   const data = await api({ action: 'getSuppliers' });
   if (data && data.error) return;
@@ -1275,9 +1279,9 @@ async function loadSuppliers() {
       <tr><th>Supplier</th><th>Contact Person</th><th>Phone</th><th>Notes</th></tr>
       ${suppliers.map(s => `<tr>
         <td><strong>${s.name}</strong></td>
-        <td>${s.contact || '—'}</td>
-        <td>${s.phone || '—'}</td>
-        <td style="font-size:12px;color:var(--text-soft)">${s.notes || '—'}</td>
+        <td>${s.contact || 'â'}</td>
+        <td>${s.phone || 'â'}</td>
+        <td style="font-size:12px;color:var(--text-soft)">${s.notes || 'â'}</td>
       </tr>`).join('')}
     </table>`;
 }
@@ -1290,7 +1294,7 @@ async function submitSupplier() {
   if (!name) { showToast('Please enter a supplier name', 'error'); return; }
   const res = await apiPost({ action: 'addSupplier', name, contact, phone, notes });
   if (res.success) {
-    showToast(`${name} added as a supplier! 🚚`, 'success');
+    showToast(`${name} added as a supplier! ð`, 'success');
     closeModals();
     loadSuppliers();
   } else {
@@ -1303,7 +1307,7 @@ function openAddSupplierModal() {
   document.getElementById('addsupplier-modal').classList.add('open');
 }
 
-// ── PURCHASE ORDERS ─────────────────────────
+// ââ PURCHASE ORDERS âââââââââââââââââââââââââ
 function populateComponentSelect() {
   if (!allComponents.length) return;
   const opts = allComponents.map(c =>
@@ -1321,7 +1325,7 @@ function renderPurchaseOrders() {
   const total   = allPurchaseOrders.length;
   const pending = allPurchaseOrders.filter(o => o['Status'] === 'Pending').length;
   document.getElementById('po-sub').textContent =
-    `${total} orders · ${pending} coming soon`;
+    `${total} orders Â· ${pending} coming soon`;
 
   const badge = document.getElementById('badge-po');
   if (pending > 0) { badge.style.display = 'inline-block'; badge.textContent = pending; }
@@ -1336,24 +1340,25 @@ function renderPurchaseOrders() {
   document.getElementById('po-table').innerHTML = `
     <table class="tbl-full" style="width:100%">
       <tr>
-        <th>PO ID</th><th>Supplier</th><th>Component</th>
+        <th>PO ID</th><th>Supplier</th><th>Component</th><th>For</th>
         <th>Qty</th><th>Ordered</th><th>Expected</th><th>Status</th><th>Action</th>
       </tr>
       ${[...filtered].reverse().map(o => {
         const isPending = o['Status'] === 'Pending';
         const statusPill = isPending
-          ? '<span class="pill pill-coming">📦 Coming Soon</span>'
-          : '<span class="pill pill-received">✅ Received</span>';
+          ? '<span class="pill pill-coming">ð¦ Coming Soon</span>'
+          : '<span class="pill pill-received">â Received</span>';
         const action = isPending
-          ? `<button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">✓ Mark Received</button>`
+          ? `<button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">â Mark Received</button>`
           : '<span style="color:var(--text-soft);font-size:12px">Done</span>';
         return `<tr>
           <td style="font-size:12px;color:var(--text-soft)">${o['PO ID']}</td>
-          <td><strong>${o['Supplier Name'] || '—'}</strong></td>
-          <td>${o['Component Name'] || '—'}</td>
+          <td><strong>${o['Supplier Name'] || 'â'}</strong></td>
+          <td>${o['Component Name'] || 'â'}</td>
+          <td>${o['For Customer'] || 'â'}</td>
           <td><strong>${o['Quantity Ordered']}</strong></td>
-          <td>${o['Order Date'] || '—'}</td>
-          <td>${o['Expected Date'] || '—'}</td>
+          <td>${o['Order Date'] || 'â'}</td>
+          <td>${o['Expected Date'] || 'â'}</td>
           <td>${statusPill}</td>
           <td>${action}</td>
         </tr>`;
@@ -1366,17 +1371,17 @@ function renderDashPendingPOs() {
   const card = document.getElementById('dash-po-card');
   if (!pending.length) {
     document.getElementById('dash-pending-pos').innerHTML =
-      '<div style="padding:8px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries. 🎉</div>';
+      '<div style="padding:8px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries. ð</div>';
     return;
   }
   document.getElementById('dash-pending-pos').innerHTML = pending.map(o => `
     <div class="order-row">
-      <div class="order-av" style="background:#FFF3D0;font-size:20px">📦</div>
+      <div class="order-av" style="background:#FFF3D0;font-size:20px">ð¦</div>
       <div class="order-info">
         <div class="order-name">${o['Component Name']}</div>
-        <div class="order-detail">${o['Quantity Ordered']} units · from ${o['Supplier Name'] || 'Supplier'} · due ${o['Expected Date'] || '—'}</div>
+        <div class="order-detail">${o['Quantity Ordered']} units Â· from ${o['Supplier Name'] || 'Supplier'} Â· due ${o['Expected Date'] || 'â'}</div>
       </div>
-      <button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">✓ Received</button>
+      <button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">â Received</button>
     </div>
   `).join('');
 }
@@ -1391,7 +1396,7 @@ function filterPOs(f, btn) {
 async function receivePO(poId, componentName, qty) {
   const res = await apiPost({ action: 'receivePurchaseOrder', poId });
   if (res.success) {
-    showToast(`✅ ${qty} units of ${componentName} added to stock!`, 'success');
+    showToast(`â ${qty} units of ${componentName} added to stock!`, 'success');
     // Update local state
     const po = allPurchaseOrders.find(o => o['PO ID'] === poId);
     if (po) po['Status'] = 'Received';
@@ -1406,7 +1411,7 @@ async function receivePO(poId, componentName, qty) {
 }
 
 function openNewPOModal() {
-  ['po-supplier','po-qty','po-notes'].forEach(id => document.getElementById(id).value = '');
+  ['po-supplier','po-for','po-qty','po-notes'].forEach(id => document.getElementById(id).value = '');
   const today = new Date(); today.setDate(today.getDate() + 7);
   document.getElementById('po-expected').value = today.toISOString().split('T')[0];
   populateComponentSelect();
@@ -1421,13 +1426,14 @@ async function submitPurchaseOrder() {
   const quantity      = parseInt(document.getElementById('po-qty').value);
   const expectedDate  = document.getElementById('po-expected').value;
   const notes         = document.getElementById('po-notes').value.trim();
+  const forCustomer   = document.getElementById('po-for').value.trim();
 
   if (!supplierName) { showToast('Please enter a supplier name', 'error'); return; }
   if (!quantity || quantity < 1) { showToast('Please enter a valid quantity', 'error'); return; }
 
-  const res = await apiPost({ action: 'addPurchaseOrder', supplierName, componentId, componentName, quantity, expectedDate, notes });
+  const res = await apiPost({ action: 'addPurchaseOrder', supplierName, componentId, componentName, quantity, expectedDate, notes, forCustomer });
   if (res.success) {
-    showToast(`Order placed! ${quantity}× ${componentName} coming soon. 📦`, 'success');
+    showToast(`Order placed! ${quantity}Ã ${componentName} coming soon. ð¦`, 'success');
     closeModals();
     const poData = await api({ action: 'getPurchaseOrders' }).catch(() => []);
     allPurchaseOrders = Array.isArray(poData) ? poData : (poData.orders || allPurchaseOrders);
@@ -1438,7 +1444,7 @@ async function submitPurchaseOrder() {
   }
 }
 
-// ── BADGES ────────────────────────────────
+// ââ BADGES ââââââââââââââââââââââââââââââââ
 function updateBadges() {
   const pending = allOrders.filter(o => ['Pending','Confirmed','Packed'].includes(o.status)).length;
   document.getElementById('badge-orders').textContent = pending;
@@ -1449,16 +1455,16 @@ function updateBadges() {
   else poBadge.style.display = 'none';
 }
 
-// ── POPULATE SELECTS ───────────────────────
+// ââ POPULATE SELECTS âââââââââââââââââââââââ
 function populateProductSelects() {
   const opts = allProducts.filter(p=>p.active==='Yes').map(p =>
-    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} — R${p.sellingPrice}</option>`
+    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} â R${p.sellingPrice}</option>`
   ).join('');
   document.getElementById('s-product').innerHTML = opts;
   addOrderItem(true);
 }
 
-// ── ORDER ITEMS ────────────────────────────
+// ââ ORDER ITEMS ââââââââââââââââââââââââââââ
 let orderItemCount = 0;
 
 function addOrderItem(first = false) {
@@ -1466,7 +1472,7 @@ function addOrderItem(first = false) {
   if (!first) orderItemCount++;
   const id = orderItemCount;
   const opts = allProducts.filter(p=>p.active==='Yes').map(p =>
-    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} — R${p.sellingPrice}</option>`
+    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} â R${p.sellingPrice}</option>`
   ).join('');
 
   const div = document.createElement('div');
@@ -1479,7 +1485,7 @@ function addOrderItem(first = false) {
       <select class="form-select item-product" data-id="${id}" onchange="calcTotal()">${opts}</select>
     </div>
     <div class="form-group">
-      <label class="form-label">Qty ${id > 0 ? `<span style="float:right;cursor:pointer;color:var(--rose)" onclick="removeItem(${id})">✕ Remove</span>` : ''}</label>
+      <label class="form-label">Qty ${id > 0 ? `<span style="float:right;cursor:pointer;color:var(--rose)" onclick="removeItem(${id})">â Remove</span>` : ''}</label>
       <input class="form-input item-qty" data-id="${id}" type="number" min="1" value="1" oninput="calcTotal()">
     </div>`;
   document.getElementById('order-items-container').appendChild(div);
@@ -1500,10 +1506,10 @@ function calcTotal() {
     const price= parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
     total += qty * price;
   });
-  document.getElementById('order-total-preview').innerHTML = `💰 Total: <strong>R${total.toLocaleString()}</strong>`;
+  document.getElementById('order-total-preview').innerHTML = `ð° Total: <strong>R${total.toLocaleString()}</strong>`;
 }
 
-// ── SUBMIT ORDER ───────────────────────────
+// ââ SUBMIT ORDER âââââââââââââââââââââââââââ
 async function submitOrder() {
   const name     = document.getElementById('o-name').value.trim();
   const phone    = document.getElementById('o-phone').value.trim();
@@ -1523,10 +1529,10 @@ async function submitOrder() {
     const pid   = sel.value;
     const qty   = parseInt(document.querySelector(`.item-qty[data-id="${id}"]`)?.value) || 0;
     const price = parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
-    const pname = sel.selectedOptions[0]?.text.split(' — ')[0];
+    const pname = sel.selectedOptions[0]?.text.split(' â ')[0];
     if (qty > 0) {
       items.push({ productId: pid, qty });
-      prodParts.push(`${pname} ×${qty}`);
+      prodParts.push(`${pname} Ã${qty}`);
       total += qty * price;
     }
   });
@@ -1546,7 +1552,7 @@ async function submitOrder() {
   });
 
   if (res.success) {
-    showToast(`Order ${res.orderId} saved! Stock updated automatically. 🎉`, 'success');
+    showToast(`Order ${res.orderId} saved! Stock updated automatically. ð`, 'success');
     closeModals();
     loadAll();
   } else {
@@ -1554,7 +1560,7 @@ async function submitOrder() {
   }
 }
 
-// ── SUBMIT STOCK ───────────────────────────
+// ââ SUBMIT STOCK âââââââââââââââââââââââââââ
 async function submitStock() {
   const productId = document.getElementById('s-product').value;
   const qty       = parseInt(document.getElementById('s-qty').value);
@@ -1573,21 +1579,21 @@ async function submitStock() {
   }
 }
 
-// ── SUBMIT PRODUCT ─────────────────────────
+// ââ SUBMIT PRODUCT âââââââââââââââââââââââââ
 async function submitProduct() {
   const name      = document.getElementById('ap-name').value.trim();
   const desc      = document.getElementById('ap-desc').value.trim();
   const sell      = parseFloat(document.getElementById('ap-sell').value);
   const cost      = parseFloat(document.getElementById('ap-cost').value);
   const stock     = parseInt(document.getElementById('ap-stock').value) || 0;
-  const threshold = parseInt(document.getElementById('ap-threshold').value) || 5;
+  const threshold = parseInt(document.getElementById('ap-threshold').value) || 20;
   const category  = document.getElementById('ap-cat').value;
 
   if (!name || !sell) { showToast('Please fill in product name and price', 'error'); return; }
 
   const res = await apiPost({ action: 'addProduct', name, description: desc, sellingPrice: sell, costPrice: cost, stock, lowThreshold: threshold, category });
   if (res.success) {
-    showToast(`${name} added to your catalogue! 🎁`, 'success');
+    showToast(`${name} added to your catalogue! ð`, 'success');
     closeModals();
     loadAll();
   } else {
@@ -1595,7 +1601,7 @@ async function submitProduct() {
   }
 }
 
-// ── MODALS ─────────────────────────────────
+// ââ MODALS âââââââââââââââââââââââââââââââââ
 function openOrderModal() {
   document.getElementById('order-items-container').innerHTML = '';
   orderItemCount = 0;
@@ -1614,21 +1620,21 @@ document.querySelectorAll('.overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) closeModals(); });
 });
 
-// ── NAVIGATION ─────────────────────────────
+// ââ NAVIGATION âââââââââââââââââââââââââââââ
 function nav(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
 
   document.getElementById('pg-' + page).classList.add('active');
 
-  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5, purchaseorders:6 };
+  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers<5, purchaseorders<6 };
   const items = document.querySelectorAll('.sb-item');
   if (map[page] !== undefined) items[map[page]].classList.add('active');
 
   if (page === 'suppliers') loadSuppliers();
 }
 
-// ── TOAST ──────────────────────────────────
+// ââ TOAST ââââââââââââââââââââââââââââââââââ
 let toastTimer;
 function showToast(msg, type='success') {
   const t = document.getElementById('toast');
