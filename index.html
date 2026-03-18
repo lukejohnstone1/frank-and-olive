@@ -860,6 +860,56 @@ body {
   </div>
 </div>
 
+<!-- EDIT PRODUCT MODAL -->
+<div class="overlay" id="editproduct-modal">
+  <div class="modal">
+    <div class="modal-title">✏️ Edit Product</div>
+    <input type="hidden" id="ep-id">
+    <div class="form-group">
+      <label class="form-label">Product Name</label>
+      <input class="form-input" id="ep-name" placeholder="e.g. Luxury Gift Box (Large)">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input class="form-input" id="ep-desc" placeholder="What's inside the box?">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Selling Price (R)</label>
+        <input class="form-input" id="ep-sell" type="number" placeholder="250">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cost Price (R)</label>
+        <input class="form-input" id="ep-cost" type="number" placeholder="110">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Low Stock Alert At</label>
+      <input class="form-input" id="ep-threshold" type="number" placeholder="5">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-select" id="ep-cat">
+        <option>Gift Box</option>
+        <option>Mini</option>
+        <option>Bundle</option>
+        <option>Budget</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Status</label>
+      <select class="form-select" id="ep-active">
+        <option value="Yes">Active</option>
+        <option value="No">Inactive</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEditProduct()">Save Changes →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ADD SUPPLIER MODAL -->
 <div class="overlay" id="addsupplier-modal">
   <div class="modal">
@@ -880,7 +930,7 @@ body {
     </div>
     <div class="form-group">
       <label class="form-label">Notes (Optional)</label>
-      <input class="formorm-input" id="sup-notes" placeholder="e.g. Delivery takes 3–5 days">
+      <input class="form-input" id="sup-notes" placeholder="e.g. Delivery takes 3–5 days">
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
@@ -1247,7 +1297,7 @@ function renderAnalyticsProducts() {
 function renderProductsTable() {
   document.getElementById('products-table').innerHTML = `
     <table class="tbl-full" style="width:100%">
-      <tr><th>Product</th><th>Description</th><th>Sell Price</th><th>Cost</th><th>Margin</th><th>Stock</th><th>Alert At</th><th>Status</th></tr>
+      <tr><th>Product</th><th>Description</th><th>Sell Price</th><th>Cost</th><th>Margin</th><th>Stock</th><th>Alert At</th><th>Status</th><th></th></tr>
       ${allProducts.map(p => {
         const margin = p.sellingPrice > 0 ? Math.round(((p.sellingPrice - p.costPrice)/p.sellingPrice)*100) : 0;
         const isLow  = Number(p.stock) <= Number(p.lowThreshold);
@@ -1260,6 +1310,7 @@ function renderProductsTable() {
           <td><strong style="color:${isLow?'var(--rose)':'inherit'}">${p.stock}</strong></td>
           <td>${p.lowThreshold}</td>
           <td><span class="pill ${p.active==='Yes'?'pill-packed':'pill-cancelled'}">${p.active==='Yes'?'Active':'Inactive'}</span></td>
+          <td><button onclick="openEditProductModal('${p.id}')" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">✏️ Edit</button></td>
         </tr>`;
       }).join('')}
     </table>`;
@@ -1611,6 +1662,40 @@ function openOrderModal() {
 
 function openStockModal() { document.getElementById('stock-modal').classList.add('open'); }
 function openAddProductModal() { document.getElementById('addproduct-modal').classList.add('open'); }
+
+function openEditProductModal(productId) {
+  const p = allProducts.find(x => x.id === productId);
+  if (!p) { showToast('Product not found', 'error'); return; }
+  document.getElementById('ep-id').value        = p.id;
+  document.getElementById('ep-name').value      = p.name || '';
+  document.getElementById('ep-desc').value      = p.description || '';
+  document.getElementById('ep-sell').value      = p.sellingPrice || '';
+  document.getElementById('ep-cost').value      = p.costPrice || '';
+  document.getElementById('ep-threshold').value = p.lowThreshold || '';
+  document.getElementById('ep-cat').value       = p.category || 'Gift Box';
+  document.getElementById('ep-active').value    = p.active || 'Yes';
+  document.getElementById('editproduct-modal').classList.add('open');
+}
+
+async function submitEditProduct() {
+  const productId    = document.getElementById('ep-id').value;
+  const name         = document.getElementById('ep-name').value.trim();
+  const description  = document.getElementById('ep-desc').value.trim();
+  const sellingPrice = parseFloat(document.getElementById('ep-sell').value);
+  const costPrice    = parseFloat(document.getElementById('ep-cost').value);
+  const lowThreshold = parseInt(document.getElementById('ep-threshold').value) || 5;
+  const category     = document.getElementById('ep-cat').value;
+  const active       = document.getElementById('ep-active').value;
+  if (!name || isNaN(sellingPrice)) { showToast('Please fill in product name and selling price', 'error'); return; }
+  const res = await apiPost({ action: 'editProduct', productId, name, description, sellingPrice, costPrice, lowThreshold, category, active });
+  if (res.success) {
+    showToast(`${name} updated! ✅`, 'success');
+    closeModals();
+    loadAll();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
 
 function closeModals() {
   document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
