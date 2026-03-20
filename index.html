@@ -587,6 +587,7 @@ body {
     <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
     <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
     <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
+    <div class="sb-item" onclick="nav('history')"><span class="si">📜</span> Stock History</div>
   </div>
   <div class="sb-footer"><span class="status-dot"></span>Live · Google Sheets</div>
 </nav>
@@ -737,6 +738,15 @@ body {
     </div>
     <div class="card">
       <div id="po-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <div id="pg-history" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Stock History</div><div class="ph-sub" id="hist-sub">Every stock addition and removal</div></div>
+    </div>
+    <div class="card">
+      <div id="hist-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
     </div>
   </div>
 
@@ -1237,6 +1247,7 @@ async function quickAddStock(productId, productName) {
     renderInventory();
     renderDashStock();
     showToast(`${productName}: stock updated to ${res.newStock}`, 'success');
+    apiPost({ action: 'logMovement', productId, productName, qty, newStock: res.newStock, notes: 'Quick add' });
   } else {
     showToast('Failed to update stock', 'error');
   }
@@ -1249,18 +1260,51 @@ async function quickRemoveStock(productId, productName) {
   if (!p) { showToast('Product not found', 'error'); return; }
   const currentStock = Number(p.stock);
   if (qty > currentStock) {
-    showToast(`Only ${currentStock} units in stock — can\u2019t remove ${qty}`, 'error'); return;
+    showToast(`Only ${currentStock} units in stock \u2014 can\u2019t remove ${qty}`, 'error'); return;
   }
-  // Pass negative qty to addStock — backend does currentStock + qty, so -5 subtracts 5
   const res = await apiPost({ action: 'addStock', productId, qty: -qty, supplier: 'Manual', notes: 'Quick remove from inventory' });
   if (res.success) {
     p.stock = res.newStock;
     renderInventory();
     renderDashStock();
     showToast(`${productName}: ${qty} removed \u2192 ${res.newStock} left`, 'success');
+    apiPost({ action: 'logMovement', productId, productName, qty: -qty, newStock: res.newStock, notes: 'Quick remove' });
   } else {
     showToast(res.error || 'Failed to remove stock', 'error');
   }
+}
+
+// ── STOCK HISTORY ───────────────────────────
+async function loadHistory() {
+  document.getElementById('hist-table').innerHTML = '<div class="loading"><div class="spinner"></div> Loading…</div>';
+  const data = await api({ action: 'getStockMovements' });
+  const rows = Array.isArray(data) ? data : (data.movements || []);
+  document.getElementById('hist-sub').textContent = `${rows.length} movement${rows.length !== 1 ? 's' : ''} recorded`;
+  if (!rows.length) {
+    document.getElementById('hist-table').innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-soft)">No stock movements yet — add or remove stock from the Inventory page to start tracking.</div>';
+    return;
+  }
+  document.getElementById('hist-table').innerHTML = `
+    <table class="data-table">
+      <thead><tr>
+        <th>Date &amp; Time</th><th>Product</th><th>Type</th><th>Qty</th><th>New Stock</th><th>Notes</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(r => {
+          const isAdd = Number(r.qty) >= 0;
+          const d = r.date ? new Date(r.date) : null;
+          const dateStr = d ? d.toLocaleDateString('en-ZA', { day:'2-digit', month:'short', year:'numeric' }) + ' ' + d.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit' }) : '—';
+          return `<tr>
+            <td style="font-size:12px;color:var(--text-soft)">${dateStr}</td>
+            <td><strong>${r.productName || r.productId}</strong></td>
+            <td><span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${isAdd ? 'var(--mint-light)' : '#FFE4EA'};color:${isAdd ? 'var(--mint)' : 'var(--rose)'}">${isAdd ? '+ Add' : '− Remove'}</span></td>
+            <td><strong>${Math.abs(Number(r.qty))}</strong></td>
+            <td>${r.newStock}</td>
+            <td style="font-size:12px;color:var(--text-soft)">${r.notes || '—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
 }
 
 // ── ANALYTICS ──────────────────────────────
@@ -1735,11 +1779,12 @@ function nav(page) {
 
   document.getElementById('pg-' + page).classList.add('active');
 
-  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5, purchaseorders:6 };
+  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5, purchaseorders:6, history:7 };
   const items = document.querySelectorAll('.sb-item');
   if (map[page] !== undefined) items[map[page]].classList.add('active');
 
   if (page === 'suppliers') loadSuppliers();
+  if (page === 'history') loadHistory();
 }
 
 // ── TOAST ──────────────────────────────────
