@@ -1218,10 +1218,11 @@ function renderInventory() {
           <div class="prod-price">R${p.sellingPrice}</div>
         </div>
         <div class="add-stock-row">
-          <input class="qty-input" type="number" id="qty-${p.id}" value="1" min="1">
+          <input class="qty-input" type="number" id="qty-${p.id}" value="${isLow ? Math.max(threshold * 3 - stock, threshold) : 1}" min="1">
           <button class="btn btn-primary" style="padding:6px 10px;font-size:12px" onclick="quickRemoveStock('${p.id}','${p.name}')">− Remove</button>
           <button class="btn btn-green" style="padding:6px 10px;font-size:12px" onclick="quickAddStock('${p.id}','${p.name}')">+ Add</button>
         </div>
+        ${isLow ? `<div style="font-size:10px;color:var(--gold);margin-top:4px">💡 Suggested reorder: ${Math.max(threshold * 3 - stock, threshold)} units</div>` : ''}
       </div>`;
   }).join('');
 }
