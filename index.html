@@ -524,6 +524,49 @@ body {
 .toast.success::before { content:'✅  '; }
 .toast.error::before   { content:'❌  '; }
 
+/* ── SEASONAL PLANNER ───────────────────── */
+.season-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.2s;
+}
+.season-card:hover { box-shadow: var(--shadow-md); }
+.season-card.urgent  { border-left-color: #FF4D6A; }
+.season-card.soon    { border-left-color: var(--gold); }
+.season-card.far     { border-left-color: var(--mint); }
+.season-card.past    { border-left-color: var(--border); opacity:0.55; }
+.season-card .sc-emoji { font-size: 30px; }
+.season-card .sc-name  { font-weight: 600; font-size: 15px; color: var(--text); }
+.season-card .sc-date  { font-size: 12px; color: var(--text-soft); }
+.season-card .sc-days  { font-size: 13px; font-weight: 600; }
+.season-card.urgent .sc-days  { color: #FF4D6A; }
+.season-card.soon   .sc-days  { color: var(--gold); }
+.season-card.far    .sc-days  { color: var(--mint); }
+.season-card.past   .sc-days  { color: var(--text-soft); }
+.season-card .sc-tip   { font-size: 11.5px; color: var(--text-soft); background: var(--cream); border-radius: 8px; padding: 6px 10px; margin-top: 4px; }
+.season-year-row {
+  display: flex;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 14px;
+}
+.season-year-row:last-child { border-bottom: none; }
+.syr-emoji { font-size: 20px; width: 28px; text-align: center; }
+.syr-name  { flex:1; font-size: 13.5px; font-weight: 500; }
+.syr-date  { font-size: 12px; color: var(--text-soft); }
+.syr-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+.syr-badge.urgent { background: #FFE5E9; color: #FF4D6A; }
+.syr-badge.soon   { background: var(--gold-pale); color: var(--gold); }
+.syr-badge.far    { background: var(--mint-light); color: var(--mint); }
+.syr-badge.past   { background: var(--cream); color: var(--text-soft); }
+
 /* ── ADD STOCK INLINE ────────────────────── */
 .add-stock-row {
   display: flex;
@@ -588,6 +631,8 @@ body {
     <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
     <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
     <div class="sb-item" onclick="nav('history')"><span class="si">📜</span> Stock History</div>
+    <div class="sb-section">Planning</div>
+    <div class="sb-item" onclick="nav('seasonal')"><span class="si">🗓️</span> Seasonal Planner</div>
   </div>
   <div class="sb-footer"><span class="status-dot"></span>Live · Google Sheets</div>
 </nav>
@@ -747,6 +792,18 @@ body {
     </div>
     <div class="card">
       <div id="hist-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- SEASONAL PLANNER -->
+  <div id="pg-seasonal" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Seasonal Planner</div><div class="ph-sub">Upcoming events & key dates for your business</div></div>
+    </div>
+    <div id="seasonal-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px"></div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-hd"><div class="card-title">📅 Full Year Overview</div></div>
+      <div id="seasonal-year" style="padding:4px 0"></div>
     </div>
   </div>
 
@@ -1307,6 +1364,80 @@ async function loadHistory() {
     </table>`;
 }
 
+// ── SEASONAL PLANNER ────────────────────────
+function easterDate(year) {
+  const a = year % 19, b = Math.floor(year/100), c = year % 100;
+  const d = Math.floor(b/4), e = b % 4, f = Math.floor((b+8)/25);
+  const g = Math.floor((b-f+1)/3), h = (19*a+b-d-g+15) % 30;
+  const i = Math.floor(c/4), k = c % 4, l = (32+2*e+2*i-h-k) % 7;
+  const m = Math.floor((a+11*h+22*l)/451);
+  const month = Math.floor((h+l-7*m+114)/31);
+  const day   = ((h+l-7*m+114) % 31) + 1;
+  return new Date(year, month-1, day);
+}
+function nthWeekday(year, month, weekday, n) {
+  // nth occurrence of weekday (0=Sun) in month (0-indexed)
+  const d = new Date(year, month, 1);
+  const first = (weekday - d.getDay() + 7) % 7;
+  return new Date(year, month, 1 + first + (n-1)*7);
+}
+function nextOccurrence(getDateForYear) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  let d = getDateForYear(today.getFullYear());
+  if (d < today) d = getDateForYear(today.getFullYear() + 1);
+  return d;
+}
+function loadSeasonal() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const fmtDate = d => d.toLocaleDateString('en-ZA', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const daysUntil = d => Math.round((d - today) / 86400000);
+  const urgency = days => days < 0 ? 'past' : days <= 21 ? 'urgent' : days <= 56 ? 'soon' : 'far';
+  const daysLabel = days => {
+    if (days < 0) return `${Math.abs(days)} days ago`;
+    if (days === 0) return 'TODAY! 🎉';
+    if (days === 1) return 'Tomorrow!';
+    if (days <= 7) return `${days} days away`;
+    const weeks = Math.round(days/7);
+    return `${weeks} week${weeks!==1?'s':''} away`;
+  };
+
+  const events = [
+    { emoji:'🌹', name:"Valentine's Day",   fn: y => new Date(y, 1, 14),  tip:"Start making heart-shaped boxes & rose truffles 3 weeks before." },
+    { emoji:'🐣', name:'Easter',             fn: y => easterDate(y),       tip:"Hot Cross chocolate boxes & egg-themed hampers are bestsellers." },
+    { emoji:'💐', name:"Mother's Day",       fn: y => nthWeekday(y, 4, 0, 2), tip:"Your biggest event — order ribbon & packaging at least 6 weeks ahead." },
+    { emoji:'👔', name:"Father's Day",       fn: y => nthWeekday(y, 5, 0, 3), tip:"Dark chocolate & whisky truffles are popular. Prepare 4 weeks early." },
+    { emoji:'👩', name:"Women's Day (SA)",   fn: y => new Date(y, 7, 9),   tip:"A great day for a special female-focused hamper promotion." },
+    { emoji:'🌸', name:'Spring Day (SA)',    fn: y => new Date(y, 8, 1),   tip:"Launch a floral-inspired spring collection to kick off the season." },
+    { emoji:'🎃', name:'Halloween',          fn: y => new Date(y, 9, 31),  tip:"Spooky packaging & dark chocolate skulls — growing fast in SA." },
+    { emoji:'🎄', name:'Christmas',          fn: y => new Date(y, 11, 25), tip:"Your busiest season — start planning stock & packaging in October." },
+    { emoji:'🎊', name:"New Year's Day",     fn: y => new Date(y, 0, 1),   tip:"Champagne truffles & gold-foil boxes sell well for New Year gifting." },
+  ].map(ev => {
+    const date = nextOccurrence(ev.fn);
+    const days = daysUntil(date);
+    return { ...ev, date, days, u: urgency(days) };
+  }).sort((a,b) => a.days - b.days);
+
+  // Cards — show next 4 upcoming
+  const upcoming = events.filter(e => e.days >= 0).slice(0,4);
+  document.getElementById('seasonal-grid').innerHTML = upcoming.map(ev => `
+    <div class="season-card ${ev.u}">
+      <div class="sc-emoji">${ev.emoji}</div>
+      <div class="sc-name">${ev.name}</div>
+      <div class="sc-date">${fmtDate(ev.date)}</div>
+      <div class="sc-days">${daysLabel(ev.days)}</div>
+      <div class="sc-tip">💡 ${ev.tip}</div>
+    </div>`).join('');
+
+  // Full year list
+  document.getElementById('seasonal-year').innerHTML = events.map(ev => `
+    <div class="season-year-row">
+      <span class="syr-emoji">${ev.emoji}</span>
+      <span class="syr-name">${ev.name}</span>
+      <span class="syr-date">${fmtDate(ev.date)}</span>
+      <span class="syr-badge ${ev.u}">${daysLabel(ev.days)}</span>
+    </div>`).join('');
+}
+
 // ── ANALYTICS ──────────────────────────────
 function renderAnalytics() {
   const total = allOrders.filter(o => o.status !== 'Cancelled').length;
@@ -1779,12 +1910,13 @@ function nav(page) {
 
   document.getElementById('pg-' + page).classList.add('active');
 
-  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5, purchaseorders:6, history:7 };
+  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5, purchaseorders:6, history:7, seasonal:8 };
   const items = document.querySelectorAll('.sb-item');
   if (map[page] !== undefined) items[map[page]].classList.add('active');
 
   if (page === 'suppliers') loadSuppliers();
   if (page === 'history') loadHistory();
+  if (page === 'seasonal') loadSeasonal();
 }
 
 // ── TOAST ──────────────────────────────────
