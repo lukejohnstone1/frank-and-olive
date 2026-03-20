@@ -1218,8 +1218,9 @@ function renderInventory() {
           <div class="prod-price">R${p.sellingPrice}</div>
         </div>
         <div class="add-stock-row">
-          <input class="qty-input" type="number" id="qty-${p.id}" value="10" min="1">
-          <button class="btn btn-green" style="padding:6px 12px;font-size:12px" onclick="quickAddStock('${p.id}','${p.name}')">+ Add</button>
+          <input class="qty-input" type="number" id="qty-${p.id}" value="1" min="1">
+          <button class="btn btn-primary" style="padding:6px 10px;font-size:12px" onclick="quickRemoveStock('${p.id}','${p.name}')">− Remove</button>
+          <button class="btn btn-green" style="padding:6px 10px;font-size:12px" onclick="quickAddStock('${p.id}','${p.name}')">+ Add</button>
         </div>
       </div>`;
   }).join('');
@@ -1228,7 +1229,7 @@ function renderInventory() {
 async function quickAddStock(productId, productName) {
   const qty = parseInt(document.getElementById('qty-' + productId).value);
   if (!qty || qty < 1) { showToast('Enter a valid quantity', 'error'); return; }
-  const res = await apiPost({ action: 'addStock', productId, qty, supplier: 'Manual', notes: 'Quick add from dashboard' });
+  const res = await apiPost({ action: 'addStock', productId, qty, supplier: 'Manual', notes: 'Quick add from inventory' });
   if (res.success) {
     const p = allProducts.find(x => x.id === productId);
     if (p) p.stock = res.newStock;
@@ -1237,6 +1238,27 @@ async function quickAddStock(productId, productName) {
     showToast(`${productName}: stock updated to ${res.newStock}`, 'success');
   } else {
     showToast('Failed to update stock', 'error');
+  }
+}
+
+async function quickRemoveStock(productId, productName) {
+  const qty = parseInt(document.getElementById('qty-' + productId).value);
+  if (!qty || qty < 1) { showToast('Enter a valid quantity', 'error'); return; }
+  const p = allProducts.find(x => x.id === productId);
+  if (!p) { showToast('Product not found', 'error'); return; }
+  const currentStock = Number(p.stock);
+  if (qty > currentStock) {
+    showToast(`Only ${currentStock} units in stock — can\u2019t remove ${qty}`, 'error'); return;
+  }
+  // Pass negative qty to addStock — backend does currentStock + qty, so -5 subtracts 5
+  const res = await apiPost({ action: 'addStock', productId, qty: -qty, supplier: 'Manual', notes: 'Quick remove from inventory' });
+  if (res.success) {
+    p.stock = res.newStock;
+    renderInventory();
+    renderDashStock();
+    showToast(`${productName}: ${qty} removed \u2192 ${res.newStock} left`, 'success');
+  } else {
+    showToast(res.error || 'Failed to remove stock', 'error');
   }
 }
 
