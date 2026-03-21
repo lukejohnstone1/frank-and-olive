@@ -5,9 +5,614 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Frank & Olive</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>:root { --api: "https://script.google.com/macros/s/AKfycbxXczdc02AvL4wxw3wvE2Z_ZeYrwpzEff7yADI42RWeHcvv3D3PUdPwIqfKaHgiw1h7/exec"; --rose: #D4526E; --rose-hover: #b8435c; --rose-pale: #FDF2F5; --rose-light: #F4B8C6; --gold: #B8892A; --gold-light: #F0D898; --gold-pale: #FDFAF0; --choc: #2C1810; --choc-mid: #5C3420; --cream: #FAF7F2; --mint: #3A9E85; --mint-light: #C2EAE0; --white: #FFFFFF; --border: rgba(44,24,16,0.09); --text: #1E0F08; --text-soft: #7A5848; --shadow: 0 2px 20px rgba(44,24,16,0.07); --shadow-md: 0 6px 32px rgba(44,24,16,0.11); --shadow-lg: 0 16px 56px rgba(44,24,16,0.15); --radius: 14px; } * { margin:0; padding:0; box-sizing:border-box; } body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; display: flex; }  .sidebar { width: 230px; background: var(--choc); min-height: 100vh; position: fixed; left:0; top:0; display: flex; flex-direction: column; z-index: 50; } .sb-brand { padding: 28px 22px 22px; border-bottom: 1px solid rgba(255,255,255,0.07); } .sb-logo { font-size: 30px; margin-bottom: 8px; } .sb-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold-light); line-height: 1.15; font-weight: 600; } .sb-tagline { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; } .sb-nav { padding: 18px 10px; flex:1; } .sb-section { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.25); padding: 12px 12px 5px; } .sb-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 13.5px; font-weight: 500; margin-bottom: 2px; transition: all 0.18s; position: relative; } .sb-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); } .sb-item.active { background: var(--rose); color: #fff; } .sb-item .si { font-size: 15px; width: 20px; text-align: center; } .sb-badge { margin-left: auto; font-size: 10px; font-weight: 700; background: rgba(255,255,255,0.15); padding: 2px 7px; border-radius: 20px; } .sb-item.active .sb-badge { background: rgba(255,255,255,0.25); } .sb-badge.alert { background: #FF4D6A; color: white; } .sb-footer { padding: 16px 22px; font-size: 11px; color: rgba(255,255,255,0.2); border-top: 1px solid rgba(255,255,255,0.06); } .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); margin-right: 5px; animation: pulse 2s infinite; } @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} } .main { margin-left: 230px; flex:1; padding: 30px 32px; } .page { display:none; animation: fadeUp 0.3s ease; } .page.active { display: block; } @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } } .ph { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 26px; } .ph-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: var(--choc); line-height: 1; } .ph-sub { font-size: 13px; color: var(--text-soft); margin-top: 5px; } .btn { padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; font-family: 'Outfit', sans-serif; transition: all 0.18s; letter-spacing: 0.01em; } .btn-primary { background: var(--rose); color: #fff; } .btn-primary:hover { background: var(--rose-hover); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(212,82,110,0.35); } .btn-ghost { background: transparent; color: var(--choc); border: 1.5px solid var(--border); } .btn-ghost:hover { border-color: var(--rose); color: var(--rose); } .btn-green { background: var(--mint); color: #fff; } .btn-green:hover { background: #2e8870; transform: translateY(-1px); } .btn-row { display:flex; gap:10px; align-items:center; } .alert-bar { background: linear-gradient(135deg, #FFF8E7, #FFEFCO); border: 1.5px solid var(--gold-light); border-radius: 12px; padding: 13px 18px; display: flex; align-items: center; gap: 10px; margin-bottom: 22px; font-size: 13.5px; color: var(--choc-mid); } .alert-bar.hidden { display: none; } .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; } .stat { background: var(--white); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); position: relative; overflow: hidden; } .stat::after { content:''; position: absolute; bottom:-18px; right:-18px; width: 70px; height: 70px; border-radius: 50%; opacity: 0.06; } .stat.s1::after { background: var(--rose); } .stat.s2::after { background: var(--gold); } .stat.s3::after { background: var(--mint); } .stat.s4::after { background: var(--choc); } .stat-icon { font-size: 20px; margin-bottom: 10px; } .stat-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 5px; } .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: var(--choc); line-height:1; } .stat-note { font-size: 11px; color: var(--mint); margin-top: 5px; font-weight: 500; } .stat-note.warn { color: var(--rose); } .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; } .card { background: var(--white); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); } .card-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; } .card-title { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: var(--choc); } .card-link { font-size: 12px; color: var(--rose); cursor: pointer; font-weight: 600; }  .loading { display: flex; align-items: center; justify-content: center; padding: 48px; color: var(--text-soft); gap: 12px; font-size: 14px; } .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--rose); border-radius: 50%; animation: spin 0.7s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } } .overlay { display: none; position: fixed; inset:0; background: rgba(44,24,16,0.5); z-index: 200; align-items: center; justify-content: center; } .overlay.open { display:flex; } .modal { background: var(--white); border-radius: 18px; padding: 30px; width: 500px; max-width: 95vw; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); } .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; margin-bottom: 22px; color: var(--choc); } .form-group { margin-bottom: 15px; } .form-label { display:block; font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-soft); margin-bottom:5px; } .form-input, .form-select { width: 100%; padding: 10px 13px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 13.5px; font-family: 'Outfit', sans-serif; color: var(--text); background: var(--white); outline: none; transition: border-color 0.15s; } .form-input:focus, .form-select:focus { border-color: var(--rose); } .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; } .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:22px; } .form-hint { background: var(--rose-pale); border-radius: 9px; padding: 11px 14px; font-size:12.5px; color: var(--text-soft); margin-top:6px; } .toast { position: fixed; bottom: 28px; right: 28px; background: var(--choc); color: #fff; padding: 13px 20px; border-radius: 12px; font-size: 13.5px; font-weight: 500; box-shadow: var(--shadow-lg); z-index: 300; transform: translateY(80px); opacity: 0; transition: all 0.3s ease; } .toast.show { transform: translateY(0); opacity:1; }</style>
+<style>
+:root {
+  --api: "https://script.google.com/macros/s/AKfycbxXczdc02AvL4wxw3wvE2Z_ZeYrwpzEff7yADI42RWeHcvv3D3PUdPwIqfKaHgiw1h7/exec";
+  --rose: #D4526E;
+  --rose-hover: #b8435c;
+  --rose-pale: #FDF2F5;
+  --rose-light: #F4B8C6;
+  --gold: #B8892A;
+  --gold-light: #F0D898;
+  --gold-pale: #FDFAF0;
+  --choc: #2C1810;
+  --choc-mid: #5C3420;
+  --cream: #FAF7F2;
+  --mint: #3A9E85;
+  --mint-light: #C2EAE0;
+  --white: #FFFFFF;
+  --border: rgba(44,24,16,0.09);
+  --text: #1E0F08;
+  --text-soft: #7A5848;
+  --shadow: 0 2px 20px rgba(44,24,16,0.07);
+  --shadow-md: 0 6px 32px rgba(44,24,16,0.11);
+  --shadow-lg: 0 16px 56px rgba(44,24,16,0.15);
+  --radius: 14px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+.sidebar {
+  width: 230px;
+  background: var(--choc);
+  min-height: 100vh;
+  position: fixed;
+  left:0; top:0;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
+.sb-brand {
+  padding: 28px 22px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.sb-logo { font-size: 30px; margin-bottom: 8px; }
+
+.sb-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold-light);
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.sb-tagline {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.sb-nav { padding: 18px 10px; flex:1; }
+
+.sb-section {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 12px 12px 5px;
+}
+
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.5);
+  font-size: 13.5px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  transition: all 0.18s;
+  position: relative;
+}
+
+.sb-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
+.sb-item.active { background: var(--rose); color: #fff; }
+.sb-item .si { font-size: 15px; width: 20px; text-align: center; }
+
+.sb-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.15);
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+
+.sb-item.active .sb-badge { background: rgba(255,255,255,0.25); }
+.sb-badge.alert { background: #FF4D6A; color: white; }
+
+.sb-footer {
+  padding: 16px 22px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  margin-right: 5px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* ── MAIN ────────────────────────────────── */
+.main { margin-left: 230px; flex:1; padding: 30px 32px; }
+
+.page { display:none; animation: fadeUp 0.3s ease; }
+.page.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── PAGE HEADER ─────────────────────────── */
+.ph {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.ph-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--choc);
+  line-height: 1;
+}
+
+.ph-sub { font-size: 13px; color: var(--text-soft); margin-top: 5px; }
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.18s;
+  letter-spacing: 0.01em;
+}
+
+.btn-primary { background: var(--rose); color: #fff; }
+.btn-primary:hover { background: var(--rose-hover); transform: translateY(-1px); box-shadow: 0 4px 18px rgba(212,82,110,0.35); }
+.btn-ghost { background: transparent; color: var(--choc); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: var(--rose); color: var(--rose); }
+.btn-green { background: var(--mint); color: #fff; }
+.btn-green:hover { background: #2e8870; transform: translateY(-1px); }
+
+.btn-row { display:flex; gap:10px; align-items:center; }
+
+/* ── ALERT BANNER ────────────────────────── */
+.alert-bar {
+  background: linear-gradient(135deg, #FFF8E7, #FFEFC0);
+  border: 1.5px solid var(--gold-light);
+  border-radius: 12px;
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  font-size: 13.5px;
+  color: var(--choc-mid);
+}
+
+.alert-bar.hidden { display: none; }
+
+/* ── STATS GRID ──────────────────────────── */
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
+
+.stat {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat::after {
+  content:'';
+  position: absolute;
+  bottom:-18px; right:-18px;
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  opacity: 0.06;
+}
+
+.stat.s1::after { background: var(--rose); }
+.stat.s2::after { background: var(--gold); }
+.stat.s3::after { background: var(--mint); }
+.stat.s4::after { background: var(--choc); }
+
+.stat-icon { font-size: 20px; margin-bottom: 10px; }
+.stat-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 5px; }
+.stat-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: var(--choc); line-height:1; }
+.stat-note { font-size: 11px; color: var(--mint); margin-top: 5px; font-weight: 500; }
+.stat-note.warn { color: var(--rose); }
+
+/* ── TWO COL ─────────────────────────────── */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+.grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 18px; }
+
+/* ── CARD ────────────────────────────────── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.card-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--choc);
+}
+
+.card-link { font-size: 12px; color: var(--rose); cursor: pointer; font-weight: 600; }
+
+/* ── TABLE ───────────────────────────────── */
+.tbl { width:100%; border-collapse: collapse; }
+
+.tbl th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  padding: 0 0 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tbl td {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+  vertical-align: middle;
+}
+
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: var(--rose-pale); padding-left: 4px; transition: 0.15s; }
+
+/* Full table variant */
+.tbl-full th {
+  padding: 11px 14px;
+  background: var(--rose-pale);
+  border-bottom: 1px solid var(--border);
+}
+
+.tbl-full th:first-child { border-radius: 10px 0 0 10px; }
+.tbl-full th:last-child  { border-radius: 0 10px 10px 0; }
+.tbl-full td { padding: 13px 14px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.tbl-full tr:hover td { background: var(--rose-pale); }
+
+/* ── PILLS ───────────────────────────────── */
+.pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.pill-pending   { background: #FFF3D0; color: #9A6800; }
+.pill-confirmed { background: #EFE8FF; color: #6B38AE; }
+.pill-packed    { background: var(--mint-light); color: #256A58; }
+.pill-delivered { background: #E0EEFF; color: #1A5FAA; }
+.pill-cancelled { background: #FFE5E5; color: #AA2020; }
+.pill-good      { background: var(--mint-light); color: #256A58; }
+.pill-low       { background: #FFE0E6; color: #B8203C; }
+.pill-medium    { background: #FFF3D0; color: #9A6800; }
+
+/* ── BAR CHART ───────────────────────────── */
+.bars { display:flex; flex-direction:column; gap:13px; }
+.bar-row { display:flex; align-items:center; gap:12px; }
+.bar-lbl { font-size:12.5px; color:var(--text); width:150px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.bar-track { flex:1; height:9px; background:var(--rose-pale); border-radius:9px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:9px; animation: grow 1s ease forwards; }
+@keyframes grow { from{width:0 !important} }
+.bar-num { font-size:12px; font-weight:700; color:var(--choc); width:36px; text-align:right; }
+
+/* ── ORDER ITEMS ─────────────────────────── */
+.order-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.order-row:last-child { border-bottom: none; }
+.order-av { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+.order-info { flex:1; }
+.order-name { font-size:13.5px; font-weight:600; color:var(--choc); }
+.order-detail { font-size:11.5px; color:var(--text-soft); margin-top:2px; }
+.order-price { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:700; color:var(--choc); }
+
+/* ── PRODUCT CARDS ───────────────────────── */
+.prod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+
+.prod-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.prod-card:hover { border-color: var(--rose-light); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.prod-card.low { border-color: #FFD0DA; }
+
+.prod-emoji { font-size:28px; margin-bottom:10px; }
+.prod-name { font-family:'Cormorant Garamond',serif; font-size:16px; font-weight:600; color:var(--choc); margin-bottom:3px; }
+.prod-desc { font-size:11.5px; color:var(--text-soft); margin-bottom:12px; line-height:1.4; }
+
+.stock-bar { height:5px; background:var(--rose-pale); border-radius:5px; overflow:hidden; margin-bottom:9px; }
+.stock-fill { height:100%; border-radius:5px; }
+.stock-fill.good   { background: var(--mint); }
+.stock-fill.medium { background: var(--gold); }
+.stock-fill.low    { background: var(--rose); }
+
+.prod-meta { display:flex; justify-content:space-between; align-items:flex-end; }
+.prod-qty { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; color:var(--choc); line-height:1; }
+.prod-qty-lbl { font-size:10px; color:var(--text-soft); }
+.prod-price { font-size:13px; font-weight:700; color:var(--mint); }
+
+.low-tag {
+  position:absolute; top:12px; right:12px;
+  background: var(--rose); color:#fff;
+  font-size:9px; font-weight:700;
+  padding: 2px 7px; border-radius:20px;
+  letter-spacing:0.06em;
+}
+
+/* ── ANALYTICS ───────────────────────────── */
+.insight-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:20px; }
+
+.insight {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.insight-emoji { font-size:32px; margin-bottom:7px; }
+.insight-lbl { font-size:10px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-soft); margin-bottom:5px; }
+.insight-val { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--choc); }
+.insight-sub { font-size:11px; color:var(--mint); font-weight:600; margin-top:3px; }
+
+/* ── FILTER ROW ──────────────────────────── */
+.filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+.filter-btn {
+  padding: 7px 15px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--text-soft);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  background: var(--rose);
+  border-color: var(--rose);
+  color: #fff;
+}
+
+/* ── LOADING ─────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: var(--text-soft);
+  gap: 12px;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--rose);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── MODAL ───────────────────────────────── */
+.overlay {
+  display: none;
+  position: fixed; inset:0;
+  background: rgba(44,24,16,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay.open { display:flex; }
+
+.modal {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 30px;
+  width: 500px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.22s ease;
+}
+
+@keyframes modalIn { from{transform:scale(0.94);opacity:0} to{transform:scale(1);opacity:1} }
+
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  color: var(--choc);
+}
+
+.form-group { margin-bottom: 15px; }
+.form-label { display:block; font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-soft); margin-bottom:5px; }
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  font-size: 13.5px;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.form-input:focus, .form-select:focus { border-color: var(--rose); }
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+.modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:22px; }
+
+.form-hint {
+  background: var(--rose-pale);
+  border-radius: 9px;
+  padding: 11px 14px;
+  font-size:12.5px;
+  color: var(--text-soft);
+  margin-top:6px;
+}
+
+/* ── TOAST ───────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--choc);
+  color: #fff;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  z-index: 300;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.toast.show { transform: translateY(0); opacity:1; }
+.toast.success::before { content:'✅  '; }
+.toast.error::before   { content:'❌  '; }
+
+/* ── SEASONAL PLANNER ───────────────────── */
+.season-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.2s;
+}
+.season-card:hover { box-shadow: var(--shadow-md); }
+.season-card.urgent  { border-left-color: #FF4D6A; }
+.season-card.soon    { border-left-color: var(--gold); }
+.season-card.far     { border-left-color: var(--mint); }
+.season-card.past    { border-left-color: var(--border); opacity:0.55; }
+.season-card .sc-emoji { font-size: 30px; }
+.season-card .sc-name  { font-weight: 600; font-size: 15px; color: var(--text); }
+.season-card .sc-date  { font-size: 12px; color: var(--text-soft); }
+.season-card .sc-days  { font-size: 13px; font-weight: 600; }
+.season-card.urgent .sc-days  { color: #FF4D6A; }
+.season-card.soon   .sc-days  { color: var(--gold); }
+.season-card.far    .sc-days  { color: var(--mint); }
+.season-card.past   .sc-days  { color: var(--text-soft); }
+.season-card .sc-tip   { font-size: 11.5px; color: var(--text-soft); background: var(--cream); border-radius: 8px; padding: 6px 10px; margin-top: 4px; }
+.season-year-row {
+  display: flex;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 14px;
+}
+.season-year-row:last-child { border-bottom: none; }
+.syr-emoji { font-size: 20px; width: 28px; text-align: center; }
+.syr-name  { flex:1; font-size: 13.5px; font-weight: 500; }
+.syr-date  { font-size: 12px; color: var(--text-soft); }
+.syr-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+.syr-badge.urgent { background: #FFE5E9; color: #FF4D6A; }
+.syr-badge.soon   { background: var(--gold-pale); color: var(--gold); }
+.syr-badge.far    { background: var(--mint-light); color: var(--mint); }
+.syr-badge.past   { background: var(--cream); color: var(--text-soft); }
+
+/* ── ADD STOCK INLINE ────────────────────── */
+.add-stock-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.qty-input {
+  width: 70px;
+  padding: 6px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  text-align: center;
+  outline: none;
+}
+
+.qty-input:focus { border-color: var(--mint); }
+
+/* ── RECEIVE BUTTON ──────────────────────── */
+.btn-receive {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  background: var(--mint);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.18s;
+}
+.btn-receive:hover { background: #2e8870; transform: translateY(-1px); }
+
+.pill-coming  { background: #FFF3D0; color: #9A6800; }
+.pill-received { background: var(--mint-light); color: #256A58; }
+</style>
 </head>
 <body>
+
+<!-- ── SIDEBAR ── -->
 <nav class="sidebar">
   <div class="sb-brand">
     <div class="sb-logo">🍬</div>
@@ -15,16 +620,1334 @@
     <div class="sb-tagline">Luxury Confectioners</div>
   </div>
   <div class="sb-nav">
-    <div class="sb-section">Dashboard</div>
-    <div class="sb-item active" onclick="nav('dashboard')"><span class="si">📊</span>Dashboard</div>
+    <div class="sb-section">Main</div>
+    <div class="sb-item active" onclick="nav('dashboard')"><span class="si">🏠</span> Dashboard</div>
+    <div class="sb-item" onclick="nav('orders')"><span class="si">📦</span> Orders <span class="sb-badge" id="badge-orders">…</span></div>
+    <div class="sb-item" onclick="nav('inventory')"><span class="si">🗃️</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
+    <div class="sb-section">Insights</div>
+    <div class="sb-item" onclick="nav('analytics')"><span class="si">📊</span> Analytics</div>
+    <div class="sb-section">Settings</div>
+    <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
+    <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
+    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
+    <div class="sb-item" onclick="nav('history')"><span class="si">📜</span> Stock History</div>
+    <div class="sb-item" onclick="nav('reorder')"><span class="si">🔄</span> Auto Reorder <span class="sb-badge alert" id="badge-reorder" style="display:none">!</span></div>
+    <div class="sb-section">Planning</div>
+    <div class="sb-item" onclick="nav('seasonal')"><span class="si">🗓️</span> Seasonal Planner</div>
   </div>
+  <div class="sb-footer"><span class="status-dot"></span>Live · Google Sheets</div>
 </nav>
+
+<!-- ── MAIN ── -->
 <main class="main">
+
+  <!-- DASHBOARD -->
   <div id="pg-dashboard" class="page active">
-    <div class="ph"><div><div class="ph-title">Dashboard</div><div class="ph-sub">Welcome to Frank & Olive management system</div></div></div>
-    <div class="stats"><div class="stat s1"><div class="stat-icon">📊</div><div class="stat-lbl">Total Orders</div><div class="stat-val">--</div></div><div class="stat s2"><div class="stat-icon">📦</div><div class="stat-lbl">Items in Stock</div><div class="stat-val">--</div></div><div class="stat s3"><div class="stat-icon">💰</div><div class="stat-lbl">Revenue</div><div class="stat-val">--</div></div><div class="stat s4"><div class="stat-icon">🎯</div><div class="stat-lbl">Upcoming</div><div class="stat-val">--</div></div></div>
+    <div class="ph">
+      <div>
+        <div class="ph-title" id="greeting">Good morning! 🌸</div>
+        <div class="ph-sub">Here's everything happening at Frank & Olive today.</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost">Export</button>
+        <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
+      </div>
+    </div>
+
+    <div class="alert-bar hidden" id="low-stock-alert">
+      ⚠️ <span id="low-stock-msg">Loading...</span>
+    </div>
+
+    <div class="stats" id="stats-grid">
+      <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading stats…</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-title">Recent Orders</div>
+          <div class="card-link" onclick="nav('orders')">View all →</div>
+        </div>
+        <div id="recent-orders"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-title">Stock Levels</div>
+          <div class="card-link" onclick="nav('inventory')">Manage →</div>
+        </div>
+        <div id="dash-stock"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+      </div>
+    </div>
+    <div class="card" id="dash-po-card" style="margin-bottom:18px">
+      <div class="card-hd">
+        <div class="card-title">📦 Incoming Stock</div>
+        <div class="card-link" onclick="nav('purchaseorders')">View all →</div>
+      </div>
+      <div id="dash-pending-pos"><div style="padding:16px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries.</div></div>
+    </div>
   </div>
+
+  <!-- ORDERS -->
+  <div id="pg-orders" class="page">
+    <div class="ph">
+      <div>
+        <div class="ph-title">Orders</div>
+        <div class="ph-sub" id="orders-subtitle">Loading orders…</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
+      </div>
+    </div>
+    <div class="filters" id="order-filters">
+      <button class="filter-btn active" onclick="filterOrders('all',this)">All</button>
+      <button class="filter-btn" onclick="filterOrders('Pending',this)">Pending</button>
+      <button class="filter-btn" onclick="filterOrders('Confirmed',this)">Confirmed</button>
+      <button class="filter-btn" onclick="filterOrders('Packed',this)">Packed</button>
+      <button class="filter-btn" onclick="filterOrders('Delivered',this)">Delivered</button>
+    </div>
+    <div class="card">
+      <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading orders…</div></div>
+    </div>
+  </div>
+
+  <!-- INVENTORY -->
+  <div id="pg-inventory" class="page">
+    <div class="ph">
+      <div>
+        <div class="ph-title">Inventory</div>
+        <div class="ph-sub" id="inv-sub">Loading stock levels…</div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-green" onclick="openStockModal()">+ Receive Stock</button>
+      </div>
+    </div>
+    <div class="alert-bar hidden" id="inv-alert">
+      🚨 <span id="inv-alert-msg"></span>
+    </div>
+    <div id="inv-grid" class="prod-grid">
+      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
+    </div>
+  </div>
+
+  <!-- ANALYTICS -->
+  <div id="pg-analytics" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Analytics</div><div class="ph-sub">Sales performance & insights</div></div>
+    </div>
+    <div class="insight-grid" id="insight-grid">
+      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-hd"><div class="card-title">Top Products by Units Sold</div></div>
+        <div id="analytics-products"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-title">Stock Value by Product</div></div>
+        <div id="analytics-stock"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div id="pg-products" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Products</div><div class="ph-sub">Your sweet box catalogue & pricing</div></div>
+      <button class="btn btn-primary" onclick="openAddProductModal()">+ Add Product</button>
+    </div>
+    <div class="card">
+      <div id="products-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- SUPPLIERS -->
+  <div id="pg-suppliers" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Suppliers</div><div class="ph-sub">Manage your ingredient & product suppliers</div></div>
+      <button class="btn btn-primary" onclick="openAddSupplierModal()">+ Add Supplier</button>
+    </div>
+    <div class="card">
+      <div id="suppliers-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- PURCHASE ORDERS -->
+  <div id="pg-purchaseorders" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Purchase Orders</div><div class="ph-sub" id="po-sub">Track incoming stock from suppliers</div></div>
+      <button class="btn btn-primary" onclick="openNewPOModal()">+ New Order</button>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterPOs('all',this)">All</button>
+      <button class="filter-btn" onclick="filterPOs('Pending',this)">📦 Coming Soon</button>
+      <button class="filter-btn" onclick="filterPOs('Received',this)">✅ Received</button>
+    </div>
+    <div class="card">
+      <div id="po-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <div id="pg-history" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Stock History</div><div class="ph-sub" id="hist-sub">Every stock addition and removal</div></div>
+    </div>
+    <div class="card">
+      <div id="hist-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- AUTO REORDER -->
+  <div id="pg-reorder" class="page">
+    <div class="ph">
+      <div>
+        <div class="ph-title">Auto Reorder</div>
+        <div class="ph-sub" id="reorder-sub">Automatically create purchase orders when stock runs low</div>
+      </div>
+      <button class="btn-rose" onclick="openReorderModal()">+ Add Rule</button>
+    </div>
+    <div class="card" style="margin-bottom:18px">
+      <div id="reorder-alerts" style="display:none">
+        <div class="card-hd"><div class="card-title">⚠️ Needs Reordering Now</div></div>
+        <div id="reorder-alerts-list" style="padding:0 18px 14px"></div>
+      </div>
+      <div id="reorder-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- SEASONAL PLANNER -->
+  <div id="pg-seasonal" class="page">
+    <div class="ph">
+      <div><div class="ph-title">Seasonal Planner</div><div class="ph-sub">Upcoming events & key dates for your business</div></div>
+    </div>
+    <div id="seasonal-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px"></div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-hd"><div class="card-title">📅 Full Year Overview</div></div>
+      <div id="seasonal-year" style="padding:4px 0"></div>
+    </div>
+  </div>
+
 </main>
-<script>function nav(page) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('pg-' + page)?.classList.add('active'); }</script>
-</body>
-</html>
+
+<!-- ── MODALS ── -->
+
+<!-- NEW ORDER MODAL -->
+<div class="overlay" id="order-modal">
+  <div class="modal">
+    <div class="modal-title">🎁 New Order</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Customer Name</label>
+        <input class="form-input" id="o-name" placeholder="e.g. Sarah Joubert">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input class="form-input" id="o-phone" placeholder="082 xxx xxxx">
+      </div>
+    </div>
+    <div id="order-items-container"></div>
+    <button class="btn btn-ghost" style="width:100%;margin-bottom:12px" onclick="addOrderItem()">+ Add Another Product</button>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Order Date</label>
+        <input class="form-input" id="o-date" type="date">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Delivery Date</label>
+        <input class="form-input" id="o-delivery" type="date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes (Optional)</label>
+      <input class="form-input" id="o-notes" placeholder="e.g. Add ribbon, no nuts, etc.">
+    </div>
+    <div class="form-hint" id="order-total-preview">Select products to see total</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitOrder()">Save Order →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD STOCK MODAL -->
+<div class="overlay" id="stock-modal">
+  <div class="modal">
+    <div class="modal-title">📦 Receive Stock</div>
+    <div class="form-group">
+      <label class="form-label">Product</label>
+      <select class="form-select" id="s-product"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Quantity Received</label>
+        <input class="form-input" id="s-qty" type="number" min="1" value="10">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Supplier (Optional)</label>
+        <input class="form-input" id="s-supplier" placeholder="e.g. SA Sweets">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes</label>
+      <input class="form-input" id="s-notes" placeholder="e.g. February delivery">
+    </div>
+    <div class="form-hint">💾 Stock will be added and logged in Stock Movements automatically.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-green" onclick="submitStock()">Add Stock →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="overlay" id="addproduct-modal">
+  <div class="modal">
+    <div class="modal-title">🍫 Add New Product</div>
+    <div class="form-group">
+      <label class="form-label">Product Name</label>
+      <input class="form-input" id="ap-name" placeholder="e.g. Luxury Gift Box (Large)">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input class="form-input" id="ap-desc" placeholder="What's inside the box?">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Selling Price (R)</label>
+        <input class="form-input" id="ap-sell" type="number" placeholder="250">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cost Price (R)</label>
+        <input class="form-input" id="ap-cost" type="number" placeholder="110">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Starting Stock</label>
+        <input class="form-input" id="ap-stock" type="number" placeholder="20">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Low Stock Alert At</label>
+        <input class="form-input" id="ap-threshold" type="number" placeholder="20">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-select" id="ap-cat">
+        <option>Gift Box</option>
+        <option>Mini</option>
+        <option>Bundle</option>
+        <option>Budget</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitProduct()">Add Product →</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="overlay" id="editproduct-modal">
+  <div class="modal">
+    <div class="modal-title">✏️ Edit Product</div>
+    <input type="hidden" id="ep-id">
+    <div class="form-group">
+      <label class="form-label">Product Name</label>
+      <input class="form-input" id="ep-name" placeholder="e.g. Luxury Gift Box (Large)">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input class="form-input" id="ep-desc" placeholder="What's inside the box?">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Selling Price (R)</label>
+        <input class="form-input" id="ep-sell" type="number" placeholder="250">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cost Price (R)</label>
+        <input class="form-input" id="ep-cost" type="number" placeholder="110">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Low Stock Alert At</label>
+      <input class="form-input" id="ep-threshold" type="number" placeholder="5">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-select" id="ep-cat">
+        <option>Gift Box</option>
+        <option>Mini</option>
+        <option>Bundle</option>
+        <option>Budget</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Status</label>
+      <select class="form-select" id="ep-active">
+        <option value="Yes">Active</option>
+        <option value="No">Inactive</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitEditProduct()">Save Changes →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SUPPLIER MODAL -->
+<div class="overlay" id="addsupplier-modal">
+  <div class="modal">
+    <div class="modal-title">🚚 Add Supplier</div>
+    <div class="form-group">
+      <label class="form-label">Supplier Name</label>
+      <input class="form-input" id="sup-name" placeholder="e.g. SA Confectionery Wholesale">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Contact Person</label>
+        <input class="form-input" id="sup-contact" placeholder="e.g. John Smith">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input class="form-input" id="sup-phone" placeholder="082 xxx xxxx">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes (Optional)</label>
+      <input class="form-input" id="sup-notes" placeholder="e.g. Delivery takes 3–5 days">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitSupplier()">Save Supplier →</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW PURCHASE ORDER MODAL -->
+<div class="overlay" id="newpo-modal">
+  <div class="modal">
+    <div class="modal-title">📋 New Purchase Order</div>
+    <div class="form-group">
+      <label class="form-label">Supplier Name</label>
+      <input class="form-input" id="po-supplier" placeholder="e.g. SA Confectionery Wholesale">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Component</label>
+      <select class="form-select" id="po-component"></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">For (Customer)</label>
+      <input class="form-input" id="po-for" placeholder="e.g. Jane Smith">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Quantity Ordered</label>
+        <input class="form-input" id="po-qty" type="number" min="1" placeholder="30">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Expected Arrival Date</label>
+        <input class="form-input" id="po-expected" type="date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Notes (Optional)</label>
+      <input class="form-input" id="po-notes" placeholder="e.g. February restock">
+    </div>
+    <div class="form-hint">📦 This order will show as <strong>Coming Soon</strong> until you mark it as received.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitPurchaseOrder()">Place Order →</button>
+    </div>
+  </div>
+</div>
+
+<!-- AUTO REORDER MODAL -->
+<div class="overlay" id="reorder-modal">
+  <div class="modal">
+    <div class="modal-title">🔄 Reorder Rule</div>
+    <input type="hidden" id="rr-edit-id">
+    <div class="form-group">
+      <label class="form-label">Product</label>
+      <select class="form-select" id="rr-product"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Reorder Point</label>
+        <input class="form-input" id="rr-point" type="number" min="0" placeholder="e.g. 5">
+        <div class="form-hint">Trigger when stock falls to or below this number</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reorder Quantity</label>
+        <input class="form-input" id="rr-qty" type="number" min="1" placeholder="e.g. 20">
+        <div class="form-hint">How many units to order each time</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Supplier (Optional)</label>
+      <input class="form-input" id="rr-supplier" placeholder="e.g. SA Confectionery Wholesale">
+    </div>
+    <div class="form-hint" style="margin-bottom:12px">📬 When stock hits the reorder point, a Purchase Order is created automatically.</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitReorderRule()">Save Rule →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbxXczdc02AvL4wxw3wvE2Z_ZeYrwpzEff7yADI42RWeHcvv3D3PUdPwIqfKaHgiw1h7/exec";
+
+// ── STATE ──────────────────────────────────
+let allOrders        = [];
+let allProducts      = [];
+let allComponents    = [];
+let allPurchaseOrders = [];
+let currentFilter    = 'all';
+let currentPOFilter  = 'all';
+
+// ── INIT ───────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  setGreeting();
+  loadAll();
+  // Set default dates
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('o-date').value = today;
+});
+
+function setGreeting() {
+  const h = new Date().getHours();
+  const g = h < 12 ? 'Good morning! 🌸' : h < 17 ? 'Good afternoon! 🍬' : 'Good evening! ✨';
+  document.getElementById('greeting').textContent = g;
+}
+
+// ── FETCH HELPER ───────────────────────────
+async function api(params) {
+  const qs = Object.entries(params).map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join('&');
+  const res = await fetch(`${API}?${qs}`);
+  return res.json();
+}
+
+async function apiPost(body) {
+  const res = await fetch(API, {
+    method: 'POST',
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+// ── LOAD ALL DATA ──────────────────────────
+async function loadAll() {
+  const [statsData, ordersData, productsData, componentsData, poData] = await Promise.all([
+    api({ action: 'getStats' }),
+    api({ action: 'getOrders' }),
+    api({ action: 'getProducts' }),
+    api({ action: 'getComponents' }),
+    api({ action: 'getPurchaseOrders' }).catch(() => [])
+  ]);
+
+  // Backend returns flat stats object directly (no success wrapper)
+  if (statsData && !statsData.error) renderStats(statsData);
+
+  // Backend returns raw arrays directly
+  allOrders = Array.isArray(ordersData) ? ordersData : (ordersData.orders || []);
+  renderRecentOrders(); renderOrdersTable(); renderAnalytics();
+
+  allProducts = Array.isArray(productsData) ? productsData : (productsData.products || []);
+  renderDashStock(); renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts();
+
+  allComponents = Array.isArray(componentsData) ? componentsData : (componentsData.components || []);
+  populateComponentSelect();
+
+  allPurchaseOrders = Array.isArray(poData) ? poData : (poData.orders || []);
+  renderPurchaseOrders(); renderDashPendingPOs();
+
+  updateBadges();
+}
+
+// ── STATS ──────────────────────────────────
+function renderStats(s) {
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat s1">
+      <div class="stat-icon">📦</div>
+      <div class="stat-lbl">Orders This Month</div>
+      <div class="stat-val">${s.monthOrders}</div>
+      <div class="stat-note">Active this month</div>
+    </div>
+    <div class="stat s2">
+      <div class="stat-icon">💰</div>
+      <div class="stat-lbl">Revenue This Month</div>
+      <div class="stat-val">R${s.monthRevenue.toLocaleString()}</div>
+      <div class="stat-note">From confirmed orders</div>
+    </div>
+    <div class="stat s3">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-lbl">Pending Deliveries</div>
+      <div class="stat-val">${s.pendingOrders}</div>
+      <div class="stat-note ${s.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
+    </div>
+    <div class="stat s4">
+      <div class="stat-icon">🚨</div>
+      <div class="stat-lbl">Low Stock Alerts</div>
+      <div class="stat-val">${s.lowStockCount}</div>
+      <div class="stat-note ${s.lowStockCount > 0 ? 'warn' : ''}">Products need restocking</div>
+    </div>
+  `;
+
+  if (s.lowStockCount > 0) {
+    const names = s.lowStockItems.map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
+    document.getElementById('low-stock-alert').classList.remove('hidden');
+    document.getElementById('low-stock-msg').innerHTML = `Low stock: ${names}`;
+    document.getElementById('badge-stock').style.display = 'inline-block';
+
+    document.getElementById('inv-alert').classList.remove('hidden');
+    document.getElementById('inv-alert-msg').innerHTML = `${s.lowStockCount} product(s) are running low: ${names}. Time to restock!`;
+  }
+}
+
+// ── RECENT ORDERS (dashboard) ──────────────
+function renderRecentOrders() {
+  const recent = [...allOrders].reverse().slice(0, 5);
+  if (!recent.length) { document.getElementById('recent-orders').innerHTML = '<div style="padding:20px;color:var(--text-soft);text-align:center">No orders yet</div>'; return; }
+
+  const colors = ['#FDE8EC','#E8F4FF','#EEF8F5','#FFF3E0','#F0E8FF'];
+  const emojis = ['🎀','🎁','🍫','🌟','🍬'];
+
+  document.getElementById('recent-orders').innerHTML = recent.map((o, i) => `
+    <div class="order-row">
+      <div class="order-av" style="background:${colors[i%5]}">${emojis[i%5]}</div>
+      <div class="order-info">
+        <div class="order-name">${o.customerName}</div>
+        <div class="order-detail">${o.products} · Due ${o.deliveryDate || '—'}|/div>
+      </div>
+      <span class="pill pill-${o.status.toLowerCase()}">${o.status}</span>
+      <div class="order-price">R${Number(o.totalPrice).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+// ── DASH STOCK SUMMARY ─────────────────────
+function renderDashStock() {
+  if (!allProducts.length) return;
+  const html = `
+    <table class="tbl">
+      <tr><th>Product</th><th>Stock</th><th>Status</th></tr>
+      ${allProducts.filter(p=>p.active==='Yes').map(p => {
+        const pct = Math.min(100, Math.round((p.stock / Math.max(p.lowThreshold*4, 1))*100));
+        const status = p.stock <= p.lowThreshold ? 'low' : p.stock <= p.lowThreshold*2 ? 'medium' : 'good';
+        const label  = status === 'low' ? '⚠ Low' : status === 'medium' ? '~ OK' : '✓ Good';
+        return `<tr>
+          <td>${p.name}</td>
+          <td><strong>${p.stock}</strong></td>
+          <td><span class="pill pill-${status}">${label}</span></td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+  document.getElementById('dash-stock').innerHTML = html;
+}
+
+// ── ORDERS TABLE ───────────────────────────
+function renderOrdersTable() {
+  const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
+  document.getElementById('orders-subtitle').textContent = `${allOrders.length} total orders · ${filtered.length} shown`;
+  if (!filtered.length) {
+    document.getElementById('orders-table').innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-soft)">No orders found</div>';
+    return;
+  }
+
+  const statuses = ['Pending','Confirmed','Packed','Delivered','Cancelled'];
+
+  document.getElementById('orders-table').innerHTML = `
+    <table class="tbl-full" style="width:100%">
+      <tr>
+        <th>Order ID</th><th>Customer</th><th>Products</th>
+        <th>Order Date</th><th>Delivery</th><th>Total</th><th>Status</th><th>Update</th>
+      </tr>
+      ${[...filtered].reverse().map(o => `
+        <tr>
+          <td><strong>${o.id}</strong></td>
+          <td>${o.customerName}<br><span style="font-size:11px;color:var(--text-soft)">${o.customerPhone}</span></td>
+          <td style="max-width:180px">${o.products}</td>
+          <td>${o.orderDate}</td>
+          <td>${o.deliveryDate || '—'}</td>
+          <td><strong>R${Number(o.totalPrice).toLocaleString()}</strong></td>
+          <td><span class="pill pill-${o.status.toLowerCase()}">${o.status}</span></td>
+          <td>
+            <select onchange="changeStatus('${o.id}',this.value)" style="padding:5px 8px;border-radius:7px;border�K�\��Y�\�KX�ܙ\�Nٛ۝Y�[Z[N��]�]�[��\�\�Y�ٛ۝\�^�N�L���\��܎��[�\����	��]\�\˛X\
+�O��[ۈ	��OO[˜�]\����[X�Y	Ή��O���O��[ۏ�
+K���[�	��_B���[X����������
+K���[�	��_B��X�O�B���[��[ۈ�[\�ܙ\�����H�\��[��[\�H���[Y[��]Y\�T�[X�ܐ[
+	˙�[\�X���K��ܑXX�
+�O����\��\���[[ݙJ	�X�]�I�JN����\��\��Y
+	�X�]�I�N�[�\�ܙ\��X�J
+NB��\�[���[��[ۈ�[��T�]\�ܙ\�Y�]��]\�H�ۜ��\�H]�Z]\T��
+�X�[ێ�	�\]Sܙ\��]\��ܙ\�Y�]\Έ�]��]\�JNY�
+�\˜�X��\��H�ۜ��H[ܙ\�˙�[�
+O��YOOHܙ\�Y
+NY�
+�H˜�]\�H�]��]\�����\�
+	�ܙ\�	�
+�ܙ\�Y
+�	�8���	�
+��]��]\�	��X��\���N�[�\��X�[�ܙ\��
+NH[�H����\�
+	јZ[Y�\]Hܙ\��	�\��܉�NB�B����8� 8� S��S�ԖH8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�\�[��[�ܞJ
+H�ۜ�X�]�HH[��X�˙�[\�O��X�]�HOOH	�Y\��N��[Y[���][[Y[��RY
+	�[��\�X��K�^�۝[�H	�X�]�K�[��H��X��0��	�X�]�K��[\�O��[X�\������HH�[X�\�����\��
+JK�[��H�YY�\����[����ۜ�[[ښ\�H�	��Y���	Ή�'�I�	�Z[�IΉ�'�k	�	Н[�IΉ�'�	�	НY�]	Ή�'�I�	�Y�][	Ή�'�j��N���[Y[���][[Y[��RY
+	�[��YܚY	�K�[��\�SHX�]�K�X\
+O��ۜ�����H�[X�\������N�ۜ��\��H�[X�\�����\��
+N�ۜ�X^�[HX]�X^
+�\��
+�
+��
+N�ۜ��HX]�Z[�LX]���[�
+
+�����X^�[
+J�L
+JN�ۜ��]\�H����H�\���	���������H�\��
+���	�YY][I��	����	��ۜ�[[ښHH[[ښ\����]Y�ܞWH[[ښ\˙Y�][�ۜ�\���H����H�\����]\���]��\��H���X�\�	�\�������Ή��H���	�\����	�]��\��H���]Yȏ��������]����	��B�]��\��H���Y[[ښH���[[ښ_O�]���]��\��H���[�[YH�����[Y_O�]���]��\��H���Y\�ȏ���\�ܚ\[ۈ	��O�]���]��\��H�����X�\���]��\��H�����Y�[	��]\�H��[OH��Y���IH���]���]���]��\��H���[Y]H���]���]��\��H���\]H�������H�[��[OH��۝\�^�N�L\���܎��\�K]^\�ٝ
+H��[�]���[���]���]��[OH��۝\�^�N�L���܎��\����ݘ\�K\���JIΉݘ\�K]^\�ٝ
+I�H��[\�]�	��\��O�]����]���]��\��H���\�X�H������[[���X�_O�]����]���]��\��H�Y\����\��ȏ��[�]�\��H�]KZ[�]�\OH��[X�\��YH�]KI��YH��[YOH��\����X]�X^
+�\��
+��H�����\��
+H�_H�Z[�H�H����]ۈ�\��H�����\�[X\�H��[OH�Y[�΍�Lٛ۝\�^�N�L��ۘ�X��H�]ZX�ԙ[[ݙT����	���YI�	����[Y_I�H���$��[[ݙO؝]ۏ���]ۈ�\��H�����YܙY[���[OH�Y[�΍�Lٛ۝\�^�N�L��ۘ�X��H�]ZX��Y����	���YI�	����[Y_I�H���Y؝]ۏ���]���	�\����]��[OH��۝\�^�N�L���܎��\�KY��
+N�X\��[�]����'�H�Y��\�Y�[ܙ\��	�X]�X^
+�\��
+��H�����\��
+_H[�]��]���	��B��]��JK���[�	��NB��\�[���[��[ۈ]ZX��Y������X�Y��X��[YJH�ۜ�]HH\��R[�
+��[Y[���][[Y[��RY
+	�]KI�
+���X�Y
+K��[YJNY�
+\]H]HJH�����\�
+	�[�\�H�[Y]X[�]I�	�\��܉�N��]\���B��ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y�������X�Y]K�\Y\��	�X[�X[	���\Έ	�]ZX��Y���H[��[�ܞI�JNY�
+�\˜�X��\��H�ۜ�H[��X�˙�[�
+O��YOOH��X�Y
+NY�
+
+H�����H�\˛�]������[�\�[��[�ܞJ
+N�[�\�\�����
+N����\�
+	���X��[Y_N�����\]Y�	ܙ\˛�]�����X	��X��\���N\T��
+�X�[ێ�	���[ݙ[Y[�	���X�Y��X��[YK]K�]����Έ�\˛�]�������\Έ	�]ZX��Y	�JNH[�H����\�
+	јZ[Y�\]H�����	�\��܉�NB�B��\�[���[��[ۈ]ZX�ԙ[[ݙT������X�Y��X��[YJH�ۜ�]HH\��R[�
+��[Y[���][[Y[��RY
+	�]KI�
+���X�Y
+K��[YJNY�
+\]H]HJH�����\�
+	�[�\�H�[Y]X[�]I�	�\��܉�N��]\���B��ۜ�H[��X�˙�[�
+O��YOOH��X�Y
+NY�
+\
+H�����\�
+	���X�����[�	�	�\��܉�N��]\���B��ۜ��\��[�����H�[X�\������NY�
+]H��\��[�����H����\�
+ۛH	��\��[�����H[�]�[�����L�M�[�L�N]�[[ݙH	�]_X	�\��܉�N��]\��B��ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y�������X�Y]N�\]K�\Y\��	�X[�X[	���\Έ	�]ZX���[[ݙH���H[��[�ܞI�JNY�
+�\˜�X��\��H�����H�\˛�]������[�\�[��[�ܞJ
+N�[�\�\�����
+N����\�
+	���X��[Y_N�	�]_H�[[ݙYL�NL�	ܙ\˛�]�����HY�	��X��\���N\T��
+�X�[ێ�	���[ݙ[Y[�	���X�Y��X��[YK]N�\]K�]����Έ�\˛�]�������\Έ	�]ZX���[[ݙI�JNH[�H����\�
+�\˙\��܈	јZ[Y��[[ݙH�����	�\��܉�NB�B����8� 8� ����T�ԖH8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�Y\�ܞJ
+H��[Y[���][[Y[��RY
+	�\�]X�I�K�[��\�SH	�]��\��H��Y[�ȏ�]��\��H��[��\����]���Y[���)��]����ۜ�]HH]�Z]\J�X�[ێ�	��]����[ݙ[Y[���JN�ۜ�����H\��^K�\�\��^J]JH�]H�
+]K�[ݙ[Y[���JN��[Y[���][[Y[��RY
+	�\�\�X��K�^�۝[�H	ܛ��˛[��H[ݙ[Y[�	ܛ��˛[��OOHH�	����	��H�X�ܙYY�
+\���˛[��
+H��[Y[���][[Y[��RY
+	�\�]X�I�K�[��\�SH	�]��[OH�Y[�Ό̜�^X[Yێ��[�\����܎��\�K]^\�ٝ
+H��������[ݙ[Y[��Y]8�%Y܈�[[ݙH�������HH[��[�ܞHY�H��\��X��[�ˏ�]����]\��B���[Y[���][[Y[��RY
+	�\�]X�I�K�[��\�SH�X�H�\��H�]K]X�H���XY�����]H	�[\�[YO�����X����\O���]O����]����������\��������XY����O��	ܛ��˛X\
+�O��ۜ�\�YH�[X�\���]JH�H�ۜ�H��]H��]�]J��]JH��[�ۜ�]T��H�����[Q]T��[��	�[�V�I��^N�̋YY�]	�[۝���ܝ	�YX\��۝[Y\�X��JH
+�	�	�
+�����[U[YT��[��	�[�V�I���\��̋YY�]	�Z[�]N�̋YY�]	�JH�	��%	��]\������[OH��۝\�^�N�L����܎��\�K]^\�ٝ
+H���]T��O������ۙω܋���X��[YH����X�YO���ۙϏ�����[��[OH�Y[�Ό�؛ܙ\�\�Y]\Ό�ٛ۝\�^�N�L\ٛ۝]�ZY���ؘX��ܛ�[���\�Y�	ݘ\�K[Z[�[Y�
+I��	�ё�MPI�N���܎��\�Y�	ݘ\�K[Z[�
+I��	ݘ\�K\���JI�H���\�Y�	��Y	��	��$��[[ݙI�O��[��������ۙω�X]�X���[X�\���]JJ_O���ۙϏ����܋��]�����O����[OH��۝\�^�N�L����܎��\�K]^\�ٝ
+H��܋���\�	��%	�O������JK���[�	��_B����O���X�O�B����8� 8� �PT�ӐSS��T�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈX\�\�]JYX\�H�ۜ�HHYX\�	HNK�HX]���܊YX\��L
+K�HYX\�	HL�ۜ�HX]���܊��
+KHH�	H
+�HX]���܊
+��
+K̍JN�ۜ��HX]���܊
+�Y��JK��KH
+NJ�J؋YY��MJH	H��ۜ�HHX]���܊��
+K�H�	H
+H
+̊̊�J̊�KZZ�H	H
+��ۜ�HHX]���܊
+J�LJ�
+̌��
+K�
+LJN�ۜ�[۝HX]���܊
+
+�MʛJ�LM
+K��JN�ۜ�^HH
+
+
+�MʛJ�LM
+H	H�JH
+�N�]\���]�]JYX\�[۝LK^JNB��[��[ۈ��YZ�^JYX\�[۝�YZ�^K�H������\��[��Hو�YZ�^H
+T�[�H[�[۝
+Z[�^Y
+B��ۜ�H�]�]JYX\�[۝JN�ۜ��\��H
+�YZ�^HH��]^J
+H
+�
+�H	H
+��]\���]�]JYX\�[۝H
+��\��
+�
+�LJJ��NB��[��[ۈ�^���\��[��J�]]Q�ܖYX\�H�ۜ��^HH�]�]J
+N��^K��]�\��
+N]H�]]Q�ܖYX\��^K��]�[YX\�
+JNY�
+�^JHH�]]Q�ܖYX\��^K��]�[YX\�
+H
+�JN�]\��B��[��[ۈ�Y�X\�ۘ[
+
+H�ۜ��^HH�]�]J
+N��^K��]�\��
+N�ۜ��]]HHO�����[Q]T��[��	�[�V�I���YZ�^N��ۙ��^N�۝[Y\�X��[۝��ۙ��YX\��۝[Y\�X��JN�ۜ�^\�[�[HO�X]���[�
+
+H�^JH�
+�
+N�ۜ�\��[��HH^\�O�^\��	�\�	��^\�H�H�	�\��[�	��^\�H
+M��	���ۉ��	٘\���ۜ�^\�X�[H^\�O�Y�
+^\�
+H�]\��	�X]�X��^\�_H^\�Y��Y�
+^\�OOH
+H�]\��	��VHH<'�I�Y�
+^\�OOHJH�]\��	��[ܜ���I�Y�
+^\�H
+�H�]\��	�^\�H^\�]�^X�ۜ��YZ��HX]���[�
+^\���N�]\��	��YZ��H�YZ���YZ��OOLO���Ή��H]�^XN��ۜ�]�[��H�[[ښN��'�.I��[YN���[[�[�I��^H����HO��]�]JKKM
+K\���\�XZ�[��X\�\�\Y��\�	����H�Y��\���YZ���Y�ܙK��K��[[ښN��'�(���[YN��X\�\�����HO�X\�\�]JJK\���ܛ�������]H��\�	�Y��][YY[\\��\�H�\��[\�ˈ�K��[[ښN��'�	��[YN��[�\���^H����HO���YZ�^JK
+�K\��[�\��Y��\�]�[�8�%ܙ\��X��ۈ	�X��Y�[��]X\�
+��YZ��ZXY��K��[[ښN��'�e	��[YN���]\���^H����HO���YZ�^JK
+K�K\��\������]H	��\��H�Y��\�\�H�[\���\\�H
+�YZ��X\�K��K��[[ښN��'�jI��[YN����Y[���^H
+�JH����HO��]�]JK
+�JK\��HܙX]^H�܈H�X�X[�[X[KY���\�Y[\\���[�[ۋ��K��[[ښN��'�.	��[YN����[��^H
+�JI����HO��]�]JKJK\��][��H�ܘ[Z[��\�Y��[����X�[ۈ��X��ٙ�H�X\�ۋ��K��[[ښN��'����[YN��[��Y[�����HO��]�]JKK�JK\������HX��Y�[��	�\������]H��[�8�%ܛ��[���\�[��K��K��[[ښN��'�	��[YN����\�X\�����HO��]�]JKLK�JK\��[�\��\�Y\��X\�ۈ8�%�\�[��[������	�X��Y�[��[���ؙ\���K��[[ښN��'㢉��[YN���]�YX\���^H����HO��]�]JKJK\���[\YۙH�Y��\�	���Y��[��\��[�[�܈�]�YX\��Y�[�ˈ�K�K�X\
+]�O��ۜ�]HH�^���\��[��J]����N�ۜ�^\�H^\�[�[
+]JN�]\������]�]K^\�N�\��[��J^\�HNJK��ܝ
+
+K�HO�K�^\�H��^\�N����\��8�%����^
+\��Z[��ۜ�\��Z[��H]�[�˙�[\�HO�K�^\��H
+K��X�J
+N��[Y[���][[Y[��RY
+	��X\�ۘ[YܚY	�K�[��\�SH\��Z[�˛X\
+]�O��]��\��H��X\�ۋX�\�	�]��_H���]��\��H���Y[[ښH���]��[[ښ_O�]���]��\��H���[�[YH���]���[Y_O�]���]��\��H���Y]H��ٛ]]J]��]J_O�]���]��\��H���Y^\ȏ��^\�X�[
+]��^\�_O�]���]��\��H���]\��'�H	�]��\O�]����]��
+K���[�	��N����[YX\�\����[Y[���][[Y[��RY
+	��X\�ۘ[^YX\��K�[��\�SH]�[�˛X\
+]�O��]��\��H��X\�ۋ^YX\�\��ȏ���[��\��H��\�Y[[ښH���]��[[ښ_O��[����[��\��H��\�[�[YH���]���[Y_O��[����[��\��H��\�Y]H��ٛ]]J]��]J_O��[����[��\��H��\�X�Y�H	�]��_H���^\�X�[
+]��^\�_O��[����]��
+K���[�	��NB����8� 8� S�SUP��8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�\�[�[]X��
+H�ۜ��[H[ܙ\�˙�[\��O�˜�]\�OOH	��[��[Y	�K�[���ۜ��]�[�YHH[ܙ\�˙�[\��O�˜�]\�OOH	��[��[Y	�K��YX�J
+��HO��
+��[X�\�˝�[�X�_
+K
+N�ۜ�]��H�[�X]���[�
+�]�[�YH��[
+H���ۜ����H�]�]J
+N�ۜ�\�[۝H[ܙ\�˙�[\��O��ۜ�H�]�]J˛ܙ\�]JN�]\����][۝
+
+OOO[��˙�][۝
+
+H	����]�[YX\�
+OOO[��˙�]�[YX\�
+H	��˜�]\�OOI��[��[Y	�JN�ۜ�[۝�]�H\�[۝��YX�J
+��HO��
+��[X�\�˝�[�X�_
+K
+N���[Y[���][[Y[��RY
+	�[��Y�YܚY	�K�[��\�SH�]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'���]��]��\��H�[��Y�[����[ܙ\���]��]��\��H�[��Y�]�[����[O�]��]��\��H�[��Y�\�X���[[YO�]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'��]��]��\��H�[��Y�[����[�]�[�YO�]��]��\��H�[��Y�]�[���ܙ]�[�YK����[T��[��
+_O�]��]��\��H�[��Y�\�X���[[YO�]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'���]��]��\��H�[��Y�[���]��ܙ\��[YO�]��]��\��H�[��Y�]�[����]��O�]��]��\��H�[��Y�\�X���\�ܙ\��]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'��O�]��]��\��H�[��Y�[���\�[۝�]��]��\��H�[��Y�]�[���\�[۝�[��Hܙ\���]��]��\��H�[��Y�\�X�����[۝�]�����[T��[��
+_H�]�[�YO�]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH���!O�]��]��\��H�[��Y�[���[]�\�Y�]��]��\��H�[��Y�]�[���[ܙ\�˙�[\��O�˜�]\�OOI�[]�\�Y	�K�[��O�]��]��\��H�[��Y�\�X�����\]Yܙ\���]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH������]��]��\��H�[��Y�[���[���ܙ\���]��]��\��H�[��Y�]�[���[ܙ\�˙�[\��O���[�[���	��ۙ�\�YY	�	�X��Y	�K�[��Y\�˜�]\�JK�[��O�]��]��\��H�[��Y�\�X���]�Z][��[]�\�O�]���]���B���[��[ۈ�[�\�[�[]X����X��
+H�������[YH�H��X���ۜ��ܝYHˋ��[��X��K��[\�O��X�]�OOOI�Y\��K��ܝ
+
+K�HO�
+�����ʘ���[[���X�JKJK����ʘK��[[���X�JJN�ۜ�X^HX]�X^
+����ܝY�X\
+O�����ʜ��[[���X�JJN���[Y[���][[Y[��RY
+	�[�[]X��\��X���K�[��\�SH]��\��H��\�ȏ��ܝY�X\
+O��ۜ��[H�����
+���[[���X�N�ۜ��HX^��X]���[�
+
+�[�X^
+J�L
+H��]\��]��\��H��\�\��ȏ��]��\��H��\�[������[Y_O�]���]��\��H��\�]�X�ȏ�]��\��H��\�Y�[��[OH��Y���INؘX��ܛ�[���\�K\���JH���]���]���]��\��H��\�[�[H��������O�]����]��JK���[�	��B�O�]�����[Y[���][[Y[��RY
+	�[�[]X��\�����K�[��\�SH]��\��H��\�ȏ��ܝY�X\
+O��ۜ��[H�����
+���[[���X�N�ۜ��HX^��X]���[�
+
+�[�X^
+J�L
+H��]\��]��\��H��\�\��ȏ��]��\��H��\�[������[Y_O�]���]��\��H��\�]�X�ȏ�]��\��H��\�Y�[��[OH��Y���INؘX��ܛ�[���\�KY��
+H���]���]���]��\��H��\�[�[H��[OH��Y�M\ٛ۝\�^�N�L\���ݘ[����[T��[��
+_O�]����]��JK���[�	��B�O�]��B����8� 8� ��P��P�H8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�\���X��X�J
+H��[Y[���][[Y[��RY
+	���X��]X�I�K�[��\�SH�X�H�\��H��Y�[��[OH��Y�L	H��������X����\�ܚ\[ۏ����[�X�O���������X\��[�����������[\�]����]\����������	�[��X�˛X\
+O��ۜ�X\��[�H��[[���X�H��X]���[�
+
+
+��[[���X�HH�����X�JK���[[���X�JJ�L
+H��ۜ�\���H�[X�\������HH�[X�\�����\��
+N�]\��������ۙω���[Y_O���ۙϏ����[OH��۝\�^�N�L����܎��\�K]^\�ٝ
+H����\�ܚ\[۟O��������[[���X�_O�����������X�_O����[OH���܎��X\��[��ML�ݘ\�K[Z[�
+IΉݘ\�KY��
+I�Nٛ۝]�ZY������X\��[�IO������ۙ��[OH���܎��\����ݘ\�K\���JIΉ�[�\�]	�H��������O���ۙϏ���������\��O�����[��\��H�[	��X�]�OOOI�Y\����[\X��Y	Ή�[X�[��[Y	�H����X�]�OOOI�Y\����X�]�IΉ�[�X�]�I�O��[�������]ۈۘ�X��H��[�Y]��X�[�[
+	���YI�H��\��H�����Y�����[OH�Y[�΍Lٛ۝\�^�N�L����#��#�Y]؝]ۏ�������JK���[�	��_B��X�O�B����8� 8� �TQT��P�H8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�Y�\Y\��
+H�ۜ�]HH]�Z]\J�X�[ێ�	��]�\Y\���JNY�
+]H	��]K�\��܊H�]\���ۜ��\Y\��H\��^K�\�\��^J]JH�]H�
+]K��\Y\���JNY�
+\�\Y\�˛[��
+H��[Y[���][[Y[��RY
+	��\Y\��]X�I�K�[��\�SH	�]��[OH�Y[�Ό��^X[Yێ��[�\����܎��\�K]^\�ٝ
+H�����\Y\��Y]�Y[�\��\��ۙHO�]����]\��B���[Y[���][[Y[��RY
+	��\Y\��]X�I�K�[��\�SH�X�H�\��H��Y�[��[OH��Y�L	H�������\Y\�����۝X�\��ۏ���ۙO�����\�������	��\Y\�˛X\
+�O�������ۙω�˛�[Y_O���ۙϏ�����˘�۝X�	��%	�O�����˜ۙH	��%	�O����[OH��۝\�^�N�L����܎��\�K]^\�ٝ
+H���˛��\�	��%	�O������
+K���[�	��_B��X�O�B��\�[���[��[ۈ�X�Z]�\Y\�
+H�ۜ��[YHH��[Y[���][[Y[��RY
+	��\[�[YI�K��[YK��[J
+N�ۜ��۝X�H��[Y[���][[Y[��RY
+	��\X�۝X�	�K��[YK��[J
+N�ۜ�ۙHH��[Y[���][[Y[��RY
+	��\\ۙI�K��[YK��[J
+N�ۜ���\�H��[Y[���][[Y[��RY
+	��\[��\��K��[YK��[J
+NY�
+[�[YJH�����\�
+	�X\�H[�\�H�\Y\��[YI�	�\��܉�N��]\���B��ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y�\Y\���[YK�۝X�ۙK��\�JNY�
+�\˜�X��\��H����\�
+	ۘ[Y_HYY\�H�\Y\�H<'榘	��X��\���N���S[�[�
+N�Y�\Y\��
+NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B���[��[ۈ�[�Y�\Y\�[�[
+
+H���\[�[YI�	��\X�۝X�	�	��\\ۙI�	��\[��\��K��ܑXX�
+YO���[Y[���][[Y[��RY
+Y
+K��[YHH	��N��[Y[���][[Y[��RY
+	�Y�\Y\�[[�[	�K��\��\��Y
+	��[��NB����8� 8� T��T�HԑT��8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[]P��\ۙ[��[X�
+
+HY�
+X[��\ۙ[�˛[��
+H�]\���ۜ���H[��\ۙ[�˛X\
+�O���[ۈ�[YOH��˚YH�]K[�[YOH��˛�[Y_H���˛�[Y_O��[ۏ��
+K���[�	��N�ۜ��[H��[Y[���][[Y[��RY
+	��X��\ۙ[�	�NY�
+�[
+H�[�[��\�SH��B���[��[ۈ�[�\�\��\�Sܙ\��
+H�ۜ��[\�YH�\��[�њ[\�OOH	�[	�[\��\�Sܙ\��[\��\�Sܙ\�˙�[\��O�����]\��HOOH�\��[�њ[\�N��ۜ��[H[\��\�Sܙ\�˛[���ۜ�[�[��H[\��\�Sܙ\�˙�[\��O�����]\��HOOH	�[�[���K�[����[Y[���][[Y[��RY
+	��\�X��K�^�۝[�B�	��[Hܙ\��0��	�[�[��H��Z[����ۘ��ۜ��Y�HH��[Y[���][[Y[��RY
+	ؘY�K\��NY�
+[�[���
+H��Y�K��[K�\�^HH	�[�[�KX�������Y�K�^�۝[�H[�[���B�[�H�Y�K��[K�\�^HH	ۛۙI��Y�
+Y�[\�Y�[��
+H��[Y[���][[Y[��RY
+	��]X�I�K�[��\�SB�	�]��[OH�Y[�Ό��^X[Yێ��[�\����܎��\�K]^\�ٝ
+H����\��\�Hܙ\��Y]�X�H[�\��\��ۙHO�]����]\��B����[Y[���][[Y[��RY
+	��]X�I�K�[��\�SH�X�H�\��H��Y�[��[OH��Y�L	H��������Q����\Y\������\ۙ[�����܏����]O���ܙ\�Y���^X�Y����]\����X�[ۏ�������	�ˋ���[\�YK��]�\��J
+K�X\
+�O��ۜ�\�[�[��H����]\��HOOH	�[�[����ۜ��]\�[H\�[�[��	��[��\��H�[[X��Z[�ȏ�'����Z[����ۏ��[���	��[��\��H�[[\�X�Z]�Y���!H�X�Z]�Y��[����ۜ�X�[ۈH\�[�[���]ۈ�\��H���\�X�Z]�H�ۘ�X��H��X�Z]�T�	������Q	�_I�	�������\ۙ[��[YI�_I�	����]X[�]Hܙ\�Y	�_JH���$�X\���X�Z]�Y؝]ۏ���	��[��[OH���܎��\�K]^\�ٝ
+Nٛ۝\�^�N�L���ۙO��[����]\������[OH��۝\�^�N�L����܎��\�K]^\�ٝ
+H�������Q	�_O������ۙω�����\Y\��[YI�H	��%	�O���ۙϏ����������\ۙ[��[YI�H	��%	�O�������ћ܈�\��Y\��H	��%	�O������ۙω����]X[�]Hܙ\�Y	�_O���ۙϏ��������ܙ\�]I�H	��%	�O��������^X�Y]I�H	��%	�O������]\�[O�����X�[۟O������JK���[�	��_B��X�O�B���[��[ۈ�[�\�\�[�[����
+H�ۜ�[�[��H[\��\�Sܙ\�˙�[\��O�����]\��HOOH	�[�[���N�ۜ��\�H��[Y[���][[Y[��RY
+	�\�\�X�\�	�NY�
+\[�[�˛[��
+H��[Y[���][[Y[��RY
+	�\�\[�[��\���K�[��\�SB�	�]��[OH�Y[�Ύ���܎��\�K]^\�ٝ
+Nٛ۝\�^�N�Lˍ\����[�[��[]�\�Y\ˈ<'�O�]����]\��B���[Y[���][[Y[��RY
+	�\�\[�[��\���K�[��\�SH[�[�˛X\
+�O��]��\��H�ܙ\�\��ȏ��]��\��H�ܙ\�X]���[OH��X��ܛ�[��ё���ٛ۝\�^�N����'���]���]��\��H�ܙ\�Z[��ȏ��]��\��H�ܙ\�[�[YH��������\ۙ[��[YI�_O�]���]��\��H�ܙ\�Y]Z[������]X[�]Hܙ\�Y	�_H[�]�0�����H	�����\Y\��[YI�H	��\Y\��H0��YH	����^X�Y]I�H	��%	�O�]����]����]ۈ�\��H���\�X�Z]�H�ۘ�X��H��X�Z]�T�	������Q	�_I�	�������\ۙ[��[YI�_I�	����]X[�]Hܙ\�Y	�_JH���$��X�Z]�Y؝]ۏ���]���
+K���[�	��NB���[��[ۈ�[\������H�\��[�њ[\�H���[Y[��]Y\�T�[X�ܐ[
+	˙�[\�X���K��ܑXX�
+�O����\��\���[[ݙJ	�X�]�I�JN����\��\��Y
+	�X�]�I�N�[�\�\��\�Sܙ\��
+NB��\�[���[��[ۈ�X�Z]�T��Y��\ۙ[��[YK]JH�ۜ��\�H]�Z]\T��
+�X�[ێ�	ܙX�Z]�T\��\�Sܙ\���YJNY�
+�\˜�X��\��H����\�
+8�!H	�]_H[�]�و	���\ۙ[��[Y_HYY�����X	��X��\���N��\]H��[�]B��ۜ��H[\��\�Sܙ\�˙�[�
+�O�����Q	�HOOH�Y
+NY�
+�H����]\��HH	ԙX�Z]�Y	��[�\�\��\�Sܙ\��
+N�[�\�\�[�[����
+N���[�Y��\ۙ[����[��[�ܞH�Y�X���]�����ۜ���\]HH]�Z]\J�X�[ێ�	��]��\ۙ[���JN[��\ۙ[��H\��^K�\�\��^J��\]JH���\]H�
+��\]K���\ۙ[��[��\ۙ[��NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���[��X\��\��X�Z]�Y	�K	�\��܉�NB�B���[��[ۈ�[��]��[�[
+
+H���\�\Y\��	��Y�܉�	��\]I�	��[��\��K��ܑXX�
+YO���[Y[���][[Y[��RY
+Y
+K��[YHH	��N�ۜ��^HH�]�]J
+N��^K��]]J�^K��]]J
+H
+�
+�N��[Y[���][[Y[��RY
+	��Y^X�Y	�K��[YHH�^K��T����[��
+K��]
+	�	�V�N�[]P��\ۙ[��[X�
+
+N��[Y[���][[Y[��RY
+	ۙ]��[[�[	�K��\��\��Y
+	��[��NB��\�[���[��[ۈ�X�Z]\��\�Sܙ\�
+H�ۜ��\Y\��[YHH��[Y[���][[Y[��RY
+	��\�\Y\��K��[YK��[J
+N�ۜ���\�[X�H��[Y[���][[Y[��RY
+	��X��\ۙ[�	�N�ۜ���\ۙ[�YH��\�[X���[YN�ۜ���\ۙ[��[YHH��\�[X���[X�Y�[ۜ��O˙]\�]��[YH	���ۜ�]X[�]HH\��R[�
+��[Y[���][[Y[��RY
+	��\]I�K��[YJN�ۜ�^X�Y]HH��[Y[���][[Y[��RY
+	��Y^X�Y	�K��[YN�ۜ���\�H��[Y[���][[Y[��RY
+	��[��\��K��[YK��[J
+N�ۜ��ܐ�\��Y\�H��[Y[���][[Y[��RY
+	��Y�܉�K��[YK��[J
+N�Y�
+\�\Y\��[YJH�����\�
+	�X\�H[�\�H�\Y\��[YI�	�\��܉�N��]\���B�Y�
+\]X[�]H]X[�]HJH�����\�
+	�X\�H[�\�H�[Y]X[�]I�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y\��\�Sܙ\���\Y\��[YK��\ۙ[�Y��\ۙ[��[YK]X[�]K^X�Y]K��\��ܐ�\��Y\�JNY�
+�\˜�X��\��H����\�
+ܙ\�X�YH	�]X[�]_p��	���\ۙ[��[Y_H��Z[����ۋ�<'��	��X��\���N���S[�[�
+N�ۜ��]HH]�Z]\J�X�[ێ�	��]\��\�Sܙ\���JK��]�
+
+
+HO��JN[\��\�Sܙ\��H\��^K�\�\��^J�]JH��]H�
+�]K�ܙ\��[\��\�Sܙ\��N�[�\�\��\�Sܙ\��
+N��[�\�\�[�[����
+N\]P�Y�\�
+NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� �Q�T�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ\]P�Y�\�
+H�ۜ�[�[��H[ܙ\�˙�[\��O���[�[���	��ۙ�\�YY	�	�X��Y	�K�[��Y\�˜�]\�JK�[����[Y[���][[Y[��RY
+	ؘY�K[ܙ\���K�^�۝[�H[�[����ۜ�[�[����H[\��\�Sܙ\�˙�[\��O�����]\��HOOH	�[�[���K�[���ۜ�ИY�HH��[Y[���][[Y[��RY
+	ؘY�K\��NY�
+[�[�����
+H�ИY�K��[K�\�^HH	�[�[�KX������ИY�K�^�۝[�H[�[�����B�[�HИY�K��[K�\�^HH	ۛۙI�B����8� 8� �SUH�SP��8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[]T��X��[X��
+H�ۜ���H[��X�˙�[\�O��X�]�OOOI�Y\��K�X\
+O���[ۈ�[YOH���YH�]K\�X�OH����[[���X�_H�����[Y_H8�%����[[���X�_O��[ۏ��
+K���[�	��N��[Y[���][[Y[��RY
+	��\��X�	�K�[��\�SH��Yܙ\�][J�YJNB����8� 8� ԑT�UST�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �]ܙ\�][P��[�H��[��[ۈYܙ\�][J�\��H�[�JHY�
+X[��X�˛[��
+H�]\��Y�
+Y�\��
+Hܙ\�][P��[�
+���ۜ�YHܙ\�][P��[��ۜ���H[��X�˙�[\�O��X�]�OOOI�Y\��K�X\
+O���[ۈ�[YOH���YH�]K\�X�OH����[[���X�_H�����[Y_H8�%����[[���X�_O��[ۏ��
+K���[�	��N��ۜ�]�H��[Y[��ܙX]Q[[Y[�
+	�]��N]���\�Ә[YHH	ٛܛK\����]��YH	�][K\���I�
+�Y]���[K�X\��[����HH	�L	�]��[��\�SH�]��\��H��ܛKYܛ�\���X�[�\��H��ܛK[X�[����X�	�Y��Y
+�H�	��O�X�[���[X��\��H��ܛK\�[X�][K\��X��]KZYH��YH�ۘ�[��OH��[��[
+
+H�����O��[X����]���]��\��H��ܛKYܛ�\���X�[�\��H��ܛK[X�[��]H	�Y���[��[OH���]��Y���\��܎��[�\����܎��\�K\���JH�ۘ�X��H��[[ݙR][J	�YJH���%H�[[ݙO��[���	��O�X�[��[�]�\��H��ܛKZ[�]][K\]H�]KZYH��YH�\OH��[X�\��Z[�H�H��[YOH�H�ۚ[�]H��[��[
+
+H����]����[Y[���][[Y[��RY
+	�ܙ\�Z][\�X�۝Z[�\��K�\[��[
+]�N�[��[
+
+NB���[��[ۈ�[[ݙR][JY
+H�ۜ�[H��[Y[���][[Y[��RY
+	�][K\���I�
+�Y
+NY�
+[
+H�[��[[ݙJ
+N��[��[
+
+N�B�B���[��[ۈ�[��[
+
+H�ۜ�����H��[Y[��]Y\�T�[X�ܐ[
+	˚][K\��X�	�N]�[H���˙�ܑXX�
+�[O��ۜ�YH�[�]\�]�Y�ۜ�]HH\��R[�
+��[Y[��]Y\�T�[X�܊�][K\]V�]KZYH��YH�X
+O˝�[YJH�ۜ��X�OH\��Q��]
+�[��[X�Y�[ۜ��O˙]\�]��X�JH�[
+�H]H
+��X�NJN��[Y[���][[Y[��RY
+	�ܙ\�]�[\�]�Y]��K�[��\�SH<'��[���ۙϔ���[����[T��[��
+_O���ۙϘB����8� 8� �P�RUԑT�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�X�Z]ܙ\�
+H�ۜ��[YHH��[Y[���][[Y[��RY
+	��[�[YI�K��[YK��[J
+N�ۜ�ۙHH��[Y[���][[Y[��RY
+	��\ۙI�K��[YK��[J
+N�ۜ��]HH��[Y[���][[Y[��RY
+	��Y]I�K��[YN�ۜ�]HH��[Y[���][[Y[��RY
+	��Y[]�\�I�K��[YN�ۜ���\�H��[Y[���][[Y[��RY
+	��[��\��K��[YN�Y�
+[�[YH[�]JH�����\�
+	�X\�H�[[��\��Y\��[YH[�ܙ\�]I�	�\��܉�N��]\���B���ۜ�][T����H��[Y[��]Y\�T�[X�ܐ[
+	˚][K\��X�	�N�ۜ�][\�H�N�ۜ���\��H�N]�[H�][T���˙�ܑXX�
+�[O��ۜ�YH�[�]\�]�Y�ۜ�YH�[��[YN�ۜ�]HH\��R[�
+��[Y[��]Y\�T�[X�܊�][K\]V�]KZYH��YH�X
+O˝�[YJH�ۜ��X�HH\��Q��]
+�[��[X�Y�[ۜ��O˙]\�]��X�JH�ۜ��[YHH�[��[X�Y�[ۜ��O˝^��]
+	�8�%	�V�NY�
+]H�
+H][\˜\�
+���X�Y�Y]HJN��\�˜\�
+	��[Y_H0���]_X
+N�[
+�H]H
+��X�NB�JN�Y�
+Z][\˛[��
+H�����\�
+	�Y]X\�ۙH��X�	�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
+X�[ێ�	�Yܙ\����\��Y\��[YN��[YK��\��Y\�ۙN�ۙK�ܙ\�]N��]K�[]�\�Q]N�]K���X�Έ��\�˚��[�	�	�K��[�X�N��[���\��][\JN�Y�
+�\˜�X��\��H�ۜ�YX�YH][\˛X\
+HO��ۜ�H[��X�˙�[�
+O��YOOHK���X�Y
+NY�
+
+H�����HX]�X^
+�[X�\������HHK�]JN�]\���	���[Y_H8�$��K�]_X�	��JK��[\����X[�K���[�	�	�N����\�
+ܙ\�	ܙ\˛ܙ\�YH�]�YHYX�Y�	�YX�YH<'�X	��X��\���N���S[�[�
+N�Y[
+
+NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� �P�RU����8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�X�Z]����
+H�ۜ���X�YH��[Y[���][[Y[��RY
+	��\��X�	�K��[YN�ۜ�]HH\��R[�
+��[Y[���][[Y[��RY
+	��\]I�K��[YJN�ۜ��\Y\�H��[Y[���][[Y[��RY
+	��\�\Y\��K��[YN�ۜ���\�H��[Y[���][[Y[��RY
+	��[��\��K��[YN�Y�
+\��X�Y\]JH�����\�
+	�X\�H�[X�H��X�[�]X[�]I�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y�������X�Y]K�\Y\���\�JNY�
+�\˜�X��\��H����\�
+����\]YH�]��[�	ܙ\˛�]�����H[�]�	��X��\���N���S[�[�
+N�Y[
+
+NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� �P�RU��P�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�X�Z]��X�
+
+H�ۜ��[YHH��[Y[���][[Y[��RY
+	�\[�[YI�K��[YK��[J
+N�ۜ�\��H��[Y[���][[Y[��RY
+	�\Y\���K��[YK��[J
+N�ۜ��[H\��Q��]
+��[Y[���][[Y[��RY
+	�\\�[	�K��[YJN�ۜ����H\��Q��]
+��[Y[���][[Y[��RY
+	�\X���	�K��[YJN�ۜ�����H\��R[�
+��[Y[���][[Y[��RY
+	�\\�����K��[YJH�ۜ��\��H\��R[�
+��[Y[���][[Y[��RY
+	�\]�\��	�K��[YJH��ۜ��]Y�ܞHH��[Y[���][[Y[��RY
+	�\X�]	�K��[YN�Y�
+[�[YH\�[
+H�����\�
+	�X\�H�[[���X��[YH[��X�I�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y��X�	��[YK\�ܚ\[ێ�\���[[���X�N��[����X�N�����������\����\���]Y�ܞHJNY�
+�\˜�X��\��H����\�
+	ۘ[Y_HYY�[�\��][��YHH<'�X	��X��\���N���S[�[�
+N�Y[
+
+NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� S�S�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�ܙ\�[�[
+
+H��[Y[���][[Y[��RY
+	�ܙ\�Z][\�X�۝Z[�\��K�[��\�SH	��ܙ\�][P��[�HY�
+[��X�˛[��
+HYܙ\�][J�YJN��[Y[���][[Y[��RY
+	�ܙ\�[[�[	�K��\��\��Y
+	��[��NB���[��[ۈ�[�����[�[
+
+H���[Y[���][[Y[��RY
+	�����[[�[	�K��\��\��Y
+	��[��N�B��[��[ۈ�[�Y��X�[�[
+
+H���[Y[���][[Y[��RY
+	�Y��X�[[�[	�K��\��\��Y
+	��[��N�B���[��[ۈ�[�Y]��X�[�[
+��X�Y
+H�ۜ�H[��X�˙�[�
+O��YOOH��X�Y
+NY�
+\
+H�����\�
+	���X�����[�	�	�\��܉�N��]\���B���[Y[���][[Y[��RY
+	�\ZY	�K��[YHH�Y��[Y[���][[Y[��RY
+	�\[�[YI�K��[YHH��[YH	����[Y[���][[Y[��RY
+	�\Y\���K��[YHH�\�ܚ\[ۈ	����[Y[���][[Y[��RY
+	�\\�[	�K��[YHH��[[���X�H	����[Y[���][[Y[��RY
+	�\X���	�K��[YHH�����X�H	����[Y[���][[Y[��RY
+	�\]�\��	�K��[YHH����\��	����[Y[���][[Y[��RY
+	�\X�]	�K��[YHH��]Y�ܞH	��Y���	���[Y[���][[Y[��RY
+	�\XX�]�I�K��[YHH�X�]�H	�Y\����[Y[���][[Y[��RY
+	�Y]��X�[[�[	�K��\��\��Y
+	��[��NB��\�[���[��[ۈ�X�Z]Y]��X�
+
+H�ۜ���X�YH��[Y[���][[Y[��RY
+	�\ZY	�K��[YN�ۜ��[YHH��[Y[���][[Y[��RY
+	�\[�[YI�K��[YK��[J
+N�ۜ�\�ܚ\[ۈH��[Y[���][[Y[��RY
+	�\Y\���K��[YK��[J
+N�ۜ��[[���X�HH\��Q��]
+��[Y[���][[Y[��RY
+	�\\�[	�K��[YJN�ۜ�����X�HH\��Q��]
+��[Y[���][[Y[��RY
+	�\X���	�K��[YJN�ۜ����\��H\��R[�
+��[Y[���][[Y[��RY
+	�\]�\��	�K��[YJH
+N�ۜ��]Y�ܞHH��[Y[���][[Y[��RY
+	�\X�]	�K��[YN�ۜ�X�]�HH��[Y[���][[Y[��RY
+	�\XX�]�I�K��[YNY�
+[�[YH\ӘS��[[���X�JJH�����\�
+	�X\�H�[[���X��[YH[��[[���X�I�	�\��܉�N��]\���B��ۜ��\�H]�Z]\T��
+�X�[ێ�	�Y]��X�	���X�Y�[YK\�ܚ\[ۋ�[[���X�K����X�K���\���]Y�ܞKX�]�HJNY�
+�\˜�X��\��H����\�
+	ۘ[Y_H\]YH8�!X	��X��\���N���S[�[�
+N�Y[
+
+NH[�H����\�
+	�\��܎�	�
+�
+�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B���[��[ۈ���S[�[�
+H��[Y[��]Y\�T�[X�ܐ[
+	˛ݙ\�^I�K��ܑXX�
+�O�˘�\��\���[[ݙJ	��[��JNB����[Y[��]Y\�T�[X�ܐ[
+	˛ݙ\�^I�K��ܑXX�
+[O�[�Y]�[�\�[�\�	��X���HO��Y�
+K�\��]OOH[
+H���S[�[�
+N�JNJN���8� 8� �U�Q�USӈ8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�]�Y�JH��[Y[��]Y\�T�[X�ܐ[
+	˜Y�I�K��ܑXX�
+O���\��\���[[ݙJ	�X�]�I�JN��[Y[��]Y\�T�[X�ܐ[
+	˜؋Z][I�K��ܑXX�
+HO�K��\��\���[[ݙJ	�X�]�I�JN���[Y[���][[Y[��RY
+	��I�
+�Y�JK��\��\��Y
+	�X�]�I�N��ۜ�X\H�\���\��ܙ\�ΌK[��[�ܞN��[�[]X�Ό���X�΍�\Y\�΍K\��\�[ܙ\�΍�\�ܞN���[ܙ\���X\�ۘ[�HN�ۜ�][\�H��[Y[��]Y\�T�[X�ܐ[
+	˜؋Z][I�NY�
+X\�Y�WHOOH[�Y�[�Y
+H][\��X\�Y�WWK��\��\��Y
+	�X�]�I�N�Y�
+Y�HOOH	��\Y\���H�Y�\Y\��
+NY�
+Y�HOOH	�\�ܞI�H�Y\�ܞJ
+NY�
+Y�HOOH	ܙ[ܙ\��H�Y�[ܙ\�
+NY�
+Y�HOOH	��X\�ۘ[	�H�Y�X\�ۘ[
+
+NB����8� 8� �T�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �]�\�[Y\��[��[ۈ����\�
+\��\OI��X��\���H�ۜ�H��[Y[���][[Y[��RY
+	��\�	�N�^�۝[�H\����\�Ә[YHH	��\�	�
+�\N��\��\��Y
+	�����N�X\�[Y[�]
+�\�[Y\�N�\�[Y\�H�][Y[�]
+
+
+HO���\��\���[[ݙJ	�����K�L
+NB����8� 8� UU��SԑT�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�Y�[ܙ\�
+H�ۜ�X�Q]�H��[Y[���][[Y[��RY
+	ܙ[ܙ\�]X�I�N�ۜ�[\��]�H��[Y[���][[Y[��RY
+	ܙ[ܙ\�X[\���N�ۜ�[\��\�H��[Y[���][[Y[��RY
+	ܙ[ܙ\�X[\��[\�	�NX�Q]��[��\�SH	�]��\��H��Y[�ȏ�]��\��H��[��\����]���Y[���)��]���[\��]���[K�\�^HH	ۛۙI��H�ۜ��\�H]�Z]�\J	��]�[ܙ\��[\��N�ۜ��[\�H�\˜�[\��N�ۜ��Y��\�YH�\˝�Y��\�Y�N������[\��[�[Y�[�H��X���YY�[ܙ\�[����Y�
+�Y��\�Y�[���
+H[\��\��[��\�SH�Y��\�Y�X\
+O��]��[OH�\�^N��^�[YۋZ][\Θ�[�\�ڝ\�Y�KX�۝[���X�KX�]�Y[��Y[�ΌL؛ܙ\�X���N�\��Yٌ�NN���]�����ۙω����X�O���ۙς��[��[OH���܎�؍
+L�N�X\��[�[Y��ٛ۝\�^�N�L������Έ	������H��[ܙ\��[��	���[ܙ\��[�O��[����]����]ۈ�\��H�����Y�����[OH��۝\�^�N�L��Y[�΍L�ۘ�X��H�ܙX]T�[ܙ\��	�����X�YI�H��ܙX]H�؝]ۏ���]��
+K���[�	��N[\��]���[K�\�^HH	؛������[Y[���][[Y[��RY
+	ؘY�K\�[ܙ\��K��[K�\�^HH	��H[�H��[Y[���][[Y[��RY
+	ؘY�K\�[ܙ\��K��[K�\�^HH	ۛۙI�B��Y�
+�[\˛[��OOH
+HX�Q]��[��\�SH]��[OH�Y[�Ό̜�^X[Yێ��[�\����܎��X�L�Y����]��[OH��۝\�^�N�̜�X\��[�X���N���'�!�]���]��[OH��۝]�ZY����X\��[�X���N������[ܙ\��[\�Y]�]���]��[OH��۝\�^�N�M���X����Y�[H���]\]]�X]X��[ܙ\�[���܈H��X���]����]���]\��B��X�Q]��[��\�SH�X�H�\��H�����XY�������X������[ܙ\��[�����ܙ\�]O�����\Y\������\��[����������]\������������XY����O��	ܝ[\˛X\
+�O��ۜ�\���H���\��[�����H���[ܙ\��[��]\��������ۙω܋���X�O���ۙϏ����܋��[ܙ\��[�H[�]�����܋��[ܙ\�]_H[�]�����܋��\Y\�	��[��[OH���܎��X�L�Y����%��[���O����[OH���܎��\����	��̍�����	��M�L�I�Nٛ۝]�ZY�����܋��\��[�����O�����\���	��[��[OH��X��ܛ�[��ٙY�������܎��̍����Y[�Ό�L؛ܙ\�\�Y]\ΌL�ٛ۝\�^�N�L�ٛ۝]�ZY�����������[���	��[��[OH��X��ܛ�[��ٌ�����܎��M�L�N�Y[�Ό�L؛ܙ\�\�Y]\ΌL�ٛ۝\�^�N�L�ٛ۝]�ZY������$�����[���O����[OH�^X[Yێ��Y�����]ۈ�\��H�����Y�����[OH��۝\�^�N�L��Y[�΍L�X\��[�\�Y���ۘ�X��H��[��[ܙ\�[�[
+	�܋���X�YI�	�܋���X�I�	܋��[ܙ\��[�K	܋��[ܙ\�]_K	�܋��\Y\�	��I�H��Y]؝]ۏ���]ۈ�\��H�����Y�����[OH��۝\�^�N�L��Y[�΍L���܎��̍����ۘ�X��H�[]T�[ܙ\��[J	�܋���X�YI�	�܋���X�I�H��[]O؝]ۏ��������JK���[�	��_B����O���X�O�H�]�
+JHX�Q]��[��\�SH]��[OH�Y[�Ό����܎��̍������Z[Y��Y�[ܙ\��[\Έ	�K�Y\��Y�_O�]��B�B���[��[ۈ�[��[ܙ\�[�[
+��X�YI����X��[YOI���[�I��]OI���\Y\�I��H���[]H��X����ۈ���H^\�[����X��\���ۜ��[H��[Y[���][[Y[��RY
+	ܜ�\��X�	�N�[�[��\�SH	��[ۈ�[YOH����%�[X���X�8�%��[ۏ�����H�[���H�X�Y��X��Y�]�Z[X�B��ۜ�����H��[Y[��]Y\�T�[X�ܐ[
+	���Z[��[�ܞH����H���\��X������H��N�ۜ��Y[�H�]��]
+
+N���˙�ܑXX�
+�O��ۜ��[�H��]Y\�T�[X�ܐ[
+	�	�NY�
+�[˛[���H�H�ۜ�YH�[��O˙]\�]˚Y	���ۜ��[YHH�[��O˝^�۝[�˝�[J
+H�[��WO˝^�۝[�˝�[J
+NY�
+�[YH	��\�Y[��\��[YJJH�Y[��Y
+�[YJN�ۜ��H��[Y[��ܙX]Q[[Y[�
+	��[ۉ�N���[YHHY�[YN��^�۝[�H�[YNY�
+YOOH��X�Y�[YHOOH��X��[YJH���[X�YH�YN�[�\[��[
+�
+NB�B�JN��Y�����X����[����H�K�]����HTB�Y�
+�[��[ۜ˛[��HJH�\J	��]��X���K�[��\�O�
+�\˜��X���\˙]H�JK��ܑXX�
+O��ۜ��H��[Y[��ܙX]Q[[Y[�
+	��[ۉ�N���[YHH�Y��[YN��^�۝[�H��[YNY�
+�YOOH��X�Y��[YHOOH��X��[YJH���[X�YH�YN�[�\[��[
+�
+NJNJK��]�
+
+
+HO��JNB����[Y[���][[Y[��RY
+	ܜ�YY]ZY	�K��[YHH��X�Y��[Y[���][[Y[��RY
+	ܜ�\�[�	�K��[YHH�[���[Y[���][[Y[��RY
+	ܜ�\]I�K��[YHH]N��[Y[���][[Y[��RY
+	ܜ�\�\Y\��K��[YHH�\Y\���[Y[���][[Y[��RY
+	ܙ[ܙ\�[[�[	�K��\��\��Y
+	��[��NB��\�[���[��[ۈ�X�Z]�[ܙ\��[J
+H�ۜ���X��[H��[Y[���][[Y[��RY
+	ܜ�\��X�	�K��[YN�ۜ���X�^H��[Y[���][[Y[��RY
+	ܜ�\��X�	�K��[X�Y�[ۜ��O˝^��X��[�ۜ��[�H\��R[�
+��[Y[���][[Y[��RY
+	ܜ�\�[�	�K��[YJN�ۜ�]HH\��R[�
+��[Y[���][[Y[��RY
+	ܜ�\]I�K��[YJN�ۜ��\Y\�H��[Y[���][[Y[��RY
+	ܜ�\�\Y\��K��[YK��[J
+N�Y�
+\��X��[
+H�]\������\�
+	�X\�H�[X�H��X�	�	�\��܉�NY�
+\ӘS��[�
+H�[�
+H�]\������\�
+	�[�\�H�[Y�[ܙ\��[�	�	�\��܉�NY�
+\ӘS�]JH]HJH�]\������\�
+	�[�\�H�[Y�[ܙ\�]X[�]I�	�\��܉�N��H]�Z]�\J	��]�T�[ܙ\��[I���X�Y���X��[���X����X�^��[ܙ\��[���[���[ܙ\�]N�]K��\Y\��JN���S[�[�
+N����\�
+	ԙ[ܙ\��[H�]�YI�N�Y�[ܙ\�
+NH�]�
+JH����\�
+	јZ[Y��]�H�[N�	�
+�K�Y\��Y�K	�\��܉�NB�B��\�[���[��[ۈ[]T�[ܙ\��[J��X�Y��X��[YJHY�
+X�ۙ�\�J[]H�[ܙ\��[H�܈����X��[Y_H��
+JH�]\���H]�Z]�\J	�[]T�[ܙ\��[I����X�YJN����\�
+	ԝ[H[]Y	�N�Y�[ܙ\�
+NH�]�
+JH����\�
+	јZ[Y�[]H�[N�	�
+�K�Y\��Y�K	�\��܉�NB�B��\�[���[��[ۈܙX]T�[ܙ\����X�Y
+H�H]�Z]�\J	�ܙX]T�[ܙ\������X�YJN����\�
+	�\��\�Hܙ\�ܙX]YI�N�Y�[ܙ\�
+NH�]�
+JH����\�
+	јZ[Y�ܙX]HΈ	�
+�K�Y\��Y�K	�\��܉�NB�B���ܚ\��؛�O���[�
