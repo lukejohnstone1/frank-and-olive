@@ -12,7 +12,7 @@
   --rose-hover: #b8435c;
   --rose-pale: #FDF2F5;
   --rose-light: #F4B8C6;
-  --gold: #B8892A;
+  --gold: #B8892
   --gold-light: #F0D898;
   --gold-pale: #FDFAF0;
   --choc: #2C1810;
@@ -1834,7 +1834,7 @@ async function submitOrder() {
     const pid   = sel.value;
     const qty   = parseInt(document.querySelector(`.item-qty[data-id="${id}"]`)?.value) || 0;
     const price = parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
-    const pname = sel.selectedOptions[0]?.text.split(' — )[0];
+    const pname = sel.selectedOptions[0]?.text.split(' — ')[0];
     if (qty > 0) {
       items.push({ productId: pid, qty });
       prodParts.push(`${pname} ×${qty}`);
