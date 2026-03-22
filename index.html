@@ -629,7 +629,7 @@ body {
     <div class="sb-section">Settings</div>
     <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
     <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
-    <div class="sb-item" onclick="naw('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
+    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
     <div class="sb-item" onclick="nav('history')"><span class="si">📜</span> Stock History</div>
     <div class="sb-item" onclick="nav('reorder')"><span class="si">🔄</span> Auto Reorder <span class="sb-badge alert" id="badge-reorder" style="display:none">!</span></div>
     <div class="sb-section">Planning</div>
@@ -1140,6 +1140,10 @@ async function apiPost(body) {
   return res.json();
 }
 
+async function gapi(action, params) {
+  return apiPost({ action, ...(params || {}) });
+}
+
 // ── LOAD ALL DATA ──────────────────────────
 async function loadAll() {
   const [statsData, ordersData, productsData, componentsData, poData] = await Promise.all([
@@ -1394,7 +1398,7 @@ async function loadHistory() {
     return;
   }
   document.getElementById('hist-table').innerHTML = `
-    <table class="data-table">
+    <table class="tbl-full" style="width:100%">
       <thead><tr>
         <th>Date &amp; Time</th><th>Product</th><th>Type</th><th>Qty</th><th>New Stock</th><th>Notes</th>
       </tr></thead>
@@ -1814,7 +1818,7 @@ function calcTotal() {
 async function submitOrder() {
   const name     = document.getElementById('o-name').value.trim();
   const phone    = document.getElementById('o-phone').value.trim();
-  const oDate    = document.getElementById('o-date').value;
+  const aDate    = document.getElementById('o-date').value;
   const dDate    = document.getElementById('o-delivery').value;
   const notes    = document.getElementById('o-notes').value;
 
@@ -1826,11 +1830,11 @@ async function submitOrder() {
   let total       = 0;
 
   itemRows.forEach(sel => {
-    const id    = sel.dataset.id;
+    const id     = sel.dataset.id;
     const pid   = sel.value;
     const qty   = parseInt(document.querySelector(`.item-qty[data-id="${id}"]`)?.value) || 0;
     const price = parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
-    const pname = sel.selectedOptions[0]?.text.split(' — ')[0];
+    const pname = sel.selectedOptions[0]?.text.split(' — )[0];
     if (qty > 0) {
       items.push({ productId: pid, qty });
       prodParts.push(`${pname} ×${qty}`);
@@ -1856,7 +1860,7 @@ async function submitOrder() {
     const deducted = items.map(i => {
       const p = allProducts.find(x => x.id === i.productId);
       if (p) p.stock = Math.max(0, Number(p.stock) - i.qty);
-      return p ? `${p.name}  ${i.qty}` : '';
+      return p ? `${p.name} −${i.qty}` : '';
     }).filter(Boolean).join(', ');
     showToast(`Order ${res.orderId} saved! Deducted: ${deducted} 🎉`, 'success');
     closeModals();
