@@ -629,7 +629,7 @@ body {
     <div class="sb-section">Settings</div>
     <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
     <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
-    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
+    <div class="sb-item" onclick="naw('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
     <div class="sb-item" onclick="nav('history')"><span class="si">📜</span> Stock History</div>
     <div class="sb-item" onclick="nav('reorder')"><span class="si">🔄</span> Auto Reorder <span class="sb-badge alert" id="badge-reorder" style="display:none">!</span></div>
     <div class="sb-section">Planning</div>
@@ -1222,7 +1222,7 @@ function renderRecentOrders() {
       <div class="order-av" style="background:${colors[i%5]}">${emojis[i%5]}</div>
       <div class="order-info">
         <div class="order-name">${o.customerName}</div>
-        <div class="order-detail">${o.products} · Due ${o.deliveryDate || '—'}|/div>
+        <div class="order-detail">${o.products} · Due ${o.deliveryDate || '—'}</div>
       </div>
       <span class="pill pill-${o.status.toLowerCase()}">${o.status}</span>
       <div class="order-price">R${Number(o.totalPrice).toLocaleString()}</div>
@@ -1254,6 +1254,7 @@ function renderDashStock() {
 function renderOrdersTable() {
   const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
   document.getElementById('orders-subtitle').textContent = `${allOrders.length} total orders · ${filtered.length} shown`;
+
   if (!filtered.length) {
     document.getElementById('orders-table').innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-soft)">No orders found</div>';
     return;
@@ -1277,677 +1278,878 @@ function renderOrdersTable() {
           <td><strong>R${Number(o.totalPrice).toLocaleString()}</strong></td>
           <td><span class="pill pill-${o.status.toLowerCase()}">${o.status}</span></td>
           <td>
-            <select onchange="changeStatus('${o.id}',this.value)" style="padding:5px 8px;border-radius:7px;border�K�\��Y�\�KX�ܙ\�Nٛ۝Y�[Z[N��]�]�[��\�\�Y�ٛ۝\�^�N�L���\��܎��[�\����	��]\�\˛X\
-�O��[ۈ	��OO[˜�]\����[X�Y	Ή��O���O��[ۏ�
-K���[�	��_B���[X����������
-K���[�	��_B��X�O�B���[��[ۈ�[\�ܙ\�����H�\��[��[\�H���[Y[��]Y\�T�[X�ܐ[
-	˙�[\�X���K��ܑXX�
-�O����\��\���[[ݙJ	�X�]�I�JN����\��\��Y
-	�X�]�I�N�[�\�ܙ\��X�J
-NB��\�[���[��[ۈ�[��T�]\�ܙ\�Y�]��]\�H�ۜ��\�H]�Z]\T��
-�X�[ێ�	�\]Sܙ\��]\��ܙ\�Y�]\Έ�]��]\�JNY�
-�\˜�X��\��H�ۜ��H[ܙ\�˙�[�
-O��YOOHܙ\�Y
-NY�
-�H˜�]\�H�]��]\�����\�
-	�ܙ\�	�
-�ܙ\�Y
-�	�8���	�
-��]��]\�	��X��\���N�[�\��X�[�ܙ\��
-NH[�H����\�
-	јZ[Y�\]Hܙ\��	�\��܉�NB�B����8� 8� S��S�ԖH8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�\�[��[�ܞJ
-H�ۜ�X�]�HH[��X�˙�[\�O��X�]�HOOH	�Y\��N��[Y[���][[Y[��RY
-	�[��\�X��K�^�۝[�H	�X�]�K�[��H��X��0��	�X�]�K��[\�O��[X�\������HH�[X�\�����\��
-JK�[��H�YY�\����[����ۜ�[[ښ\�H�	��Y���	Ή�'�I�	�Z[�IΉ�'�k	�	Н[�IΉ�'�	�	НY�]	Ή�'�I�	�Y�][	Ή�'�j��N���[Y[���][[Y[��RY
-	�[��YܚY	�K�[��\�SHX�]�K�X\
-O��ۜ�����H�[X�\������N�ۜ��\��H�[X�\�����\��
-N�ۜ�X^�[HX]�X^
-�\��
-�
-��
-N�ۜ��HX]�Z[�LX]���[�
+            <select onchange="changeStatus('${o.id}',this.value)" style="padding:5px 8px;border-radius:7px;border:1.5px solid var(--border);font-family:Outfit,sans-serif;font-size:12px;cursor:pointer">
+              ${statuses.map(s => `<option ${s===o.status?'selected':''}>${s}</option>`).join('')}
+            </select>
+          </td>
+        </tr>
+      `).join('')}
+    </table>`;
+}
 
-�����X^�[
-J�L
-JN�ۜ��]\�H����H�\���	���������H�\��
-���	�YY][I��	����	��ۜ�[[ښHH[[ښ\����]Y�ܞWH[[ښ\˙Y�][�ۜ�\���H����H�\����]\���]��\��H���X�\�	�\�������Ή��H���	�\����	�]��\��H���]Yȏ��������]����	��B�]��\��H���Y[[ښH���[[ښ_O�]���]��\��H���[�[YH�����[Y_O�]���]��\��H���Y\�ȏ���\�ܚ\[ۈ	��O�]���]��\��H�����X�\���]��\��H�����Y�[	��]\�H��[OH��Y���IH���]���]���]��\��H���[Y]H���]���]��\��H���\]H�������H�[��[OH��۝\�^�N�L\���܎��\�K]^\�ٝ
-H��[�]���[���]���]��[OH��۝\�^�N�L���܎��\����ݘ\�K\���JIΉݘ\�K]^\�ٝ
-I�H��[\�]�	��\��O�]����]���]��\��H���\�X�H������[[���X�_O�]����]���]��\��H�Y\����\��ȏ��[�]�\��H�]KZ[�]�\OH��[X�\��YH�]KI��YH��[YOH��\����X]�X^
-�\��
-��H�����\��
-H�_H�Z[�H�H����]ۈ�\��H�����\�[X\�H��[OH�Y[�΍�Lٛ۝\�^�N�L��ۘ�X��H�]ZX�ԙ[[ݙT����	���YI�	����[Y_I�H���$��[[ݙO؝]ۏ���]ۈ�\��H�����YܙY[���[OH�Y[�΍�Lٛ۝\�^�N�L��ۘ�X��H�]ZX��Y����	���YI�	����[Y_I�H���Y؝]ۏ���]���	�\����]��[OH��۝\�^�N�L���܎��\�KY��
-N�X\��[�]����'�H�Y��\�Y�[ܙ\��	�X]�X^
-�\��
-��H�����\��
-_H[�]��]���	��B��]��JK���[�	��NB��\�[���[��[ۈ]ZX��Y������X�Y��X��[YJH�ۜ�]HH\��R[�
-��[Y[���][[Y[��RY
-	�]KI�
-���X�Y
-K��[YJNY�
-\]H]HJH�����\�
-	�[�\�H�[Y]X[�]I�	�\��܉�N��]\���B��ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y�������X�Y]K�\Y\��	�X[�X[	���\Έ	�]ZX��Y���H[��[�ܞI�JNY�
-�\˜�X��\��H�ۜ�H[��X�˙�[�
-O��YOOH��X�Y
-NY�
-
-H�����H�\˛�]������[�\�[��[�ܞJ
-N�[�\�\�����
-N����\�
-	���X��[Y_N�����\]Y�	ܙ\˛�]�����X	��X��\���N\T��
-�X�[ێ�	���[ݙ[Y[�	���X�Y��X��[YK]K�]����Έ�\˛�]�������\Έ	�]ZX��Y	�JNH[�H����\�
-	јZ[Y�\]H�����	�\��܉�NB�B��\�[���[��[ۈ]ZX�ԙ[[ݙT������X�Y��X��[YJH�ۜ�]HH\��R[�
-��[Y[���][[Y[��RY
-	�]KI�
-���X�Y
-K��[YJNY�
-\]H]HJH�����\�
-	�[�\�H�[Y]X[�]I�	�\��܉�N��]\���B��ۜ�H[��X�˙�[�
-O��YOOH��X�Y
-NY�
-\
-H�����\�
-	���X�����[�	�	�\��܉�N��]\���B��ۜ��\��[�����H�[X�\������NY�
-]H��\��[�����H����\�
-ۛH	��\��[�����H[�]�[�����L�M�[�L�N]�[[ݙH	�]_X	�\��܉�N��]\��B��ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y�������X�Y]N�\]K�\Y\��	�X[�X[	���\Έ	�]ZX���[[ݙH���H[��[�ܞI�JNY�
-�\˜�X��\��H�����H�\˛�]������[�\�[��[�ܞJ
-N�[�\�\�����
-N����\�
-	���X��[Y_N�	�]_H�[[ݙYL�NL�	ܙ\˛�]�����HY�	��X��\���N\T��
-�X�[ێ�	���[ݙ[Y[�	���X�Y��X��[YK]N�\]K�]����Έ�\˛�]�������\Έ	�]ZX���[[ݙI�JNH[�H����\�
-�\˙\��܈	јZ[Y��[[ݙH�����	�\��܉�NB�B����8� 8� ����T�ԖH8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�Y\�ܞJ
-H��[Y[���][[Y[��RY
-	�\�]X�I�K�[��\�SH	�]��\��H��Y[�ȏ�]��\��H��[��\����]���Y[���)��]����ۜ�]HH]�Z]\J�X�[ێ�	��]����[ݙ[Y[���JN�ۜ�����H\��^K�\�\��^J]JH�]H�
-]K�[ݙ[Y[���JN��[Y[���][[Y[��RY
-	�\�\�X��K�^�۝[�H	ܛ��˛[��H[ݙ[Y[�	ܛ��˛[��OOHH�	����	��H�X�ܙYY�
-\���˛[��
-H��[Y[���][[Y[��RY
-	�\�]X�I�K�[��\�SH	�]��[OH�Y[�Ό̜�^X[Yێ��[�\����܎��\�K]^\�ٝ
-H��������[ݙ[Y[��Y]8�%Y܈�[[ݙH�������HH[��[�ܞHY�H��\��X��[�ˏ�]����]\��B���[Y[���][[Y[��RY
-	�\�]X�I�K�[��\�SH�X�H�\��H�]K]X�H���XY�����]H	�[\�[YO�����X����\O���]O����]����������\��������XY����O��	ܛ��˛X\
-�O��ۜ�\�YH�[X�\���]JH�H�ۜ�H��]H��]�]J��]JH��[�ۜ�]T��H�����[Q]T��[��	�[�V�I��^N�̋YY�]	�[۝���ܝ	�YX\��۝[Y\�X��JH
-�	�	�
-�����[U[YT��[��	�[�V�I���\��̋YY�]	�Z[�]N�̋YY�]	�JH�	��%	��]\������[OH��۝\�^�N�L����܎��\�K]^\�ٝ
-H���]T��O������ۙω܋���X��[YH����X�YO���ۙϏ�����[��[OH�Y[�Ό�؛ܙ\�\�Y]\Ό�ٛ۝\�^�N�L\ٛ۝]�ZY���ؘX��ܛ�[���\�Y�	ݘ\�K[Z[�[Y�
-I��	�ё�MPI�N���܎��\�Y�	ݘ\�K[Z[�
-I��	ݘ\�K\���JI�H���\�Y�	��Y	��	��$��[[ݙI�O��[��������ۙω�X]�X���[X�\���]JJ_O���ۙϏ����܋��]�����O����[OH��۝\�^�N�L����܎��\�K]^\�ٝ
-H��܋���\�	��%	�O������JK���[�	��_B����O���X�O�B����8� 8� �PT�ӐSS��T�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈX\�\�]JYX\�H�ۜ�HHYX\�	HNK�HX]���܊YX\��L
-K�HYX\�	HL�ۜ�HX]���܊��
-KHH�	H
-�HX]���܊
-��
-K̍JN�ۜ��HX]���܊
-�Y��JK��KH
-NJ�J؋YY��MJH	H��ۜ�HHX]���܊��
-K�H�	H
-H
-̊̊�J̊�KZZ�H	H
-��ۜ�HHX]���܊
-J�LJ�
-̌��
-K�
-LJN�ۜ�[۝HX]���܊
-
-�MʛJ�LM
-K��JN�ۜ�^HH
+function filterOrders(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOrdersTable();
+}
 
-
-�MʛJ�LM
-H	H�JH
-�N�]\���]�]JYX\�[۝LK^JNB��[��[ۈ��YZ�^JYX\�[۝�YZ�^K�H������\��[��Hو�YZ�^H
-T�[�H[�[۝
-Z[�^Y
-B��ۜ�H�]�]JYX\�[۝JN�ۜ��\��H
-�YZ�^HH��]^J
-H
-�
-�H	H
-��]\���]�]JYX\�[۝H
-��\��
-�
-�LJJ��NB��[��[ۈ�^���\��[��J�]]Q�ܖYX\�H�ۜ��^HH�]�]J
-N��^K��]�\��
-N]H�]]Q�ܖYX\��^K��]�[YX\�
-JNY�
-�^JHH�]]Q�ܖYX\��^K��]�[YX\�
-H
-�JN�]\��B��[��[ۈ�Y�X\�ۘ[
+async function changeStatus(orderId, newStatus) {
+  const res = await apiPost({ action: 'updateOrderStatus', orderId, status: newStatus });
+  if (res.success) {
+    const o = allOrders.find(x => x.id === orderId);
+    if (o) o.status = newStatus;
+    showToast('Order ' + orderId + ' → ' + newStatus, 'success');
+    renderRecentOrders();
+  } else {
+    showToast('Failed to update order', 'error');
+  }
+}
 
-H�ۜ��^HH�]�]J
-N��^K��]�\��
-N�ۜ��]]HHO�����[Q]T��[��	�[�V�I���YZ�^N��ۙ��^N�۝[Y\�X��[۝��ۙ��YX\��۝[Y\�X��JN�ۜ�^\�[�[HO�X]���[�
+// ── INVENTORY ──────────────────────────────
+function renderInventory() {
+  const active = allProducts.filter(p => p.active === 'Yes');
+  document.getElementById('inv-sub').textContent = `${active.length} products · ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
 
-H�^JH�
-�
-N�ۜ�\��[��HH^\�O�^\��	�\�	��^\�H�H�	�\��[�	��^\�H
-M��	���ۉ��	٘\���ۜ�^\�X�[H^\�O�Y�
-^\�
-H�]\��	�X]�X��^\�_H^\�Y��Y�
-^\�OOH
-H�]\��	��VHH<'�I�Y�
-^\�OOHJH�]\��	��[ܜ���I�Y�
-^\�H
-�H�]\��	�^\�H^\�]�^X�ۜ��YZ��HX]���[�
-^\���N�]\��	��YZ��H�YZ���YZ��OOLO���Ή��H]�^XN��ۜ�]�[��H�[[ښN��'�.I��[YN���[[�[�I��^H����HO��]�]JKKM
-K\���\�XZ�[��X\�\�\Y��\�	����H�Y��\���YZ���Y�ܙK��K��[[ښN��'�(���[YN��X\�\�����HO�X\�\�]JJK\���ܛ�������]H��\�	�Y��][YY[\\��\�H�\��[\�ˈ�K��[[ښN��'�	��[YN��[�\���^H����HO���YZ�^JK
-�K\��[�\��Y��\�]�[�8�%ܙ\��X��ۈ	�X��Y�[��]X\�
-��YZ��ZXY��K��[[ښN��'�e	��[YN���]\���^H����HO���YZ�^JK
-K�K\��\������]H	��\��H�Y��\�\�H�[\���\\�H
-�YZ��X\�K��K��[[ښN��'�jI��[YN����Y[���^H
-�JH����HO��]�]JK
-�JK\��HܙX]^H�܈H�X�X[�[X[KY���\�Y[\\���[�[ۋ��K��[[ښN��'�.	��[YN����[��^H
-�JI����HO��]�]JKJK\��][��H�ܘ[Z[��\�Y��[����X�[ۈ��X��ٙ�H�X\�ۋ��K��[[ښN��'����[YN��[��Y[�����HO��]�]JKK�JK\������HX��Y�[��	�\������]H��[�8�%ܛ��[���\�[��K��K��[[ښN��'�	��[YN����\�X\�����HO��]�]JKLK�JK\��[�\��\�Y\��X\�ۈ8�%�\�[��[������	�X��Y�[��[���ؙ\���K��[[ښN��'㢉��[YN���]�YX\���^H����HO��]�]JKJK\���[\YۙH�Y��\�	���Y��[��\��[�[�܈�]�YX\��Y�[�ˈ�K�K�X\
-]�O��ۜ�]HH�^���\��[��J]����N�ۜ�^\�H^\�[�[
-]JN�]\������]�]K^\�N�\��[��J^\�HNJK��ܝ
+  const emojis = { 'Gift Box':'🎁','Mini':'🍬','Bundle':'🎀','Budget':'💝','default':'🍫' };
 
-K�HO�K�^\�H��^\�N����\��8�%����^
-\��Z[��ۜ�\��Z[��H]�[�˙�[\�HO�K�^\��H
-K��X�J
-N��[Y[���][[Y[��RY
-	��X\�ۘ[YܚY	�K�[��\�SH\��Z[�˛X\
-]�O��]��\��H��X\�ۋX�\�	�]��_H���]��\��H���Y[[ښH���]��[[ښ_O�]���]��\��H���[�[YH���]���[Y_O�]���]��\��H���Y]H��ٛ]]J]��]J_O�]���]��\��H���Y^\ȏ��^\�X�[
-]��^\�_O�]���]��\��H���]\��'�H	�]��\O�]����]��
-K���[�	��N����[YX\�\����[Y[���][[Y[��RY
-	��X\�ۘ[^YX\��K�[��\�SH]�[�˛X\
-]�O��]��\��H��X\�ۋ^YX\�\��ȏ���[��\��H��\�Y[[ښH���]��[[ښ_O��[����[��\��H��\�[�[YH���]���[Y_O��[����[��\��H��\�Y]H��ٛ]]J]��]J_O��[����[��\��H��\�X�Y�H	�]��_H���^\�X�[
-]��^\�_O��[����]��
-K���[�	��NB����8� 8� S�SUP��8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�\�[�[]X��
-H�ۜ��[H[ܙ\�˙�[\��O�˜�]\�OOH	��[��[Y	�K�[���ۜ��]�[�YHH[ܙ\�˙�[\��O�˜�]\�OOH	��[��[Y	�K��YX�J
-��HO��
-��[X�\�˝�[�X�_
-K
-N�ۜ�]��H�[�X]���[�
-�]�[�YH��[
-H���ۜ����H�]�]J
-N�ۜ�\�[۝H[ܙ\�˙�[\��O��ۜ�H�]�]J˛ܙ\�]JN�]\����][۝
+  document.getElementById('inv-grid').innerHTML = active.map(p => {
+    const stock     = Number(p.stock);
+    const threshold = Number(p.lowThreshold);
+    const maxVal    = Math.max(threshold * 6, 30);
+    const pct       = Math.min(100, Math.round((stock / maxVal)*100));
+    const status    = stock <= threshold ? 'low' : stock <= threshold*2 ? 'medium' : 'good';
+    const emoji     = emojis[p.category] || emojis.default;
+    const isLow     = stock <= threshold;
 
-OOO[��˙�][۝
+    return `
+      <div class="prod-card ${isLow?'low':''}">
+        ${isLow ? '<div class="low-tag">LOW STOCK</div>' : ''}
+        <div class="prod-emoji">${emoji}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-desc">${p.description || ''}</div>
+        <div class="stock-bar"><div class="stock-fill ${status}" style="width:${pct}%"></div></div>
+        <div class="prod-meta">
+          <div>
+            <div class="prod-qty">${stock} <span style="font-size:11px;color:var(--text-soft)">units</span></div>
+            <div style="font-size:10px;color:${isLow?'var(--rose)':'var(--text-soft)'}">Alert at: ${threshold}</div>
+          </div>
+          <div class="prod-price">R${p.sellingPrice}</div>
+        </div>
+        <div class="add-stock-row">
+          <input class="qty-input" type="number" id="qty-${p.id}" value="${isLow ? Math.max(threshold * 3 - stock, threshold) : 1}" min="1">
+          <button class="btn btn-primary" style="padding:6px 10px;font-size:12px" onclick="quickRemoveStock('${p.id}','${p.name}')">− Remove</button>
+          <button class="btn btn-green" style="padding:6px 10px;font-size:12px" onclick="quickAddStock('${p.id}','${p.name}')">+ Add</button>
+        </div>
+        ${isLow ? `<div style="font-size:10px;color:var(--gold);margin-top:4px">💡 Suggested reorder: ${Math.max(threshold * 3 - stock, threshold)} units</div>` : ''}
+      </div>`;
+  }).join('');
+}
 
-H	����]�[YX\�
-OOO[��˙�]�[YX\�
-H	��˜�]\�OOI��[��[Y	�JN�ۜ�[۝�]�H\�[۝��YX�J
-��HO��
-��[X�\�˝�[�X�_
-K
-N���[Y[���][[Y[��RY
-	�[��Y�YܚY	�K�[��\�SH�]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'���]��]��\��H�[��Y�[����[ܙ\���]��]��\��H�[��Y�]�[����[O�]��]��\��H�[��Y�\�X���[[YO�]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'��]��]��\��H�[��Y�[����[�]�[�YO�]��]��\��H�[��Y�]�[���ܙ]�[�YK����[T��[��
-_O�]��]��\��H�[��Y�\�X���[[YO�]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'���]��]��\��H�[��Y�[���]��ܙ\��[YO�]��]��\��H�[��Y�]�[����]��O�]��]��\��H�[��Y�\�X���\�ܙ\��]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH��'��O�]��]��\��H�[��Y�[���\�[۝�]��]��\��H�[��Y�]�[���\�[۝�[��Hܙ\���]��]��\��H�[��Y�\�X�����[۝�]�����[T��[��
-_H�]�[�YO�]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH���!O�]��]��\��H�[��Y�[���[]�\�Y�]��]��\��H�[��Y�]�[���[ܙ\�˙�[\��O�˜�]\�OOI�[]�\�Y	�K�[��O�]��]��\��H�[��Y�\�X�����\]Yܙ\���]���]���]��\��H�[��Y���]��\��H�[��Y�Y[[ښH������]��]��\��H�[��Y�[���[���ܙ\���]��]��\��H�[��Y�]�[���[ܙ\�˙�[\��O���[�[���	��ۙ�\�YY	�	�X��Y	�K�[��Y\�˜�]\�JK�[��O�]��]��\��H�[��Y�\�X���]�Z][��[]�\�O�]���]���B���[��[ۈ�[�\�[�[]X����X��
-H�������[YH�H��X���ۜ��ܝYHˋ��[��X��K��[\�O��X�]�OOOI�Y\��K��ܝ
+async function quickAddStock(productId, productName) {
+  const qty = parseInt(document.getElementById('qty-' + productId).value);
+  if (!qty || qty < 1) { showToast('Enter a valid quantity', 'error'); return; }
+  const res = await apiPost({ action: 'addStock', productId, qty, supplier: 'Manual', notes: 'Quick add from inventory' });
+  if (res.success) {
+    const p = allProducts.find(x => x.id === productId);
+    if (p) p.stock = res.newStock;
+    renderInventory();
+    renderDashStock();
+    showToast(`${productName}: stock updated to ${res.newStock}`, 'success');
+    apiPost({ action: 'logMovement', productId, productName, qty, newStock: res.newStock, notes: 'Quick add' });
+  } else {
+    showToast('Failed to update stock', 'error');
+  }
+}
 
-K�HO�
-�����ʘ���[[���X�JKJK����ʘK��[[���X�JJN�ۜ�X^HX]�X^
-����ܝY�X\
-O�����ʜ��[[���X�JJN���[Y[���][[Y[��RY
-	�[�[]X��\��X���K�[��\�SH]��\��H��\�ȏ��ܝY�X\
-O��ۜ��[H�����
-���[[���X�N�ۜ��HX^��X]���[�
+async function quickRemoveStock(productId, productName) {
+  const qty = parseInt(document.getElementById('qty-' + productId).value);
+  if (!qty || qty < 1) { showToast('Enter a valid quantity', 'error'); return; }
+  const p = allProducts.find(x => x.id === productId);
+  if (!p) { showToast('Product not found', 'error'); return; }
+  const currentStock = Number(p.stock);
+  if (qty > currentStock) {
+    showToast(`Only ${currentStock} units in stock \u2014 can\u2019t remove ${qty}`, 'error'); return;
+  }
+  const res = await apiPost({ action: 'addStock', productId, qty: -qty, supplier: 'Manual', notes: 'Quick remove from inventory' });
+  if (res.success) {
+    p.stock = res.newStock;
+    renderInventory();
+    renderDashStock();
+    showToast(`${productName}: ${qty} removed \u2192 ${res.newStock} left`, 'success');
+    apiPost({ action: 'logMovement', productId, productName, qty: -qty, newStock: res.newStock, notes: 'Quick remove' });
+  } else {
+    showToast(res.error || 'Failed to remove stock', 'error');
+  }
+}
 
-�[�X^
-J�L
-H��]\��]��\��H��\�\��ȏ��]��\��H��\�[������[Y_O�]���]��\��H��\�]�X�ȏ�]��\��H��\�Y�[��[OH��Y���INؘX��ܛ�[���\�K\���JH���]���]���]��\��H��\�[�[H��������O�]����]��JK���[�	��B�O�]�����[Y[���][[Y[��RY
-	�[�[]X��\�����K�[��\�SH]��\��H��\�ȏ��ܝY�X\
-O��ۜ��[H�����
-���[[���X�N�ۜ��HX^��X]���[�
+// ── STOCK HISTORY ───────────────────────────
+async function loadHistory() {
+  document.getElementById('hist-table').innerHTML = '<div class="loading"><div class="spinner"></div> Loading…</div>';
+  const data = await api({ action: 'getStockMovements' });
+  const rows = Array.isArray(data) ? data : (data.movements || []);
+  document.getElementById('hist-sub').textContent = `${rows.length} movement${rows.length !== 1 ? 's' : ''} recorded`;
+  if (!rows.length) {
+    document.getElementById('hist-table').innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-soft)">No stock movements yet — add or remove stock from the Inventory page to start tracking.</div>';
+    return;
+  }
+  document.getElementById('hist-table').innerHTML = `
+    <table class="data-table">
+      <thead><tr>
+        <th>Date &amp; Time</th><th>Product</th><th>Type</th><th>Qty</th><th>New Stock</th><th>Notes</th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(r => {
+          const isAdd = Number(r.qty) >= 0;
+          const d = r.date ? new Date(r.date) : null;
+          const dateStr = d ? d.toLocaleDateString('en-ZA', { day:'2-digit', month:'short', year:'numeric' }) + ' ' + d.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit' }) : '—';
+          return `<tr>
+            <td style="font-size:12px;color:var(--text-soft)">${dateStr}</td>
+            <td><strong>${r.productName || r.productId}</strong></td>
+            <td><span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${isAdd ? 'var(--mint-light)' : '#FFE4EA'};color:${isAdd ? 'var(--mint)' : 'var(--rose)'}">${isAdd ? '+ Add' : '− Remove'}</span></td>
+            <td><strong>${Math.abs(Number(r.qty))}</strong></td>
+            <td>${r.newStock}</td>
+            <td style="font-size:12px;color:var(--text-soft)">${r.notes || '—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
+}
 
-�[�X^
-J�L
-H��]\��]��\��H��\�\��ȏ��]��\��H��\�[������[Y_O�]���]��\��H��\�]�X�ȏ�]��\��H��\�Y�[��[OH��Y���INؘX��ܛ�[���\�KY��
-H���]���]���]��\��H��\�[�[H��[OH��Y�M\ٛ۝\�^�N�L\���ݘ[����[T��[��
-_O�]����]��JK���[�	��B�O�]��B����8� 8� ��P��P�H8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�\���X��X�J
-H��[Y[���][[Y[��RY
-	���X��]X�I�K�[��\�SH�X�H�\��H��Y�[��[OH��Y�L	H��������X����\�ܚ\[ۏ����[�X�O���������X\��[�����������[\�]����]\����������	�[��X�˛X\
-O��ۜ�X\��[�H��[[���X�H��X]���[�
+// ── SEASONAL PLANNER ────────────────────────
+function easterDate(year) {
+  const a = year % 19, b = Math.floor(year/100), c = year % 100;
+  const d = Math.floor(b/4), e = b % 4, f = Math.floor((b+8)/25);
+  const g = Math.floor((b-f+1)/3), h = (19*a+b-d-g+15) % 30;
+  const i = Math.floor(c/4), k = c % 4, l = (32+2*e+2*i-h-k) % 7;
+  const m = Math.floor((a+11*h+22*l)/451);
+  const month = Math.floor((h+l-7*m+114)/31);
+  const day   = ((h+l-7*m+114) % 31) + 1;
+  return new Date(year, month-1, day);
+}
+function nthWeekday(year, month, weekday, n) {
+  // nth occurrence of weekday (0=Sun) in month (0-indexed)
+  const d = new Date(year, month, 1);
+  const first = (weekday - d.getDay() + 7) % 7;
+  return new Date(year, month, 1 + first + (n-1)*7);
+}
+function nextOccurrence(getDateForYear) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  let d = getDateForYear(today.getFullYear());
+  if (d < today) d = getDateForYear(today.getFullYear() + 1);
+  return d;
+}
+function loadSeasonal() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const fmtDate = d => d.toLocaleDateString('en-ZA', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const daysUntil = d => Math.round((d - today) / 86400000);
+  const urgency = days => days < 0 ? 'past' : days <= 21 ? 'urgent' : days <= 56 ? 'soon' : 'far';
+  const daysLabel = days => {
+    if (days < 0) return `${Math.abs(days)} days ago`;
+    if (days === 0) return 'TODAY! 🎉';
+    if (days === 1) return 'Tomorrow!';
+    if (days <= 7) return `${days} days away`;
+    const weeks = Math.round(days/7);
+    return `${weeks} week${weeks!==1?'s':''} away`;
+  };
 
+  const events = [
+    { emoji:'🌹', name:"Valentine's Day",   fn: y => new Date(y, 1, 14),  tip:"Start making heart-shaped boxes & rose truffles 3 weeks before." },
+    { emoji:'🐣', name:'Easter',             fn: y => easterDate(y),       tip:"Hot Cross chocolate boxes & egg-themed hampers are bestsellers." },
+    { emoji:'💐', name:"Mother's Day",       fn: y => nthWeekday(y, 4, 0, 2), tip:"Your biggest event — order ribbon & packaging at least 6 weeks ahead." },
+    { emoji:'👔', name:"Father's Day",       fn: y => nthWeekday(y, 5, 0, 3), tip:"Dark chocolate & whisky truffles are popular. Prepare 4 weeks early." },
+    { emoji:'👩', name:"Women's Day (SA)",   fn: y => new Date(y, 7, 9),   tip:"A great day for a special female-focused hamper promotion." },
+    { emoji:'🌸', name:'Spring Day (SA)',    fn: y => new Date(y, 8, 1),   tip:"Launch a floral-inspired spring collection to kick off the season." },
+    { emoji:'🎃', name:'Halloween',          fn: y => new Date(y, 9, 31),  tip:"Spooky packaging & dark chocolate skulls — growing fast in SA." },
+    { emoji:'🎄', name:'Christmas',          fn: y => new Date(y, 11, 25), tip:"Your busiest season — start planning stock & packaging in October." },
+    { emoji:'🎊', name:"New Year's Day",     fn: y => new Date(y, 0, 1),   tip:"Champagne truffles & gold-foil boxes sell well for New Year gifting." },
+  ].map(ev => {
+    const date = nextOccurrence(ev.fn);
+    const days = daysUntil(date);
+    return { ...ev, date, days, u: urgency(days) };
+  }).sort((a,b) => a.days - b.days);
 
-��[[���X�HH�����X�JK���[[���X�JJ�L
-H��ۜ�\���H�[X�\������HH�[X�\�����\��
-N�]\��������ۙω���[Y_O���ۙϏ����[OH��۝\�^�N�L����܎��\�K]^\�ٝ
-H����\�ܚ\[۟O��������[[���X�_O�����������X�_O����[OH���܎��X\��[��ML�ݘ\�K[Z[�
-IΉݘ\�KY��
-I�Nٛ۝]�ZY������X\��[�IO������ۙ��[OH���܎��\����ݘ\�K\���JIΉ�[�\�]	�H��������O���ۙϏ���������\��O�����[��\��H�[	��X�]�OOOI�Y\����[\X��Y	Ή�[X�[��[Y	�H����X�]�OOOI�Y\����X�]�IΉ�[�X�]�I�O��[�������]ۈۘ�X��H��[�Y]��X�[�[
-	���YI�H��\��H�����Y�����[OH�Y[�΍Lٛ۝\�^�N�L����#��#�Y]؝]ۏ�������JK���[�	��_B��X�O�B����8� 8� �TQT��P�H8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�Y�\Y\��
-H�ۜ�]HH]�Z]\J�X�[ێ�	��]�\Y\���JNY�
-]H	��]K�\��܊H�]\���ۜ��\Y\��H\��^K�\�\��^J]JH�]H�
-]K��\Y\���JNY�
-\�\Y\�˛[��
-H��[Y[���][[Y[��RY
-	��\Y\��]X�I�K�[��\�SH	�]��[OH�Y[�Ό��^X[Yێ��[�\����܎��\�K]^\�ٝ
-H�����\Y\��Y]�Y[�\��\��ۙHO�]����]\��B���[Y[���][[Y[��RY
-	��\Y\��]X�I�K�[��\�SH�X�H�\��H��Y�[��[OH��Y�L	H�������\Y\�����۝X�\��ۏ���ۙO�����\�������	��\Y\�˛X\
-�O�������ۙω�˛�[Y_O���ۙϏ�����˘�۝X�	��%	�O�����˜ۙH	��%	�O����[OH��۝\�^�N�L����܎��\�K]^\�ٝ
-H���˛��\�	��%	�O������
-K���[�	��_B��X�O�B��\�[���[��[ۈ�X�Z]�\Y\�
-H�ۜ��[YHH��[Y[���][[Y[��RY
-	��\[�[YI�K��[YK��[J
-N�ۜ��۝X�H��[Y[���][[Y[��RY
-	��\X�۝X�	�K��[YK��[J
-N�ۜ�ۙHH��[Y[���][[Y[��RY
-	��\\ۙI�K��[YK��[J
-N�ۜ���\�H��[Y[���][[Y[��RY
-	��\[��\��K��[YK��[J
-NY�
-[�[YJH�����\�
-	�X\�H[�\�H�\Y\��[YI�	�\��܉�N��]\���B��ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y�\Y\���[YK�۝X�ۙK��\�JNY�
-�\˜�X��\��H����\�
-	ۘ[Y_HYY\�H�\Y\�H<'榘	��X��\���N���S[�[�
-N�Y�\Y\��
-NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B���[��[ۈ�[�Y�\Y\�[�[
+  // Cards — show next 4 upcoming
+  const upcoming = events.filter(e => e.days >= 0).slice(0,4);
+  document.getElementById('seasonal-grid').innerHTML = upcoming.map(ev => `
+    <div class="season-card ${ev.u}">
+      <div class="sc-emoji">${ev.emoji}</div>
+      <div class="sc-name">${ev.name}</div>
+      <div class="sc-date">${fmtDate(ev.date)}</div>
+      <div class="sc-days">${daysLabel(ev.days)}</div>
+      <div class="sc-tip">💡 ${ev.tip}</div>
+    </div>`).join('');
 
-H���\[�[YI�	��\X�۝X�	�	��\\ۙI�	��\[��\��K��ܑXX�
-YO���[Y[���][[Y[��RY
-Y
-K��[YHH	��N��[Y[���][[Y[��RY
-	�Y�\Y\�[[�[	�K��\��\��Y
-	��[��NB����8� 8� T��T�HԑT��8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[]P��\ۙ[��[X�
+  // Full year list
+  document.getElementById('seasonal-year').innerHTML = events.map(ev => `
+    <div class="season-year-row">
+      <span class="syr-emoji">${ev.emoji}</span>
+      <span class="syr-name">${ev.name}</span>
+      <span class="syr-date">${fmtDate(ev.date)}</span>
+      <span class="syr-badge ${ev.u}">${daysLabel(ev.days)}</span>
+    </div>`).join('');
+}
 
-HY�
-X[��\ۙ[�˛[��
-H�]\���ۜ���H[��\ۙ[�˛X\
-�O���[ۈ�[YOH��˚YH�]K[�[YOH��˛�[Y_H���˛�[Y_O��[ۏ��
-K���[�	��N�ۜ��[H��[Y[���][[Y[��RY
-	��X��\ۙ[�	�NY�
-�[
-H�[�[��\�SH��B���[��[ۈ�[�\�\��\�Sܙ\��
-H�ۜ��[\�YH�\��[�њ[\�OOH	�[	�[\��\�Sܙ\��[\��\�Sܙ\�˙�[\��O�����]\��HOOH�\��[�њ[\�N��ۜ��[H[\��\�Sܙ\�˛[���ۜ�[�[��H[\��\�Sܙ\�˙�[\��O�����]\��HOOH	�[�[���K�[����[Y[���][[Y[��RY
-	��\�X��K�^�۝[�B�	��[Hܙ\��0��	�[�[��H��Z[����ۘ��ۜ��Y�HH��[Y[���][[Y[��RY
-	ؘY�K\��NY�
-[�[���
-H��Y�K��[K�\�^HH	�[�[�KX�������Y�K�^�۝[�H[�[���B�[�H�Y�K��[K�\�^HH	ۛۙI��Y�
-Y�[\�Y�[��
-H��[Y[���][[Y[��RY
-	��]X�I�K�[��\�SB�	�]��[OH�Y[�Ό��^X[Yێ��[�\����܎��\�K]^\�ٝ
-H����\��\�Hܙ\��Y]�X�H[�\��\��ۙHO�]����]\��B����[Y[���][[Y[��RY
-	��]X�I�K�[��\�SH�X�H�\��H��Y�[��[OH��Y�L	H��������Q����\Y\������\ۙ[�����܏����]O���ܙ\�Y���^X�Y����]\����X�[ۏ�������	�ˋ���[\�YK��]�\��J
-K�X\
-�O��ۜ�\�[�[��H����]\��HOOH	�[�[����ۜ��]\�[H\�[�[��	��[��\��H�[[X��Z[�ȏ�'����Z[����ۏ��[���	��[��\��H�[[\�X�Z]�Y���!H�X�Z]�Y��[����ۜ�X�[ۈH\�[�[���]ۈ�\��H���\�X�Z]�H�ۘ�X��H��X�Z]�T�	������Q	�_I�	�������\ۙ[��[YI�_I�	����]X[�]Hܙ\�Y	�_JH���$�X\���X�Z]�Y؝]ۏ���	��[��[OH���܎��\�K]^\�ٝ
-Nٛ۝\�^�N�L���ۙO��[����]\������[OH��۝\�^�N�L����܎��\�K]^\�ٝ
-H�������Q	�_O������ۙω�����\Y\��[YI�H	��%	�O���ۙϏ����������\ۙ[��[YI�H	��%	�O�������ћ܈�\��Y\��H	��%	�O������ۙω����]X[�]Hܙ\�Y	�_O���ۙϏ��������ܙ\�]I�H	��%	�O��������^X�Y]I�H	��%	�O������]\�[O�����X�[۟O������JK���[�	��_B��X�O�B���[��[ۈ�[�\�\�[�[����
-H�ۜ�[�[��H[\��\�Sܙ\�˙�[\��O�����]\��HOOH	�[�[���N�ۜ��\�H��[Y[���][[Y[��RY
-	�\�\�X�\�	�NY�
-\[�[�˛[��
-H��[Y[���][[Y[��RY
-	�\�\[�[��\���K�[��\�SB�	�]��[OH�Y[�Ύ���܎��\�K]^\�ٝ
-Nٛ۝\�^�N�Lˍ\����[�[��[]�\�Y\ˈ<'�O�]����]\��B���[Y[���][[Y[��RY
-	�\�\[�[��\���K�[��\�SH[�[�˛X\
-�O��]��\��H�ܙ\�\��ȏ��]��\��H�ܙ\�X]���[OH��X��ܛ�[��ё���ٛ۝\�^�N����'���]���]��\��H�ܙ\�Z[��ȏ��]��\��H�ܙ\�[�[YH��������\ۙ[��[YI�_O�]���]��\��H�ܙ\�Y]Z[������]X[�]Hܙ\�Y	�_H[�]�0�����H	�����\Y\��[YI�H	��\Y\��H0��YH	����^X�Y]I�H	��%	�O�]����]����]ۈ�\��H���\�X�Z]�H�ۘ�X��H��X�Z]�T�	������Q	�_I�	�������\ۙ[��[YI�_I�	����]X[�]Hܙ\�Y	�_JH���$��X�Z]�Y؝]ۏ���]���
-K���[�	��NB���[��[ۈ�[\������H�\��[�њ[\�H���[Y[��]Y\�T�[X�ܐ[
-	˙�[\�X���K��ܑXX�
-�O����\��\���[[ݙJ	�X�]�I�JN����\��\��Y
-	�X�]�I�N�[�\�\��\�Sܙ\��
-NB��\�[���[��[ۈ�X�Z]�T��Y��\ۙ[��[YK]JH�ۜ��\�H]�Z]\T��
-�X�[ێ�	ܙX�Z]�T\��\�Sܙ\���YJNY�
-�\˜�X��\��H����\�
-8�!H	�]_H[�]�و	���\ۙ[��[Y_HYY�����X	��X��\���N��\]H��[�]B��ۜ��H[\��\�Sܙ\�˙�[�
-�O�����Q	�HOOH�Y
-NY�
-�H����]\��HH	ԙX�Z]�Y	��[�\�\��\�Sܙ\��
-N�[�\�\�[�[����
-N���[�Y��\ۙ[����[��[�ܞH�Y�X���]�����ۜ���\]HH]�Z]\J�X�[ێ�	��]��\ۙ[���JN[��\ۙ[��H\��^K�\�\��^J��\]JH���\]H�
-��\]K���\ۙ[��[��\ۙ[��NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���[��X\��\��X�Z]�Y	�K	�\��܉�NB�B���[��[ۈ�[��]��[�[
+// ── ANALYTICS ──────────────────────────────
+function renderAnalytics() {
+  const total = allOrders.filter(o => o.status !== 'Cancelled').length;
+  const revenue = allOrders.filter(o => o.status !== 'Cancelled').reduce((s,o) => s + Number(o.totalPrice||0), 0);
+  const avg = total ? Math.round(revenue / total) : 0;
 
-H���\�\Y\��	��Y�܉�	��\]I�	��[��\��K��ܑXX�
-YO���[Y[���][[Y[��RY
-Y
-K��[YHH	��N�ۜ��^HH�]�]J
-N��^K��]]J�^K��]]J
-H
-�
-�N��[Y[���][[Y[��RY
-	��Y^X�Y	�K��[YHH�^K��T����[��
-K��]
-	�	�V�N�[]P��\ۙ[��[X�
+  const now = new Date();
+  const thisMonth = allOrders.filter(o => {
+    const d = new Date(o.orderDate);
+    return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear() && o.status!=='Cancelled';
+  });
+  const monthRev = thisMonth.reduce((s,o) => s + Number(o.totalPrice||0), 0);
 
-N��[Y[���][[Y[��RY
-	ۙ]��[[�[	�K��\��\��Y
-	��[��NB��\�[���[��[ۈ�X�Z]\��\�Sܙ\�
-H�ۜ��\Y\��[YHH��[Y[���][[Y[��RY
-	��\�\Y\��K��[YK��[J
-N�ۜ���\�[X�H��[Y[���][[Y[��RY
-	��X��\ۙ[�	�N�ۜ���\ۙ[�YH��\�[X���[YN�ۜ���\ۙ[��[YHH��\�[X���[X�Y�[ۜ��O˙]\�]��[YH	���ۜ�]X[�]HH\��R[�
-��[Y[���][[Y[��RY
-	��\]I�K��[YJN�ۜ�^X�Y]HH��[Y[���][[Y[��RY
-	��Y^X�Y	�K��[YN�ۜ���\�H��[Y[���][[Y[��RY
-	��[��\��K��[YK��[J
-N�ۜ��ܐ�\��Y\�H��[Y[���][[Y[��RY
-	��Y�܉�K��[YK��[J
-N�Y�
-\�\Y\��[YJH�����\�
-	�X\�H[�\�H�\Y\��[YI�	�\��܉�N��]\���B�Y�
-\]X[�]H]X[�]HJH�����\�
-	�X\�H[�\�H�[Y]X[�]I�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y\��\�Sܙ\���\Y\��[YK��\ۙ[�Y��\ۙ[��[YK]X[�]K^X�Y]K��\��ܐ�\��Y\�JNY�
-�\˜�X��\��H����\�
-ܙ\�X�YH	�]X[�]_p��	���\ۙ[��[Y_H��Z[����ۋ�<'��	��X��\���N���S[�[�
-N�ۜ��]HH]�Z]\J�X�[ێ�	��]\��\�Sܙ\���JK��]�
+  document.getElementById('insight-grid').innerHTML = `
+    <div class="insight"><div class="insight-emoji">📦</div><div class="insight-lbl">Total Orders</div><div class="insight-val">${total}</div><div class="insight-sub">All time</div></div>
+    <div class="insight"><div class="insight-emoji">💰</div><div class="insight-lbl">Total Revenue</div><div class="insight-val">R${revenue.toLocaleString()}</div><div class="insight-sub">All time</div></div>
+    <div class="insight"><div class="insight-emoji">📊</div><div class="insight-lbl">Avg Order Value</div><div class="insight-val">R${avg}</div><div class="insight-sub">Per order</div></div>
+    <div class="insight"><div class="insight-emoji">📅</div><div class="insight-lbl">This Month</div><div class="insight-val">${thisMonth.length} orders</div><div class="insight-sub">R${monthRev.toLocaleString()} revenue</div></div>
+    <div class="insight"><div class="insight-emoji">✅</div><div class="insight-lbl">Delivered</div><div class="insight-val">${allOrders.filter(o=>o.status==='Delivered').length}</div><div class="insight-sub">Completed orders</div></div>
+    <div class="insight"><div class="insight-emoji">⏳</div><div class="insight-lbl">In Progress</div><div class="insight-val">${allOrders.filter(o=>['Pending','Confirmed','Packed'].includes(o.status)).length}</div><div class="insight-sub">Awaiting delivery</div></div>
+  `;
+}
 
+function renderAnalyticsProducts() {
+  // Stock value by product
+  const sorted = [...allProducts].filter(p=>p.active==='Yes').sort((a,b) => (b.stock*b.sellingPrice)-(a.stock*a.sellingPrice));
+  const max = Math.max(...sorted.map(p => p.stock*p.sellingPrice));
 
-HO��JN[\��\�Sܙ\��H\��^K�\�\��^J�]JH��]H�
-�]K�ܙ\��[\��\�Sܙ\��N�[�\�\��\�Sܙ\��
-N��[�\�\�[�[����
-N\]P�Y�\�
-NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� �Q�T�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ\]P�Y�\�
-H�ۜ�[�[��H[ܙ\�˙�[\��O���[�[���	��ۙ�\�YY	�	�X��Y	�K�[��Y\�˜�]\�JK�[����[Y[���][[Y[��RY
-	ؘY�K[ܙ\���K�^�۝[�H[�[����ۜ�[�[����H[\��\�Sܙ\�˙�[\��O�����]\��HOOH	�[�[���K�[���ۜ�ИY�HH��[Y[���][[Y[��RY
-	ؘY�K\��NY�
-[�[�����
-H�ИY�K��[K�\�^HH	�[�[�KX������ИY�K�^�۝[�H[�[�����B�[�HИY�K��[K�\�^HH	ۛۙI�B����8� 8� �SUH�SP��8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[]T��X��[X��
-H�ۜ���H[��X�˙�[\�O��X�]�OOOI�Y\��K�X\
-O���[ۈ�[YOH���YH�]K\�X�OH����[[���X�_H�����[Y_H8�%����[[���X�_O��[ۏ��
-K���[�	��N��[Y[���][[Y[��RY
-	��\��X�	�K�[��\�SH��Yܙ\�][J�YJNB����8� 8� ԑT�UST�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �]ܙ\�][P��[�H��[��[ۈYܙ\�][J�\��H�[�JHY�
-X[��X�˛[��
-H�]\��Y�
-Y�\��
-Hܙ\�][P��[�
-���ۜ�YHܙ\�][P��[��ۜ���H[��X�˙�[\�O��X�]�OOOI�Y\��K�X\
-O���[ۈ�[YOH���YH�]K\�X�OH����[[���X�_H�����[Y_H8�%����[[���X�_O��[ۏ��
-K���[�	��N��ۜ�]�H��[Y[��ܙX]Q[[Y[�
-	�]��N]���\�Ә[YHH	ٛܛK\����]��YH	�][K\���I�
-�Y]���[K�X\��[����HH	�L	�]��[��\�SH�]��\��H��ܛKYܛ�\���X�[�\��H��ܛK[X�[����X�	�Y��Y
-�H�	��O�X�[���[X��\��H��ܛK\�[X�][K\��X��]KZYH��YH�ۘ�[��OH��[��[
+  document.getElementById('analytics-products').innerHTML = `<div class="bars">${
+    sorted.map(p => {
+      const val = p.stock * p.sellingPrice;
+      const pct = max > 0 ? Math.round((val/max)*100) : 0;
+      return `<div class="bar-row">
+        <div class="bar-lbl">${p.name}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:var(--rose)"></div></div>
+        <div class="bar-num">${p.stock}</div>
+      </div>`;
+    }).join('')
+  }</div>`;
 
-H�����O��[X����]���]��\��H��ܛKYܛ�\���X�[�\��H��ܛK[X�[��]H	�Y���[��[OH���]��Y���\��܎��[�\����܎��\�K\���JH�ۘ�X��H��[[ݙR][J	�YJH���%H�[[ݙO��[���	��O�X�[��[�]�\��H��ܛKZ[�]][K\]H�]KZYH��YH�\OH��[X�\��Z[�H�H��[YOH�H�ۚ[�]H��[��[
+  document.getElementById('analytics-stock').innerHTML = `<div class="bars">${
+    sorted.map(p => {
+      const val = p.stock * p.sellingPrice;
+      const pct = max > 0 ? Math.round((val/max)*100) : 0;
+      return `<div class="bar-row">
+        <div class="bar-lbl">${p.name}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:var(--gold)"></div></div>
+        <div class="bar-num" style="width:55px;font-size:11px">R${val.toLocaleString()}</div>
+      </div>`;
+    }).join('')
+  }</div>`;
+}
 
-H����]����[Y[���][[Y[��RY
-	�ܙ\�Z][\�X�۝Z[�\��K�\[��[
-]�N�[��[
+// ── PRODUCTS TABLE ─────────────────────────
+function renderProductsTable() {
+  document.getElementById('products-table').innerHTML = `
+    <table class="tbl-full" style="width:100%">
+      <tr><th>Product</th><th>Description</th><th>Sell Price</th><th>Cost</th><th>Margin</th><th>Stock</th><th>Alert At</th><th>Status</th><th></th></tr>
+      ${allProducts.map(p => {
+        const margin = p.sellingPrice > 0 ? Math.round(((p.sellingPrice - p.costPrice)/p.sellingPrice)*100) : 0;
+        const isLow  = Number(p.stock) <= Number(p.lowThreshold);
+        return `<tr>
+          <td><strong>${p.name}</strong></td>
+          <td style="font-size:12px;color:var(--text-soft)">${p.description}</td>
+          <td>R${p.sellingPrice}</td>
+          <td>R${p.costPrice}</td>
+          <td style="color:${margin>=50?'var(--mint)':'var(--gold)'};font-weight:700">${margin}%</td>
+          <td><strong style="color:${isLow?'var(--rose)':'inherit'}">${p.stock}</strong></td>
+          <td>${p.lowThreshold}</td>
+          <td><span class="pill ${p.active==='Yes'?'pill-packed':'pill-cancelled'}">${p.active==='Yes'?'Active':'Inactive'}</span></td>
+          <td><button onclick="openEditProductModal('${p.id}')" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">✏️ Edit</button></td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+}
 
-NB���[��[ۈ�[[ݙR][JY
-H�ۜ�[H��[Y[���][[Y[��RY
-	�][K\���I�
-�Y
-NY�
-[
-H�[��[[ݙJ
-N��[��[
+// ── SUPPLIERS TABLE ────────────────────────
+async function loadSuppliers() {
+  const data = await api({ action: 'getSuppliers' });
+  if (data && data.error) return;
+  const suppliers = Array.isArray(data) ? data : (data.suppliers || []);
+  if (!suppliers.length) {
+    document.getElementById('suppliers-table').innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-soft)">No suppliers yet. Add your first one!</div>';
+    return;
+  }
+  document.getElementById('suppliers-table').innerHTML = `
+    <table class="tbl-full" style="width:100%">
+      <tr><th>Supplier</th><th>Contact Person</th><th>Phone</th><th>Notes</th></tr>
+      ${suppliers.map(s => `<tr>
+        <td><strong>${s.name}</strong></td>
+        <td>${s.contact || '—'}</td>
+        <td>${s.phone || '—'}</td>
+        <td style="font-size:12px;color:var(--text-soft)">${s.notes || '—'}</td>
+      </tr>`).join('')}
+    </table>`;
+}
 
-N�B�B���[��[ۈ�[��[
+async function submitSupplier() {
+  const name    = document.getElementById('sup-name').value.trim();
+  const contact = document.getElementById('sup-contact').value.trim();
+  const phone   = document.getElementById('sup-phone').value.trim();
+  const notes   = document.getElementById('sup-notes').value.trim();
+  if (!name) { showToast('Please enter a supplier name', 'error'); return; }
+  const res = await apiPost({ action: 'addSupplier', name, contact, phone, notes });
+  if (res.success) {
+    showToast(`${name} added as a supplier! 🚚`, 'success');
+    closeModals();
+    loadSuppliers();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
 
-H�ۜ�����H��[Y[��]Y\�T�[X�ܐ[
-	˚][K\��X�	�N]�[H���˙�ܑXX�
-�[O��ۜ�YH�[�]\�]�Y�ۜ�]HH\��R[�
-��[Y[��]Y\�T�[X�܊�][K\]V�]KZYH��YH�X
-O˝�[YJH�ۜ��X�OH\��Q��]
-�[��[X�Y�[ۜ��O˙]\�]��X�JH�[
-�H]H
-��X�NJN��[Y[���][[Y[��RY
-	�ܙ\�]�[\�]�Y]��K�[��\�SH<'��[���ۙϔ���[����[T��[��
-_O���ۙϘB����8� 8� �P�RUԑT�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�X�Z]ܙ\�
-H�ۜ��[YHH��[Y[���][[Y[��RY
-	��[�[YI�K��[YK��[J
-N�ۜ�ۙHH��[Y[���][[Y[��RY
-	��\ۙI�K��[YK��[J
-N�ۜ��]HH��[Y[���][[Y[��RY
-	��Y]I�K��[YN�ۜ�]HH��[Y[���][[Y[��RY
-	��Y[]�\�I�K��[YN�ۜ���\�H��[Y[���][[Y[��RY
-	��[��\��K��[YN�Y�
-[�[YH[�]JH�����\�
-	�X\�H�[[��\��Y\��[YH[�ܙ\�]I�	�\��܉�N��]\���B���ۜ�][T����H��[Y[��]Y\�T�[X�ܐ[
-	˚][K\��X�	�N�ۜ�][\�H�N�ۜ���\��H�N]�[H�][T���˙�ܑXX�
-�[O��ۜ�YH�[�]\�]�Y�ۜ�YH�[��[YN�ۜ�]HH\��R[�
-��[Y[��]Y\�T�[X�܊�][K\]V�]KZYH��YH�X
-O˝�[YJH�ۜ��X�HH\��Q��]
-�[��[X�Y�[ۜ��O˙]\�]��X�JH�ۜ��[YHH�[��[X�Y�[ۜ��O˝^��]
-	�8�%	�V�NY�
-]H�
-H][\˜\�
-���X�Y�Y]HJN��\�˜\�
-	��[Y_H0���]_X
-N�[
-�H]H
-��X�NB�JN�Y�
-Z][\˛[��
-H�����\�
-	�Y]X\�ۙH��X�	�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
-X�[ێ�	�Yܙ\����\��Y\��[YN��[YK��\��Y\�ۙN�ۙK�ܙ\�]N��]K�[]�\�Q]N�]K���X�Έ��\�˚��[�	�	�K��[�X�N��[���\��][\JN�Y�
-�\˜�X��\��H�ۜ�YX�YH][\˛X\
-HO��ۜ�H[��X�˙�[�
-O��YOOHK���X�Y
-NY�
-
-H�����HX]�X^
-�[X�\������HHK�]JN�]\���	���[Y_H8�$��K�]_X�	��JK��[\����X[�K���[�	�	�N����\�
-ܙ\�	ܙ\˛ܙ\�YH�]�YHYX�Y�	�YX�YH<'�X	��X��\���N���S[�[�
-N�Y[
+function openAddSupplierModal() {
+  ['sup-name','sup-contact','sup-phone','sup-notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('addsupplier-modal').classList.add('open');
+}
 
-NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� �P�RU����8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�X�Z]����
-H�ۜ���X�YH��[Y[���][[Y[��RY
-	��\��X�	�K��[YN�ۜ�]HH\��R[�
-��[Y[���][[Y[��RY
-	��\]I�K��[YJN�ۜ��\Y\�H��[Y[���][[Y[��RY
-	��\�\Y\��K��[YN�ۜ���\�H��[Y[���][[Y[��RY
-	��[��\��K��[YN�Y�
-\��X�Y\]JH�����\�
-	�X\�H�[X�H��X�[�]X[�]I�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y�������X�Y]K�\Y\���\�JNY�
-�\˜�X��\��H����\�
-����\]YH�]��[�	ܙ\˛�]�����H[�]�	��X��\���N���S[�[�
-N�Y[
+// ── PURCHASE ORDERS ─────────────────────────
+function populateComponentSelect() {
+  if (!allComponents.length) return;
+  const opts = allComponents.map(c =>
+    `<option value="${c.id}" data-name="${c.name}">${c.name}</option>`
+  ).join('');
+  const sel = document.getElementById('po-component');
+  if (sel) sel.innerHTML = opts;
+}
 
-NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� �P�RU��P�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�X�Z]��X�
+function renderPurchaseOrders() {
+  const filtered = currentPOFilter === 'all'
+    ? allPurchaseOrders
+    : allPurchaseOrders.filter(o => o['Status'] === currentPOFilter);
 
-H�ۜ��[YHH��[Y[���][[Y[��RY
-	�\[�[YI�K��[YK��[J
-N�ۜ�\��H��[Y[���][[Y[��RY
-	�\Y\���K��[YK��[J
-N�ۜ��[H\��Q��]
-��[Y[���][[Y[��RY
-	�\\�[	�K��[YJN�ۜ����H\��Q��]
-��[Y[���][[Y[��RY
-	�\X���	�K��[YJN�ۜ�����H\��R[�
-��[Y[���][[Y[��RY
-	�\\�����K��[YJH�ۜ��\��H\��R[�
-��[Y[���][[Y[��RY
-	�\]�\��	�K��[YJH��ۜ��]Y�ܞHH��[Y[���][[Y[��RY
-	�\X�]	�K��[YN�Y�
-[�[YH\�[
-H�����\�
-	�X\�H�[[���X��[YH[��X�I�	�\��܉�N��]\���B���ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y��X�	��[YK\�ܚ\[ێ�\���[[���X�N��[����X�N�����������\����\���]Y�ܞHJNY�
-�\˜�X��\��H����\�
-	ۘ[Y_HYY�[�\��][��YHH<'�X	��X��\���N���S[�[�
-N�Y[
+  const total   = allPurchaseOrders.length;
+  const pending = allPurchaseOrders.filter(o => o['Status'] === 'Pending').length;
+  document.getElementById('po-sub').textContent =
+    `${total} orders · ${pending} coming soon`;
 
-NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B����8� 8� S�S�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�[�ܙ\�[�[
+  const badge = document.getElementById('badge-po');
+  if (pending > 0) { badge.style.display = 'inline-block'; badge.textContent = pending; }
+  else badge.style.display = 'none';
 
-H��[Y[���][[Y[��RY
-	�ܙ\�Z][\�X�۝Z[�\��K�[��\�SH	��ܙ\�][P��[�HY�
-[��X�˛[��
-HYܙ\�][J�YJN��[Y[���][[Y[��RY
-	�ܙ\�[[�[	�K��\��\��Y
-	��[��NB���[��[ۈ�[�����[�[
+  if (!filtered.length) {
+    document.getElementById('po-table').innerHTML =
+      '<div style="padding:24px;text-align:center;color:var(--text-soft)">No purchase orders yet. Place your first one!</div>';
+    return;
+  }
 
-H���[Y[���][[Y[��RY
-	�����[[�[	�K��\��\��Y
-	��[��N�B��[��[ۈ�[�Y��X�[�[
+  document.getElementById('po-table').innerHTML = `
+    <table class="tbl-full" style="width:100%">
+      <tr>
+        <th>PO ID</th><th>Supplier</th><th>Component</th><th>For</th>
+        <th>Qty</th><th>Ordered</th><th>Expected</th><th>Status</th><th>Action</th>
+      </tr>
+      ${[...filtered].reverse().map(o => {
+        const isPending = o['Status'] === 'Pending';
+        const statusPill = isPending
+          ? '<span class="pill pill-coming">📦 Coming Soon</span>'
+          : '<span class="pill pill-received">✅ Received</span>';
+        const action = isPending
+          ? `<button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">✓ Mark Received</button>`
+          : '<span style="color:var(--text-soft);font-size:12px">Done</span>';
+        return `<tr>
+          <td style="font-size:12px;color:var(--text-soft)">${o['PO ID']}</td>
+          <td><strong>${o['Supplier Name'] || '—'}</strong></td>
+          <td>${o['Component Name'] || '—'}</td>
+          <td>${o['For Customer'] || '—'}</td>
+          <td><strong>${o['Quantity Ordered']}</strong></td>
+          <td>${o['Order Date'] || '—'}</td>
+          <td>${o['Expected Date'] || '—'}</td>
+          <td>${statusPill}</td>
+          <td>${action}</td>
+        </tr>`;
+      }).join('')}
+    </table>`;
+}
 
-H���[Y[���][[Y[��RY
-	�Y��X�[[�[	�K��\��\��Y
-	��[��N�B���[��[ۈ�[�Y]��X�[�[
-��X�Y
-H�ۜ�H[��X�˙�[�
-O��YOOH��X�Y
-NY�
-\
-H�����\�
-	���X�����[�	�	�\��܉�N��]\���B���[Y[���][[Y[��RY
-	�\ZY	�K��[YHH�Y��[Y[���][[Y[��RY
-	�\[�[YI�K��[YHH��[YH	����[Y[���][[Y[��RY
-	�\Y\���K��[YHH�\�ܚ\[ۈ	����[Y[���][[Y[��RY
-	�\\�[	�K��[YHH��[[���X�H	����[Y[���][[Y[��RY
-	�\X���	�K��[YHH�����X�H	����[Y[���][[Y[��RY
-	�\]�\��	�K��[YHH����\��	����[Y[���][[Y[��RY
-	�\X�]	�K��[YHH��]Y�ܞH	��Y���	���[Y[���][[Y[��RY
-	�\XX�]�I�K��[YHH�X�]�H	�Y\����[Y[���][[Y[��RY
-	�Y]��X�[[�[	�K��\��\��Y
-	��[��NB��\�[���[��[ۈ�X�Z]Y]��X�
+function renderDashPendingPOs() {
+  const pending = allPurchaseOrders.filter(o => o['Status'] === 'Pending');
+  const card = document.getElementById('dash-po-card');
+  if (!pending.length) {
+    document.getElementById('dash-pending-pos').innerHTML =
+      '<div style="padding:8px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries. 🎉</div>';
+    return;
+  }
+  document.getElementById('dash-pending-pos').innerHTML = pending.map(o => `
+    <div class="order-row">
+      <div class="order-av" style="background:#FFF3D0;font-size:20px">📦</div>
+      <div class="order-info">
+        <div class="order-name">${o['Component Name']}</div>
+        <div class="order-detail">${o['Quantity Ordered']} units · from ${o['Supplier Name'] || 'Supplier'} · due ${o['Expected Date'] || '—'}</div>
+      </div>
+      <button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">✓ Received</button>
+    </div>
+  `).join('');
+}
 
-H�ۜ���X�YH��[Y[���][[Y[��RY
-	�\ZY	�K��[YN�ۜ��[YHH��[Y[���][[Y[��RY
-	�\[�[YI�K��[YK��[J
-N�ۜ�\�ܚ\[ۈH��[Y[���][[Y[��RY
-	�\Y\���K��[YK��[J
-N�ۜ��[[���X�HH\��Q��]
-��[Y[���][[Y[��RY
-	�\\�[	�K��[YJN�ۜ�����X�HH\��Q��]
-��[Y[���][[Y[��RY
-	�\X���	�K��[YJN�ۜ����\��H\��R[�
-��[Y[���][[Y[��RY
-	�\]�\��	�K��[YJH
-N�ۜ��]Y�ܞHH��[Y[���][[Y[��RY
-	�\X�]	�K��[YN�ۜ�X�]�HH��[Y[���][[Y[��RY
-	�\XX�]�I�K��[YNY�
-[�[YH\ӘS��[[���X�JJH�����\�
-	�X\�H�[[���X��[YH[��[[���X�I�	�\��܉�N��]\���B��ۜ��\�H]�Z]\T��
-�X�[ێ�	�Y]��X�	���X�Y�[YK\�ܚ\[ۋ�[[���X�K����X�K���\���]Y�ܞKX�]�HJNY�
-�\˜�X��\��H����\�
-	ۘ[Y_H\]YH8�!X	��X��\���N���S[�[�
-N�Y[
+function filterPOs(f, btn) {
+  currentPOFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPurchaseOrders();
+}
 
-NH[�H����\�
-	�\��܎�	�
-�
-�\˙\��܈	���Y][���[�ܛۙ��K	�\��܉�NB�B���[��[ۈ���S[�[�
-H��[Y[��]Y\�T�[X�ܐ[
-	˛ݙ\�^I�K��ܑXX�
-�O�˘�\��\���[[ݙJ	��[��JNB����[Y[��]Y\�T�[X�ܐ[
-	˛ݙ\�^I�K��ܑXX�
-[O�[�Y]�[�\�[�\�	��X���HO��Y�
-K�\��]OOH[
-H���S[�[�
-N�JNJN���8� 8� �U�Q�USӈ8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� ��[��[ۈ�]�Y�JH��[Y[��]Y\�T�[X�ܐ[
-	˜Y�I�K��ܑXX�
-O���\��\���[[ݙJ	�X�]�I�JN��[Y[��]Y\�T�[X�ܐ[
-	˜؋Z][I�K��ܑXX�
-HO�K��\��\���[[ݙJ	�X�]�I�JN���[Y[���][[Y[��RY
-	��I�
-�Y�JK��\��\��Y
-	�X�]�I�N��ۜ�X\H�\���\��ܙ\�ΌK[��[�ܞN��[�[]X�Ό���X�΍�\Y\�΍K\��\�[ܙ\�΍�\�ܞN���[ܙ\���X\�ۘ[�HN�ۜ�][\�H��[Y[��]Y\�T�[X�ܐ[
-	˜؋Z][I�NY�
-X\�Y�WHOOH[�Y�[�Y
-H][\��X\�Y�WWK��\��\��Y
-	�X�]�I�N�Y�
-Y�HOOH	��\Y\���H�Y�\Y\��
-NY�
-Y�HOOH	�\�ܞI�H�Y\�ܞJ
-NY�
-Y�HOOH	ܙ[ܙ\��H�Y�[ܙ\�
-NY�
-Y�HOOH	��X\�ۘ[	�H�Y�X\�ۘ[
+async function receivePO(poId, componentName, qty) {
+  const res = await apiPost({ action: 'receivePurchaseOrder', poId });
+  if (res.success) {
+    showToast(`✅ ${qty} units of ${componentName} added to stock!`, 'success');
+    // Update local state
+    const po = allPurchaseOrders.find(o => o['PO ID'] === poId);
+    if (po) po['Status'] = 'Received';
+    renderPurchaseOrders();
+    renderDashPendingPOs();
+    // Reload components so inventory reflects new stock
+    const compData = await api({ action: 'getComponents' });
+    allComponents = Array.isArray(compData) ? compData : (compData.components || allComponents);
+  } else {
+    showToast('Error: ' + (res.error || 'Could not mark as received'), 'error');
+  }
+}
 
-NB����8� 8� �T�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �]�\�[Y\��[��[ۈ����\�
-\��\OI��X��\���H�ۜ�H��[Y[���][[Y[��RY
-	��\�	�N�^�۝[�H\����\�Ә[YHH	��\�	�
-�\N��\��\��Y
-	�����N�X\�[Y[�]
-�\�[Y\�N�\�[Y\�H�][Y[�]
+function openNewPOModal() {
+  ['po-supplier','po-for','po-qty','po-notes'].forEach(id => document.getElementById(id).value = '');
+  const today = new Date(); today.setDate(today.getDate() + 7);
+  document.getElementById('po-expected').value = today.toISOString().split('T')[0];
+  populateComponentSelect();
+  document.getElementById('newpo-modal').classList.add('open');
+}
 
+async function submitPurchaseOrder() {
+  const supplierName  = document.getElementById('po-supplier').value.trim();
+  const compSelect    = document.getElementById('po-component');
+  const componentId   = compSelect.value;
+  const componentName = compSelect.selectedOptions[0]?.dataset.name || '';
+  const quantity      = parseInt(document.getElementById('po-qty').value);
+  const expectedDate  = document.getElementById('po-expected').value;
+  const notes         = document.getElementById('po-notes').value.trim();
+  const forCustomer   = document.getElementById('po-for').value.trim();
 
-HO���\��\���[[ݙJ	�����K�L
-NB����8� 8� UU��SԑT�8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� 8� �\�[���[��[ۈ�Y�[ܙ\�
-H�ۜ�X�Q]�H��[Y[���][[Y[��RY
-	ܙ[ܙ\�]X�I�N�ۜ�[\��]�H��[Y[���][[Y[��RY
-	ܙ[ܙ\�X[\���N�ۜ�[\��\�H��[Y[���][[Y[��RY
-	ܙ[ܙ\�X[\��[\�	�NX�Q]��[��\�SH	�]��\��H��Y[�ȏ�]��\��H��[��\����]���Y[���)��]���[\��]���[K�\�^HH	ۛۙI��H�ۜ��\�H]�Z]�\J	��]�[ܙ\��[\��N�ۜ��[\�H�\˜�[\��N�ۜ��Y��\�YH�\˝�Y��\�Y�N������[\��[�[Y�[�H��X���YY�[ܙ\�[����Y�
-�Y��\�Y�[���
-H[\��\��[��\�SH�Y��\�Y�X\
-O��]��[OH�\�^N��^�[YۋZ][\Θ�[�\�ڝ\�Y�KX�۝[���X�KX�]�Y[��Y[�ΌL؛ܙ\�X���N�\��Yٌ�NN���]�����ۙω����X�O���ۙς��[��[OH���܎�؍
-L�N�X\��[�[Y��ٛ۝\�^�N�L������Έ	������H��[ܙ\��[��	���[ܙ\��[�O��[����]����]ۈ�\��H�����Y�����[OH��۝\�^�N�L��Y[�΍L�ۘ�X��H�ܙX]T�[ܙ\��	�����X�YI�H��ܙX]H�؝]ۏ���]��
-K���[�	��N[\��]���[K�\�^HH	؛������[Y[���][[Y[��RY
-	ؘY�K\�[ܙ\��K��[K�\�^HH	��H[�H��[Y[���][[Y[��RY
-	ؘY�K\�[ܙ\��K��[K�\�^HH	ۛۙI�B��Y�
-�[\˛[��OOH
-HX�Q]��[��\�SH]��[OH�Y[�Ό̜�^X[Yێ��[�\����܎��X�L�Y����]��[OH��۝\�^�N�̜�X\��[�X���N���'�!�]���]��[OH��۝]�ZY����X\��[�X���N������[ܙ\��[\�Y]�]���]��[OH��۝\�^�N�M���X����Y�[H���]\]]�X]X��[ܙ\�[���܈H��X���]����]���]\��B��X�Q]��[��\�SH�X�H�\��H�����XY�������X������[ܙ\��[�����ܙ\�]O�����\Y\������\��[����������]\������������XY����O��	ܝ[\˛X\
-�O��ۜ�\���H���\��[�����H���[ܙ\��[��]\��������ۙω܋���X�O���ۙϏ����܋��[ܙ\��[�H[�]�����܋��[ܙ\�]_H[�]�����܋��\Y\�	��[��[OH���܎��X�L�Y����%��[���O����[OH���܎��\����	��̍�����	��M�L�I�Nٛ۝]�ZY�����܋��\��[�����O�����\���	��[��[OH��X��ܛ�[��ٙY�������܎��̍����Y[�Ό�L؛ܙ\�\�Y]\ΌL�ٛ۝\�^�N�L�ٛ۝]�ZY�����������[���	��[��[OH��X��ܛ�[��ٌ�����܎��M�L�N�Y[�Ό�L؛ܙ\�\�Y]\ΌL�ٛ۝\�^�N�L�ٛ۝]�ZY������$�����[���O����[OH�^X[Yێ��Y�����]ۈ�\��H�����Y�����[OH��۝\�^�N�L��Y[�΍L�X\��[�\�Y���ۘ�X��H��[��[ܙ\�[�[
-	�܋���X�YI�	�܋���X�I�	܋��[ܙ\��[�K	܋��[ܙ\�]_K	�܋��\Y\�	��I�H��Y]؝]ۏ���]ۈ�\��H�����Y�����[OH��۝\�^�N�L��Y[�΍L���܎��̍����ۘ�X��H�[]T�[ܙ\��[J	�܋���X�YI�	�܋���X�I�H��[]O؝]ۏ��������JK���[�	��_B����O���X�O�H�]�
-JHX�Q]��[��\�SH]��[OH�Y[�Ό����܎��̍������Z[Y��Y�[ܙ\��[\Έ	�K�Y\��Y�_O�]��B�B���[��[ۈ�[��[ܙ\�[�[
-��X�YI����X��[YOI���[�I��]OI���\Y\�I��H���[]H��X����ۈ���H^\�[����X��\���ۜ��[H��[Y[���][[Y[��RY
-	ܜ�\��X�	�N�[�[��\�SH	��[ۈ�[YOH����%�[X���X�8�%��[ۏ�����H�[���H�X�Y��X��Y�]�Z[X�B��ۜ�����H��[Y[��]Y\�T�[X�ܐ[
-	���Z[��[�ܞH����H���\��X������H��N�ۜ��Y[�H�]��]
+  if (!supplierName) { showToast('Please enter a supplier name', 'error'); return; }
+  if (!quantity || quantity < 1) { showToast('Please enter a valid quantity', 'error'); return; }
 
-N���˙�ܑXX�
-�O��ۜ��[�H��]Y\�T�[X�ܐ[
-	�	�NY�
-�[˛[���H�H�ۜ�YH�[��O˙]\�]˚Y	���ۜ��[YHH�[��O˝^�۝[�˝�[J
-H�[��WO˝^�۝[�˝�[J
-NY�
-�[YH	��\�Y[��\��[YJJH�Y[��Y
-�[YJN�ۜ��H��[Y[��ܙX]Q[[Y[�
-	��[ۉ�N���[YHHY�[YN��^�۝[�H�[YNY�
-YOOH��X�Y�[YHOOH��X��[YJH���[X�YH�YN�[�\[��[
-�
-NB�B�JN��Y�����X����[����H�K�]����HTB�Y�
-�[��[ۜ˛[��HJH�\J	��]��X���K�[��\�O�
-�\˜��X���\˙]H�JK��ܑXX�
-O��ۜ��H��[Y[��ܙX]Q[[Y[�
-	��[ۉ�N���[YHH�Y��[YN��^�۝[�H��[YNY�
-�YOOH��X�Y��[YHOOH��X��[YJH���[X�YH�YN�[�\[��[
-�
-NJNJK��]�
+  const res = await apiPost({ action: 'addPurchaseOrder', supplierName, componentId, componentName, quantity, expectedDate, notes, forCustomer });
+  if (res.success) {
+    showToast(`Order placed! ${quantity}× ${componentName} coming soon. 📦`, 'success');
+    closeModals();
+    const poData = await api({ action: 'getPurchaseOrders' }).catch(() => []);
+    allPurchaseOrders = Array.isArray(poData) ? poData : (poData.orders || allPurchaseOrders);
+    renderPurchaseOrders(); renderDashPendingPOs();
+    updateBadges();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
 
+// ── BADGES ────────────────────────────────
+function updateBadges() {
+  const pending = allOrders.filter(o => ['Pending','Confirmed','Packed'].includes(o.status)).length;
+  document.getElementById('badge-orders').textContent = pending;
 
-HO��JNB����[Y[���][[Y[��RY
-	ܜ�YY]ZY	�K��[YHH��X�Y��[Y[���][[Y[��RY
-	ܜ�\�[�	�K��[YHH�[���[Y[���][[Y[��RY
-	ܜ�\]I�K��[YHH]N��[Y[���][[Y[��RY
-	ܜ�\�\Y\��K��[YHH�\Y\���[Y[���][[Y[��RY
-	ܙ[ܙ\�[[�[	�K��\��\��Y
-	��[��NB��\�[���[��[ۈ�X�Z]�[ܙ\��[J
-H�ۜ���X��[H��[Y[���][[Y[��RY
-	ܜ�\��X�	�K��[YN�ۜ���X�^H��[Y[���][[Y[��RY
-	ܜ�\��X�	�K��[X�Y�[ۜ��O˝^��X��[�ۜ��[�H\��R[�
-��[Y[���][[Y[��RY
-	ܜ�\�[�	�K��[YJN�ۜ�]HH\��R[�
-��[Y[���][[Y[��RY
-	ܜ�\]I�K��[YJN�ۜ��\Y\�H��[Y[���][[Y[��RY
-	ܜ�\�\Y\��K��[YK��[J
-N�Y�
-\��X��[
-H�]\������\�
-	�X\�H�[X�H��X�	�	�\��܉�NY�
-\ӘS��[�
-H�[�
-H�]\������\�
-	�[�\�H�[Y�[ܙ\��[�	�	�\��܉�NY�
-\ӘS�]JH]HJH�]\������\�
-	�[�\�H�[Y�[ܙ\�]X[�]I�	�\��܉�N��H]�Z]�\J	��]�T�[ܙ\��[I���X�Y���X��[���X����X�^��[ܙ\��[���[���[ܙ\�]N�]K��\Y\��JN���S[�[�
-N����\�
-	ԙ[ܙ\��[H�]�YI�N�Y�[ܙ\�
-NH�]�
-JH����\�
-	јZ[Y��]�H�[N�	�
-�K�Y\��Y�K	�\��܉�NB�B��\�[���[��[ۈ[]T�[ܙ\��[J��X�Y��X��[YJHY�
-X�ۙ�\�J[]H�[ܙ\��[H�܈����X��[Y_H��
-JH�]\���H]�Z]�\J	�[]T�[ܙ\��[I����X�YJN����\�
-	ԝ[H[]Y	�N�Y�[ܙ\�
-NH�]�
-JH����\�
-	јZ[Y�[]H�[N�	�
-�K�Y\��Y�K	�\��܉�NB�B��\�[���[��[ۈܙX]T�[ܙ\����X�Y
-H�H]�Z]�\J	�ܙX]T�[ܙ\������X�YJN����\�
-	�\��\�Hܙ\�ܙX]YI�N�Y�[ܙ\�
-NH�]�
-JH����\�
-	јZ[Y�ܙX]HΈ	�
-�K�Y\��Y�K	�\��܉�NB�B���ܚ\��؛�O���[�
+  const pendingPOs = allPurchaseOrders.filter(o => o['Status'] === 'Pending').length;
+  const poBadge = document.getElementById('badge-po');
+  if (pendingPOs > 0) { poBadge.style.display = 'inline-block'; poBadge.textContent = pendingPOs; }
+  else poBadge.style.display = 'none';
+}
+
+// ── POPULATE SELECTS ───────────────────────
+function populateProductSelects() {
+  const opts = allProducts.filter(p=>p.active==='Yes').map(p =>
+    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} — R${p.sellingPrice}</option>`
+  ).join('');
+  document.getElementById('s-product').innerHTML = opts;
+  addOrderItem(true);
+}
+
+// ── ORDER ITEMS ────────────────────────────
+let orderItemCount = 0;
+
+function addOrderItem(first = false) {
+  if (!allProducts.length) return;
+  if (!first) orderItemCount++;
+  const id = orderItemCount;
+  const opts = allProducts.filter(p=>p.active==='Yes').map(p =>
+    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} — R${p.sellingPrice}</option>`
+  ).join('');
+
+  const div = document.createElement('div');
+  div.className = 'form-row';
+  div.id = 'item-row-' + id;
+  div.style.marginBottom = '10px';
+  div.innerHTML = `
+    <div class="form-group">
+      <label class="form-label">Product ${id > 0 ? id+1 : ''}</label>
+      <select class="form-select item-product" data-id="${id}" onchange="calcTotal()">${opts}</select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Qty ${id > 0 ? `<span style="float:right;cursor:pointer;color:var(--rose)" onclick="removeItem(${id})">✕ Remove</span>` : ''}</label>
+      <input class="form-input item-qty" data-id="${id}" type="number" min="1" value="1" oninput="calcTotal()">
+    </div>`;
+  document.getElementById('order-items-container').appendChild(div);
+  calcTotal();
+}
+
+function removeItem(id) {
+  const el = document.getElementById('item-row-' + id);
+  if (el) { el.remove(); calcTotal(); }
+}
+
+function calcTotal() {
+  const rows = document.querySelectorAll('.item-product');
+  let total = 0;
+  rows.forEach(sel => {
+    const id   = sel.dataset.id;
+    const qty  = parseInt(document.querySelector(`.item-qty[data-id="${id}"]`)?.value) || 0;
+    const price= parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
+    total += qty * price;
+  });
+  document.getElementById('order-total-preview').innerHTML = `💰 Total: <strong>R${total.toLocaleString()}</strong>`;
+}
+
+// ── SUBMIT ORDER ───────────────────────────
+async function submitOrder() {
+  const name     = document.getElementById('o-name').value.trim();
+  const phone    = document.getElementById('o-phone').value.trim();
+  const oDate    = document.getElementById('o-date').value;
+  const dDate    = document.getElementById('o-delivery').value;
+  const notes    = document.getElementById('o-notes').value;
+
+  if (!name || !oDate) { showToast('Please fill in customer name and order date', 'error'); return; }
+
+  const itemRows  = document.querySelectorAll('.item-product');
+  const items     = [];
+  const prodParts = [];
+  let total       = 0;
+
+  itemRows.forEach(sel => {
+    const id    = sel.dataset.id;
+    const pid   = sel.value;
+    const qty   = parseInt(document.querySelector(`.item-qty[data-id="${id}"]`)?.value) || 0;
+    const price = parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
+    const pname = sel.selectedOptions[0]?.text.split(' — ')[0];
+    if (qty > 0) {
+      items.push({ productId: pid, qty });
+      prodParts.push(`${pname} ×${qty}`);
+      total += qty * price;
+    }
+  });
+
+  if (!items.length) { showToast('Add at least one product', 'error'); return; }
+
+  const res = await apiPost({
+    action: 'addOrder',
+    customerName: name,
+    customerPhone: phone,
+    orderDate: oDate,
+    deliveryDate: dDate,
+    products: prodParts.join(', '),
+    totalPrice: total,
+    notes,
+    items
+  });
+
+  if (res.success) {
+    const deducted = items.map(i => {
+      const p = allProducts.find(x => x.id === i.productId);
+      if (p) p.stock = Math.max(0, Number(p.stock) - i.qty);
+      return p ? `${p.name}  ${i.qty}` : '';
+    }).filter(Boolean).join(', ');
+    showToast(`Order ${res.orderId} saved! Deducted: ${deducted} 🎉`, 'success');
+    closeModals();
+    loadAll();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
+
+// ── SUBMIT STOCK ───────────────────────────
+async function submitStock() {
+  const productId = document.getElementById('s-product').value;
+  const qty       = parseInt(document.getElementById('s-qty').value);
+  const supplier  = document.getElementById('s-supplier').value;
+  const notes     = document.getElementById('s-notes').value;
+
+  if (!productId || !qty) { showToast('Please select a product and quantity', 'error'); return; }
+
+  const res = await apiPost({ action: 'addStock', productId, qty, supplier, notes });
+  if (res.success) {
+    showToast(`Stock updated! New total: ${res.newStock} units`, 'success');
+    closeModals();
+    loadAll();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
+
+// ── SUBMIT PRODUCT ─────────────────────────
+async function submitProduct() {
+  const name      = document.getElementById('ap-name').value.trim();
+  const desc      = document.getElementById('ap-desc').value.trim();
+  const sell      = parseFloat(document.getElementById('ap-sell').value);
+  const cost      = parseFloat(document.getElementById('ap-cost').value);
+  const stock     = parseInt(document.getElementById('ap-stock').value) || 0;
+  const threshold = parseInt(document.getElementById('ap-threshold').value) || 20;
+  const category  = document.getElementById('ap-cat').value;
+
+  if (!name || !sell) { showToast('Please fill in product name and price', 'error'); return; }
+
+  const res = await apiPost({ action: 'addProduct', name, description: desc, sellingPrice: sell, costPrice: cost, stock, lowThreshold: threshold, category });
+  if (res.success) {
+    showToast(`${name} added to your catalogue! 🎁`, 'success');
+    closeModals();
+    loadAll();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
+
+// ── MODALS ─────────────────────────────────
+function openOrderModal() {
+  document.getElementById('order-items-container').innerHTML = '';
+  orderItemCount = 0;
+  if (allProducts.length) addOrderItem(true);
+  document.getElementById('order-modal').classList.add('open');
+}
+
+function openStockModal() { document.getElementById('stock-modal').classList.add('open'); }
+function openAddProductModal() { document.getElementById('addproduct-modal').classList.add('open'); }
+
+function openEditProductModal(productId) {
+  const p = allProducts.find(x => x.id === productId);
+  if (!p) { showToast('Product not found', 'error'); return; }
+  document.getElementById('ep-id').value        = p.id;
+  document.getElementById('ep-name').value      = p.name || '';
+  document.getElementById('ep-desc').value      = p.description || '';
+  document.getElementById('ep-sell').value      = p.sellingPrice || '';
+  document.getElementById('ep-cost').value      = p.costPrice || '';
+  document.getElementById('ep-threshold').value = p.lowThreshold || '';
+  document.getElementById('ep-cat').value       = p.category || 'Gift Box';
+  document.getElementById('ep-active').value    = p.active || 'Yes';
+  document.getElementById('editproduct-modal').classList.add('open');
+}
+
+async function submitEditProduct() {
+  const productId    = document.getElementById('ep-id').value;
+  const name         = document.getElementById('ep-name').value.trim();
+  const description  = document.getElementById('ep-desc').value.trim();
+  const sellingPrice = parseFloat(document.getElementById('ep-sell').value);
+  const costPrice    = parseFloat(document.getElementById('ep-cost').value);
+  const lowThreshold = parseInt(document.getElementById('ep-threshold').value) || 5;
+  const category     = document.getElementById('ep-cat').value;
+  const active       = document.getElementById('ep-active').value;
+  if (!name || isNaN(sellingPrice)) { showToast('Please fill in product name and selling price', 'error'); return; }
+  const res = await apiPost({ action: 'editProduct', productId, name, description, sellingPrice, costPrice, lowThreshold, category, active });
+  if (res.success) {
+    showToast(`${name} updated! ✅`, 'success');
+    closeModals();
+    loadAll();
+  } else {
+    showToast('Error: ' + (res.error || 'Something went wrong'), 'error');
+  }
+}
+
+function closeModals() {
+  document.querySelectorAll('.overlay').forEach(o => o.classList.remove('open'));
+}
+
+document.querySelectorAll('.overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) closeModals(); });
+});
+
+// ── NAVIGATION ─────────────────────────────
+function nav(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+
+  document.getElementById('pg-' + page).classList.add('active');
+
+  const map = { dashboard:0, orders:1, inventory:2, analytics:3, products:4, suppliers:5, purchaseorders:6, history:7, reorder:8, seasonal:9 };
+  const items = document.querySelectorAll('.sb-item');
+  if (map[page] !== undefined) items[map[page]].classList.add('active');
+
+  if (page === 'suppliers') loadSuppliers();
+  if (page === 'history') loadHistory();
+  if (page === 'reorder') loadReorder();
+  if (page === 'seasonal') loadSeasonal();
+}
+
+// ── TOAST ──────────────────────────────────
+let toastTimer;
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── AUTO REORDER ──────────────────────────────────────────────────────────────
+async function loadReorder() {
+  const tableDiv = document.getElementById('reorder-table');
+  const alertsDiv = document.getElementById('reorder-alerts');
+  const alertsList = document.getElementById('reorder-alerts-list');
+  tableDiv.innerHTML = '<div class="loading"><div class="spinner"></div> Loading…</div>';
+  alertsDiv.style.display = 'none';
+  try {
+    const res = await gapi('getReorderRules');
+    const rules = res.rules || [];
+    const triggered = res.triggered || [];
+
+    // Show alerts panel if any products need reordering now
+    if (triggered.length > 0) {
+      alertsList.innerHTML = triggered.map(t => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3e8e8">
+          <div>
+            <strong>${t.product}</strong>
+            <span style="color:#b45309;margin-left:8px;font-size:13px">Stock: ${t.stock} / Reorder point: ${t.reorderPoint}</span>
+          </div>
+          <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px" onclick="createReorderPO('${t.productId}')">Create PO</button>
+        </div>`).join('');
+      alertsDiv.style.display = 'block';
+      document.getElementById('badge-reorder').style.display = '';
+    } else {
+      document.getElementById('badge-reorder').style.display = 'none';
+    }
+
+    if (rules.length === 0) {
+      tableDiv.innerHTML = `<div style="padding:32px;text-align:center;color:#9ca3af">
+        <div style="font-size:32px;margin-bottom:8px">🔄</div>
+        <div style="font-weight:600;margin-bottom:4px">No reorder rules yet</div>
+        <div style="font-size:14px">Click "+ Add Rule" to set up automatic reordering for a product.</div>
+      </div>`;
+      return;
+    }
+
+    tableDiv.innerHTML = `
+      <table class="tbl">
+        <thead><tr>
+          <th>Product</th>
+          <th>Reorder Point</th>
+          <th>Order Qty</th>
+          <th>Supplier</th>
+          <th>Current Stock</th>
+          <th>Status</th>
+          <th></th>
+        </tr></thead>
+        <tbody>
+          ${rules.map(r => {
+            const isLow = r.currentStock <= r.reorderPoint;
+            return `<tr>
+              <td><strong>${r.product}</strong></td>
+              <td>${r.reorderPoint} units</td>
+              <td>${r.reorderQty} units</td>
+              <td>${r.supplier || '<span style="color:#9ca3af">—</span>'}</td>
+              <td style="color:${isLow ? '#dc2626' : '#16a34a'};font-weight:600">${r.currentStock}</td>
+              <td>${isLow
+                ? '<span style="background:#fef2f2;color:#dc2626;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600">⚠ Low</span>'
+                : '<span style="background:#f0fdf4;color:#16a34a;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600">✓ OK</span>'}</td>
+              <td style="text-align:right">
+                <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px;margin-right:4px" onclick="openReorderModal('${r.productId}','${r.product}',${r.reorderPoint},${r.reorderQty},'${r.supplier||''}')">Edit</button>
+                <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px;color:#dc2626" onclick="deleteReorderRule('${r.productId}','${r.product}')">Delete</button>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+  } catch(e) {
+    tableDiv.innerHTML = `<div style="padding:24px;color:#dc2626">Failed to load reorder rules: ${e.message}</div>`;
+  }
+}
+
+function openReorderModal(productId='', productName='', point='', qty='', supplier='') {
+  // Populate product dropdown from existing products list
+  const sel = document.getElementById('rr-product');
+  sel.innerHTML = '<option value="">— Select product —</option>';
+  // Try to pull from cached products if available
+  const rows = document.querySelectorAll('#pg-inventory .tbl tbody tr, #pg-products .tbl tbody tr');
+  const seen = new Set();
+  rows.forEach(r => {
+    const cells = r.querySelectorAll('td');
+    if (cells.length >= 2) {
+      const id = cells[0]?.dataset?.id || '';
+      const name = cells[0]?.textContent?.trim() || cells[1]?.textContent?.trim();
+      if (name && !seen.has(name)) {
+        seen.add(name);
+        const opt = document.createElement('option');
+        opt.value = id || name;
+        opt.textContent = name;
+        if (id === productId || name === productName) opt.selected = true;
+        sel.appendChild(opt);
+      }
+    }
+  });
+  // If no products found from DOM, fetch from API
+  if (sel.options.length <= 1) {
+    gapi('getProducts').then(res => {
+      (res.products || res.data || []).forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id || p.name;
+        opt.textContent = p.name;
+        if (p.id === productId || p.name === productName) opt.selected = true;
+        sel.appendChild(opt);
+      });
+    }).catch(() => {});
+  }
+
+  document.getElementById('rr-edit-id').value = productId;
+  document.getElementById('rr-point').value = point;
+  document.getElementById('rr-qty').value = qty;
+  document.getElementById('rr-supplier').value = supplier;
+  document.getElementById('reorder-modal').classList.add('open');
+}
+
+async function submitReorderRule() {
+  const productVal = document.getElementById('rr-product').value;
+  const productText = document.getElementById('rr-product').selectedOptions[0]?.text || productVal;
+  const point = parseInt(document.getElementById('rr-point').value);
+  const qty = parseInt(document.getElementById('rr-qty').value);
+  const supplier = document.getElementById('rr-supplier').value.trim();
+
+  if (!productVal) return showToast('Please select a product', 'error');
+  if (isNaN(point) || point < 0) return showToast('Enter a valid reorder point', 'error');
+  if (isNaN(qty) || qty < 1) return showToast('Enter a valid reorder quantity', 'error');
+
+  try {
+    await gapi('saveReorderRule', {
+      productId: productVal,
+      product: productText,
+      reorderPoint: point,
+      reorderQty: qty,
+      supplier
+    });
+    closeModals();
+    showToast('Reorder rule saved!');
+    loadReorder();
+  } catch(e) {
+    showToast('Failed to save rule: ' + e.message, 'error');
+  }
+}
+
+async function deleteReorderRule(productId, productName) {
+  if (!confirm(`Delete reorder rule for "${productName}"?`)) return;
+  try {
+    await gapi('deleteReorderRule', { productId });
+    showToast('Rule deleted');
+    loadReorder();
+  } catch(e) {
+    showToast('Failed to delete rule: ' + e.message, 'error');
+  }
+}
+
+async function createReorderPO(productId) {
+  try {
+    await gapi('createReorderPO', { productId });
+    showToast('Purchase order created!');
+    loadReorder();
+  } catch(e) {
+    showToast('Failed to create PO: ' + e.message, 'error');
+  }
+}
+</script>
+</body>
+</html>
