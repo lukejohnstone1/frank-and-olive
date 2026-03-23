@@ -1394,7 +1394,7 @@ async function quickRemoveStock(productId, productName) {
   if (!qty || qty < 1) { showToast('Enter a valid quantity', 'error'); return; }
   const p = allProducts.find(x => x.id === productId);
   if (!p) { showToast('Product not found', 'error'); return; }
-  const currentStock = Number(p.stock);
+  if (!confirm(`Remove ${qty} unit${qty>1?'s':''} of ${productName}?`)) return;   if (!confirm(`Remove ${qty} unit${qty>1?'s':''} of ${productName}?`)) return;   const currentStock = Number(p.stock);
   if (qty > currentStock) {
     showToast(`Only ${currentStock} units in stock \u2014 can\u2019t remove ${qty}`, 'error'); return;
   }
