@@ -40,7 +40,7 @@ body {
   display: flex;
 }
 
-/* ââ SIDEBAR âââââââââââââââââââââââââââââââ */
+/* ── SIDEBAR ─────────────────────────────── */
 .sidebar {
   width: 230px;
   background: var(--choc);
@@ -134,7 +134,7 @@ body {
 
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-/* ââ MAIN ââââââââââââââââââââââââââââââââââ */
+/* ── MAIN ────────────────────────────────── */
 .main { margin-left: 230px; flex:1; padding: 30px 32px; }
 
 .page { display:none; animation: fadeUp 0.3s ease; }
@@ -145,7 +145,7 @@ body {
   to   { opacity:1; transform:translateY(0); }
 }
 
-/* ââ PAGE HEADER âââââââââââââââââââââââââââ */
+/* ── PAGE HEADER ─────────────────────────── */
 .ph {
   display: flex;
   align-items: flex-start;
@@ -184,7 +184,7 @@ body {
 
 .btn-row { display:flex; gap:10px; align-items:center; }
 
-/* ââ ALERT BANNER ââââââââââââââââââââââââââ */
+/* ── ALERT BANNER ────────────────────────── */
 .alert-bar {
   background: linear-gradient(135deg, #FFF8E7, #FFEFC0);
   border: 1.5px solid var(--gold-light);
@@ -200,7 +200,7 @@ body {
 
 .alert-bar.hidden { display: none; }
 
-/* ââ STATS GRID ââââââââââââââââââââââââââââ */
+/* ── STATS GRID ──────────────────────────── */
 .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
 
 .stat {
@@ -232,11 +232,11 @@ body {
 .stat-note { font-size: 11px; color: var(--mint); margin-top: 5px; font-weight: 500; }
 .stat-note.warn { color: var(--rose); }
 
-/* ââ TWO COL âââââââââââââââââââââââââââââââ */
+/* ── TWO COL ─────────────────────────────── */
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
 .grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 18px; }
 
-/* ââ CARD ââââââââââââââââââââââââââââââââââ */
+/* ── CARD ────────────────────────────────── */
 .card {
   background: var(--white);
   border-radius: var(--radius);
@@ -260,7 +260,7 @@ body {
 
 .card-link { font-size: 12px; color: var(--rose); cursor: pointer; font-weight: 600; }
 
-/* ââ TABLE âââââââââââââââââââââââââââââââââ */
+/* ── TABLE ───────────────────────────────── */
 .tbl { width:100%; border-collapse: collapse; }
 
 .tbl th {
@@ -296,7 +296,7 @@ body {
 .tbl-full td { padding: 13px 14px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
 .tbl-full tr:hover td { background: var(--rose-pale); }
 
-/* ââ PILLS âââââââââââââââââââââââââââââââââ */
+/* ── PILLS ───────────────────────────────── */
 .pill {
   display: inline-block;
   padding: 3px 10px;
@@ -315,7 +315,7 @@ body {
 .pill-low       { background: #FFE0E6; color: #B8203C; }
 .pill-medium    { background: #FFF3D0; color: #9A6800; }
 
-/* ââ BAR CHART âââââââââââââââââââââââââââââ */
+/* ── BAR CHART ───────────────────────────── */
 .bars { display:flex; flex-direction:column; gap:13px; }
 .bar-row { display:flex; align-items:center; gap:12px; }
 .bar-lbl { font-size:12.5px; color:var(--text); width:150px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -324,7 +324,7 @@ body {
 @keyframes grow { from{width:0 !important} }
 .bar-num { font-size:12px; font-weight:700; color:var(--choc); width:36px; text-align:right; }
 
-/* ââ ORDER ITEMS âââââââââââââââââââââââââââ */
+/* ── ORDER ITEMS ─────────────────────────── */
 .order-row {
   display: flex;
   align-items: center;
@@ -340,7 +340,7 @@ body {
 .order-detail { font-size:11.5px; color:var(--text-soft); margin-top:2px; }
 .order-price { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:700; color:var(--choc); }
 
-/* ââ PRODUCT CARDS âââââââââââââââââââââââââ */
+/* ── PRODUCT CARDS ───────────────────────── */
 .prod-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
 
 .prod-card {
@@ -380,7 +380,7 @@ body {
   letter-spacing:0.06em;
 }
 
-/* ââ ANALYTICS âââââââââââââââââââââââââââââ */
+/* ── ANALYTICS ───────────────────────────── */
 .insight-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:20px; }
 
 .insight {
@@ -396,7 +396,7 @@ body {
 .insight-val { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--choc); }
 .insight-sub { font-size:11px; color:var(--mint); font-weight:600; margin-top:3px; }
 
-/* ââ FILTER ROW ââââââââââââââââââââââââââââ */
+/* ── FILTER ROW ──────────────────────────── */
 .filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
 .filter-btn {
   padding: 7px 15px;
@@ -417,7 +417,7 @@ body {
   color: #fff;
 }
 
-/* ââ LOADING âââââââââââââââââââââââââââââââ */
+/* ── LOADING ─────────────────────────────── */
 .loading {
   display: flex;
   align-items: center;
@@ -438,7 +438,7 @@ body {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ââ MODAL âââââââââââââââââââââââââââââââââ */
+/* ── MODAL ───────────────────────────────── */
 .overlay {
   display: none;
   position: fixed; inset:0;
@@ -502,7 +502,7 @@ body {
   margin-top:6px;
 }
 
-/* ââ TOAST âââââââââââââââââââââââââââââââââ */
+/* ── TOAST ───────────────────────────────── */
 .toast {
   position: fixed;
   bottom: 28px; right: 28px;
@@ -520,10 +520,10 @@ body {
 }
 
 .toast.show { transform: translateY(0); opacity:1; }
-.toast.success::before { content:'â  '; }
-.toast.error::before   { content:'â  '; }
+.toast.success::before { content:'✅  '; }
+.toast.error::before   { content:'❌  '; }
 
-/* ââ SEASONAL PLANNER âââââââââââââââââââââ */
+/* ── SEASONAL PLANNER ───────────────────── */
 .season-card {
   background: var(--white);
   border-radius: var(--radius);
@@ -566,7 +566,7 @@ body {
 .syr-badge.far    { background: var(--mint-light); color: var(--mint); }
 .syr-badge.past   { background: var(--cream); color: var(--text-soft); }
 
-/* ââ ADD STOCK INLINE ââââââââââââââââââââââ */
+/* ── ADD STOCK INLINE ────────────────────── */
 .add-stock-row {
   display: flex;
   align-items: center;
@@ -587,7 +587,7 @@ body {
 
 .qty-input:focus { border-color: var(--mint); }
 
-/* ââ RECEIVE BUTTON ââââââââââââââââââââââââ */
+/* ── RECEIVE BUTTON ──────────────────────── */
 .btn-receive {
   display: inline-flex;
   align-items: center;
@@ -611,40 +611,40 @@ body {
 </head>
 <body>
 
-<!-- ââ SIDEBAR ââ -->
+<!-- ── SIDEBAR ── -->
 <nav class="sidebar">
   <div class="sb-brand">
-    <div class="sb-logo">ð¬</div>
+    <div class="sb-logo">🍬</div>
     <div class="sb-name">Frank &amp;<br>Olive</div>
     <div class="sb-tagline">Luxury Confectioners</div>
   </div>
   <div class="sb-nav">
     <div class="sb-section">Main</div>
-    <div class="sb-item active" onclick="nav('dashboard')"><span class="si">ð </span> Dashboard</div>
-    <div class="sb-item" onclick="nav('orders')"><span class="si">ð¦</span> Orders <span class="sb-badge" id="badge-orders">â¦</span></div>
-    <div class="sb-item" onclick="nav('inventory')"><span class="si">ðï¸</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
+    <div class="sb-item active" onclick="nav('dashboard')"><span class="si">🏠</span> Dashboard</div>
+    <div class="sb-item" onclick="nav('orders')"><span class="si">📦</span> Orders <span class="sb-badge" id="badge-orders">…</span></div>
+    <div class="sb-item" onclick="nav('inventory')"><span class="si">🗃️</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
     <div class="sb-section">Insights</div>
-    <div class="sb-item" onclick="nav('analytics')"><span class="si">ð</span> Analytics</div>
+    <div class="sb-item" onclick="nav('analytics')"><span class="si">📊</span> Analytics</div>
     <div class="sb-section">Settings</div>
-    <div class="sb-item" onclick="nav('products')"><span class="si">ð</span> Products</div>
-    <div class="sb-item" onclick="nav('suppliers')"><span class="si">ð</span> Suppliers</div>
-    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">ð</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
-    <div class="sb-item" onclick="nav('history')"><span class="si">ð</span> Stock History</div>
-    <div class="sb-item" onclick="nav('reorder')"><span class="si">ð</span> Auto Reorder <span class="sb-badge alert" id="badge-reorder" style="display:none">!</span></div>
+    <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
+    <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
+    <div class="sb-item" onclick="nav('purchaseorders')"><span class="si">📋</span> Purchase Orders <span class="sb-badge" id="badge-po" style="display:none">!</span></div>
+    <div class="sb-item" onclick="nav('history')"><span class="si">📜</span> Stock History</div>
+    <div class="sb-item" onclick="nav('reorder')"><span class="si">🔄</span> Auto Reorder <span class="sb-badge alert" id="badge-reorder" style="display:none">!</span></div>
     <div class="sb-section">Planning</div>
-    <div class="sb-item" onclick="nav('seasonal')"><span class="si">ðï¸</span> Seasonal Planner</div>
+    <div class="sb-item" onclick="nav('seasonal')"><span class="si">🗓️</span> Seasonal Planner</div>
   </div>
-  <div class="sb-footer"><span class="status-dot"></span>Live Â· Google Sheets</div>
+  <div class="sb-footer"><span class="status-dot"></span>Live · Google Sheets</div>
 </nav>
 
-<!-- ââ MAIN ââ -->
+<!-- ── MAIN ── -->
 <main class="main">
 
   <!-- DASHBOARD -->
   <div id="pg-dashboard" class="page active">
     <div class="ph">
       <div>
-        <div class="ph-title" id="greeting">Good morning! ð¸</div>
+        <div class="ph-title" id="greeting">Good morning! 🌸</div>
         <div class="ph-sub">Here's everything happening at Frank & Olive today.</div>
       </div>
       <div class="btn-row">
@@ -654,33 +654,33 @@ body {
     </div>
 
     <div class="alert-bar hidden" id="low-stock-alert">
-      â ï¸ <span id="low-stock-msg">Loading...</span>
+      ⚠️ <span id="low-stock-msg">Loading...</span>
     </div>
 
     <div class="stats" id="stats-grid">
-      <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading statsâ¦</div>
+      <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading stats…</div>
     </div>
 
     <div class="grid2">
       <div class="card">
         <div class="card-hd">
           <div class="card-title">Recent Orders</div>
-          <div class="card-link" onclick="nav('orders')">View all â</div>
+          <div class="card-link" onclick="nav('orders')">View all →</div>
         </div>
-        <div id="recent-orders"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+        <div id="recent-orders"><div class="loading"><div class="spinner"></div> Loading…</div></div>
       </div>
       <div class="card">
         <div class="card-hd">
           <div class="card-title">Stock Levels</div>
-          <div class="card-link" onclick="nav('inventory')">Manage â</div>
+          <div class="card-link" onclick="nav('inventory')">Manage →</div>
         </div>
-        <div id="dash-stock"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+        <div id="dash-stock"><div class="loading"><div class="spinner"></div> Loading…</div></div>
       </div>
     </div>
     <div class="card" id="dash-po-card" style="margin-bottom:18px">
       <div class="card-hd">
-        <div class="card-title">ð¦ Incoming Stock</div>
-        <div class="card-link" onclick="nav('purchaseorders')">View all â</div>
+        <div class="card-title">📦 Incoming Stock</div>
+        <div class="card-link" onclick="nav('purchaseorders')">View all →</div>
       </div>
       <div id="dash-pending-pos"><div style="padding:16px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries.</div></div>
     </div>
@@ -691,7 +691,7 @@ body {
     <div class="ph">
       <div>
         <div class="ph-title">Orders</div>
-        <div class="ph-sub" id="orders-subtitle">Loading ordersâ¦</div>
+        <div class="ph-sub" id="orders-subtitle">Loading orders…</div>
       </div>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="openOrderModal()">+ New Order</button>
@@ -705,7 +705,7 @@ body {
       <button class="filter-btn" onclick="filterOrders('Delivered',this)">Delivered</button>
     </div>
     <div class="card">
-      <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading ordersâ¦</div></div>
+      <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading orders…</div></div>
     </div>
   </div>
 
@@ -714,17 +714,17 @@ body {
     <div class="ph">
       <div>
         <div class="ph-title">Inventory</div>
-        <div class="ph-sub" id="inv-sub">Loading stock levelsâ¦</div>
+        <div class="ph-sub" id="inv-sub">Loading stock levels…</div>
       </div>
       <div class="btn-row">
         <button class="btn btn-green" onclick="openStockModal()">+ Receive Stock</button>
       </div>
     </div>
     <div class="alert-bar hidden" id="inv-alert">
-      ð¨ <span id="inv-alert-msg"></span>
+      🚨 <span id="inv-alert-msg"></span>
     </div>
     <div id="inv-grid" class="prod-grid">
-      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loadingâ¦</div>
+      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
     </div>
   </div>
 
@@ -734,7 +734,7 @@ body {
       <div><div class="ph-title">Analytics</div><div class="ph-sub">Sales performance & insights</div></div>
     </div>
     <div class="insight-grid" id="insight-grid">
-      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loadingâ¦</div>
+      <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -755,7 +755,7 @@ body {
       <button class="btn btn-primary" onclick="openAddProductModal()">+ Add Product</button>
     </div>
     <div class="card">
-      <div id="products-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+      <div id="products-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
     </div>
   </div>
 
@@ -766,7 +766,7 @@ body {
       <button class="btn btn-primary" onclick="openAddSupplierModal()">+ Add Supplier</button>
     </div>
     <div class="card">
-      <div id="suppliers-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+      <div id="suppliers-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
     </div>
   </div>
 
@@ -778,11 +778,11 @@ body {
     </div>
     <div class="filters">
       <button class="filter-btn active" onclick="filterPOs('all',this)">All</button>
-      <button class="filter-btn" onclick="filterPOs('Pending',this)">ð¦ Coming Soon</button>
-      <button class="filter-btn" onclick="filterPOs('Received',this)">â Received</button>
+      <button class="filter-btn" onclick="filterPOs('Pending',this)">📦 Coming Soon</button>
+      <button class="filter-btn" onclick="filterPOs('Received',this)">✅ Received</button>
     </div>
     <div class="card">
-      <div id="po-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+      <div id="po-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
     </div>
   </div>
 
@@ -791,7 +791,7 @@ body {
       <div><div class="ph-title">Stock History</div><div class="ph-sub" id="hist-sub">Every stock addition and removal</div></div>
     </div>
     <div class="card">
-      <div id="hist-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+      <div id="hist-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
     </div>
   </div>
 
@@ -806,10 +806,10 @@ body {
     </div>
     <div class="card" style="margin-bottom:180x">
       <div id="reorder-alerts" style="display:none">
-        <div class="card-hd"><div class="card-title">â ï¸ Needs Reordering Now</div></div>
+        <div class="card-hd"><div class="card-title">⚠️ Needs Reordering Now</div></div>
         <div id="reorder-alerts-list" style="padding:0 18px 14px"></div>
       </div>
-      <div id="reorder-table"><div class="loading"><div class="spinner"></div> Loadingâ¦</div></div>
+      <div id="reorder-table"><div class="loading"><div class="spinner"></div> Loading…</div></div>
     </div>
   </div>
 
@@ -820,19 +820,19 @@ body {
     </div>
     <div id="seasonal-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px"></div>
     <div class="card" style="margin-bottom:0">
-      <div class="card-hd"><div class="card-title">ð Full Year Overview</div></div>
+      <div class="card-hd"><div class="card-title">📅 Full Year Overview</div></div>
       <div id="seasonal-year" style="padding:4px 0"></div>
     </div>
   </div>
 
 </main>
 
-<!-- ââ MODALS ââ -->
+<!-- ── MODALS ── -->
 
 <!-- NEW ORDER MODAL -->
 <div class="overlay" id="order-modal">
   <div class="modal">
-    <div class="modal-title">ð New Order</div>
+    <div class="modal-title">🎁 New Order</div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Customer Name</label>
@@ -862,7 +862,7 @@ body {
     <div class="form-hint" id="order-total-preview">Select products to see total</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitOrder()">Save Order â</button>
+      <button class="btn btn-primary" onclick="submitOrder()">Save Order →</button>
     </div>
   </div>
 </div>
@@ -870,7 +870,7 @@ body {
 <!-- ADD STOCK MODAL -->
 <div class="overlay" id="stock-modal">
   <div class="modal">
-    <div class="modal-title">ð¦ Receive Stock</div>
+    <div class="modal-title">📦 Receive Stock</div>
     <div class="form-group">
       <label class="form-label">Product</label>
       <select class="form-select" id="s-product"></select>
@@ -889,10 +889,10 @@ body {
       <label class="form-label">Notes</label>
       <input class="form-input" id="s-notes" placeholder="e.g. February delivery">
     </div>
-    <div class="form-hint">ð¾ Stock will be added and logged in Stock Movements automatically.</div>
+    <div class="form-hint">💾 Stock will be added and logged in Stock Movements automatically.</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-green" onclick="submitStock()">Add Stock â</button>
+      <button class="btn btn-green" onclick="submitStock()">Add Stock →</button>
     </div>
   </div>
 </div>
@@ -900,7 +900,7 @@ body {
 <!-- ADD PRODUCT MODAL -->
 <div class="overlay" id="addproduct-modal">
   <div class="modal">
-    <div class="modal-title">ð« Add New Product</div>
+    <div class="modal-title">🍫 Add New Product</div>
     <div class="form-group">
       <label class="form-label">Product Name</label>
       <input class="form-input" id="ap-name" placeholder="e.g. Luxury Gift Box (Large)">
@@ -940,7 +940,7 @@ body {
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitProduct()">Add Product â</button>
+      <button class="btn btn-primary" onclick="submitProduct()">Add Product →</button>
     </div>
   </div>
 </div>
@@ -948,7 +948,7 @@ body {
 <!-- EDIT PRODUCT MODAL -->
 <div class="overlay" id="editproduct-modal">
   <div class="modal">
-    <div class="modal-title">âï¸ Edit Product</div>
+    <div class="modal-title">✏️ Edit Product</div>
     <input type="hidden" id="ep-id">
     <div class="form-group">
       <label class="form-label">Product Name</label>
@@ -990,7 +990,7 @@ body {
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitEditProduct()">Save Changes â</button>
+      <button class="btn btn-primary" onclick="submitEditProduct()">Save Changes →</button>
     </div>
   </div>
 </div>
@@ -998,7 +998,7 @@ body {
 <!-- ADD SUPPLIER MODAL -->
 <div class="overlay" id="addsupplier-modal">
   <div class="modal">
-    <div class="modal-title">ð Add Supplier</div>
+    <div class="modal-title">🚚 Add Supplier</div>
     <div class="form-group">
       <label class="form-label">Supplier Name</label>
       <input class="form-input" id="sup-name" placeholder="e.g. SA Confectionery Wholesale">
@@ -1015,11 +1015,11 @@ body {
     </div>
     <div class="form-group">
       <label class="form-label">Notes (Optional)</label>
-      <input class="form-input" id="sup-notes" placeholder="e.g. Delivery takes 3â5 days">
+      <input class="form-input" id="sup-notes" placeholder="e.g. Delivery takes 3–5 days">
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitSupplier()">Save Supplier â</button>
+      <button class="btn btn-primary" onclick="submitSupplier()">Save Supplier →</button>
     </div>
   </div>
 </div>
@@ -1027,7 +1027,7 @@ body {
 <!-- NEW PURCHASE ORDER MODAL -->
 <div class="overlay" id="newpo-modal">
   <div class="modal">
-    <div class="modal-title">ð New Purchase Order</div>
+    <div class="modal-title">📋 New Purchase Order</div>
     <div class="form-group">
       <label class="form-label">Supplier Name</label>
       <input class="form-input" id="po-supplier" placeholder="e.g. SA Confectionery Wholesale">
@@ -1054,10 +1054,10 @@ body {
       <label class="form-label">Notes (Optional)</label>
       <input class="form-input" id="po-notes" placeholder="e.g. February restock">
     </div>
-    <div class="form-hint">ð¦ This order will show as <strong>Coming Soon</strong> until you mark it as received.</div>
+    <div class="form-hint">📦 This order will show as <strong>Coming Soon</strong> until you mark it as received.</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitPurchaseOrder()">Place Order â</button>
+      <button class="btn btn-primary" onclick="submitPurchaseOrder()">Place Order →</button>
     </div>
   </div>
 </div>
@@ -1065,7 +1065,7 @@ body {
 <!-- AUTO REORDER MODAL -->
 <div class="overlay" id="reorder-modal">
   <div class="modal">
-    <div class="modal-title">ð Reorder Rule</div>
+    <div class="modal-title">🔄 Reorder Rule</div>
     <input type="hidden" id="rr-edit-id">
     <div class="form-group">
       <label class="form-label">Product</label>
@@ -1087,10 +1087,10 @@ body {
       <label class="form-label">Supplier (Optional)</label>
       <input class="form-input" id="rr-supplier" placeholder="e.g. SA Confectionery Wholesale">
     </div>
-    <div class="form-hint" style="margin-bottom:12px">ð¬ When stock hits the reorder point, a Purchase Order is created automatically.</div>
+    <div class="form-hint" style="margin-bottom:12px">📬 When stock hits the reorder point, a Purchase Order is created automatically.</div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
-      <button class="btn btn-primary" onclick="submitReorderRule()">Save Rule â</button>
+      <button class="btn btn-primary" onclick="submitReorderRule()">Save Rule →</button>
     </div>
   </div>
 </div>
@@ -1101,7 +1101,7 @@ body {
 <script>
 const API = "https://script.google.com/macros/s/AKfycbxXczdc02AvL4wxw3wvE2Z_ZeYrwpzEff7yADI42RWeHcvv3D3PUdPwIqfKaHgiw1h7/exec";
 
-// ââ STATE ââââââââââââââââââââââââââââââââââ
+// ── STATE ──────────────────────────────────
 let allOrders        = [];
 let allProducts      = [];
 let allComponents    = [];
@@ -1109,7 +1109,7 @@ let allPurchaseOrders = [];
 let currentFilter    = 'all';
 let currentPOFilter  = 'all';
 
-// ââ INIT âââââââââââââââââââââââââââââââââââ
+// ── INIT ───────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   setGreeting();
   loadAll();
@@ -1120,11 +1120,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function setGreeting() {
   const h = new Date().getHours();
-  const g = h < 12 ? 'Good morning! ð¸' : h < 17 ? 'Good afternoon! ð¬' : 'Good evening! â¨';
+  const g = h < 12 ? 'Good morning! 🌸' : h < 17 ? 'Good afternoon! 🍬' : 'Good evening! ✨';
   document.getElementById('greeting').textContent = g;
 }
 
-// ââ FETCH HELPER âââââââââââââââââââââââââââ
+// ── FETCH HELPER ───────────────────────────
 async function api(params) {
   const qs = Object.entries(params).map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join('&');
   const res = await fetch(`${API}?${qs}`);
@@ -1143,7 +1143,7 @@ async function gapi(action, params) {
   return apiPost({ action, ...(params || {}) });
 }
 
-// ââ LOAD ALL DATA ââââââââââââââââââââââââââ
+// ── LOAD ALL DATA ──────────────────────────
 async function loadAll() {
   const [statsData, ordersData, productsData, componentsData, poData] = await Promise.all([
     api({ action: 'getStats' }),
@@ -1172,29 +1172,29 @@ async function loadAll() {
   updateBadges();
 }
 
-// ââ STATS ââââââââââââââââââââââââââââââââââ
+// ── STATS ──────────────────────────────────
 function renderStats(s) {
   document.getElementById('stats-grid').innerHTML = `
     <div class="stat s1">
-      <div class="stat-icon">ð¦</div>
+      <div class="stat-icon">📦</div>
       <div class="stat-lbl">Orders This Month</div>
       <div class="stat-val">${s.monthOrders}</div>
       <div class="stat-note">Active this month</div>
     </div>
     <div class="stat s2">
-      <div class="stat-icon">ð°</div>
+      <div class="stat-icon">💰</div>
       <div class="stat-lbl">Revenue This Month</div>
       <div class="stat-val">R${s.monthRevenue.toLocaleString()}</div>
       <div class="stat-note">From confirmed orders</div>
     </div>
     <div class="stat s3">
-      <div class="stat-icon">â³</div>
+      <div class="stat-icon">⏳</div>
       <div class="stat-lbl">Pending Deliveries</div>
       <div class="stat-val">${s.pendingOrders}</div>
       <div class="stat-note ${s.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
     </div>
     <div class="stat s4">
-      <div class="stat-icon">ð¨</div>
+      <div class="stat-icon">🚨</div>
       <div class="stat-lbl">Low Stock Alerts</div>
       <div class="stat-val">${s.lowStockCount}</div>
       <div class="stat-note ${s.lowStockCount > 0 ? 'warn' : ''}">Products need restocking</div>
@@ -1206,7 +1206,7 @@ function renderStats(s) {
     const preview = items.slice(0, 3).map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
     const remaining = items.length > 3 ? ` <span id="low-stock-toggle" onclick="toggleLowStockDetail()" style="cursor:pointer;text-decoration:underline;white-space:nowrap">+${items.length - 3} more</span>` : '';
     const allNames = items.map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
-    const detailHtml = `<span id="low-stock-detail" style="display:none"> Â· ${allNames}</span>`;
+    const detailHtml = `<span id="low-stock-detail" style="display:none"> · ${allNames}</span>`;
 
     document.getElementById('low-stock-alert').classList.remove('hidden');
     document.getElementById('low-stock-msg').innerHTML = `${items.length} products low on stock: ${preview}${remaining}${detailHtml}`;
@@ -1220,20 +1220,20 @@ function renderStats(s) {
   }
 }
 
-// ââ RECENT ORDERS (dashboard) ââââââââââââââ
+// ── RECENT ORDERS (dashboard) ──────────────
 function renderRecentOrders() {
   const recent = [...allOrders].reverse().slice(0, 5);
   if (!recent.length) { document.getElementById('recent-orders').innerHTML = '<div style="padding:20px;color:var(--text-soft);text-align:center">No orders yet</div>'; return; }
 
   const colors = ['#FDE8EC','#E8F4FF','#EEF8F5','#FFF3E0','#F0E8FF'];
-  const emojis = ['ð','ð','ð«','ð','ð¬'];
+  const emojis = ['🎀','🎁','🍫','🌟','🍬'];
 
   document.getElementById('recent-orders').innerHTML = recent.map((o, i) => `
     <div class="order-row">
       <div class="order-av" style="background:${colors[i%5]}">${emojis[i%5]}</div>
       <div class="order-info">
         <div class="order-name">${o.customerName}</div>
-        <div class="order-detail">${o.products} Â· Due ${fmtDate(o.deliveryDate)}</div>
+        <div class="order-detail">${o.products} · Due ${fmtDate(o.deliveryDate)}</div>
       </div>
       <span class="pill pill-${o.status.toLowerCase()}">${o.status}</span>
       <div class="order-price">R${Number(o.totalPrice).toLocaleString()}</div>
@@ -1241,7 +1241,7 @@ function renderRecentOrders() {
   `).join('');
 }
 
-// ââ DASH STOCK SUMMARY âââââââââââââââââââââ
+// ── DASH STOCK SUMMARY ─────────────────────
 function renderDashStock() {
   if (!allProducts.length) return;
   const html = `
@@ -1250,7 +1250,7 @@ function renderDashStock() {
       ${allProducts.filter(p=>p.active==='Yes').map(p => {
         const pct = Math.min(100, Math.round((p.stock / Math.max(p.lowThreshold*4, 1))*100));
         const status = p.stock <= p.lowThreshold ? 'low' : p.stock <= p.lowThreshold*2 ? 'medium' : 'good';
-        const label  = status === 'low' ? 'â  Low' : status === 'medium' ? '~ OK' : 'â Good';
+        const label  = status === 'low' ? '⚠ Low' : status === 'medium' ? '~ OK' : '✓ Good';
         return `<tr>
           <td>${p.name}</td>
           <td><strong>${p.stock}</strong></td>
@@ -1261,10 +1261,10 @@ function renderDashStock() {
   document.getElementById('dash-stock').innerHTML = html;
 }
 
-// ââ ORDERS TABLE âââââââââââââââââââââââââââ
+// ── ORDERS TABLE ───────────────────────────
 function renderOrdersTable() {
   const filtered = currentFilter === 'all' ? allOrders : allOrders.filter(o => o.status === currentFilter);
-  document.getElementById('orders-subtitle').textContent = `${allOrders.length} total orders Â· ${filtered.length} shown`;
+  document.getElementById('orders-subtitle').textContent = `${allOrders.length} total orders · ${filtered.length} shown`;
 
   if (!filtered.length) {
     document.getElementById('orders-table').innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-soft)">No orders found</div>';
@@ -1310,19 +1310,19 @@ async function changeStatus(orderId, newStatus) {
   if (res.success) {
     const o = allOrders.find(x => x.id === orderId);
     if (o) o.status = newStatus;
-    showToast('Order ' + orderId + ' â ' + newStatus, 'success');
+    showToast('Order ' + orderId + ' → ' + newStatus, 'success');
     renderRecentOrders();
   } else {
     showToast('Failed to update order', 'error');
   }
 }
 
-// ââ INVENTORY ââââââââââââââââââââââââââââââ
+// ── INVENTORY ──────────────────────────────
 function renderInventory() {
   const active = allProducts.filter(p => p.active === 'Yes');
-  document.getElementById('inv-sub').textContent = `${active.length} products Â· ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
+  document.getElementById('inv-sub').textContent = `${active.length} products · ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
 
-  const emojis = { 'Gift Box':'ð','Mini':'ð¬','Bundle':'ð','Budget':'ð','default':'ð«' };
+  const emojis = { 'Gift Box':'🎁','Mini':'🍬','Bundle':'🎀','Budget':'💝','default':'🍫' };
 
   document.getElementById('inv-grid').innerHTML = active.map(p => {
     const stock     = Number(p.stock);
@@ -1349,10 +1349,10 @@ function renderInventory() {
         </div>
         <div class="add-stock-row">
           <input class="qty-input" type="number" id="qty-${p.id}" value="${isLow ? Math.max(threshold * 3 - stock, threshold) : 1}" min="1">
-          <button class="btn btn-primary" style="padding:6px 10px;font-size:12px" onclick="quickRemoveStock('${p.id}','${p.name}')">â Remove</button>
+          <button class="btn btn-primary" style="padding:6px 10px;font-size:12px" onclick="quickRemoveStock('${p.id}','${p.name}')">− Remove</button>
           <button class="btn btn-green" style="padding:6px 10px;font-size:12px" onclick="quickAddStock('${p.id}','${p.name}')">+ Add</button>
         </div>
-        ${isLow ? `<div style="font-size:10px;color:var(--gold);margin-top:4px">ð¡ Suggested reorder: ${Math.max(threshold * 3 - stock, threshold)} units</div>` : ''}
+        ${isLow ? `<div style="font-size:10px;color:var(--gold);margin-top:4px">💡 Suggested reorder: ${Math.max(threshold * 3 - stock, threshold)} units</div>` : ''}
       </div>`;
   }).join('');
 }
@@ -1394,14 +1394,14 @@ async function quickRemoveStock(productId, productName) {
   }
 }
 
-// ââ STOCK HISTORY âââââââââââââââââââââââââââ
+// ── STOCK HISTORY ───────────────────────────
 async function loadHistory() {
-  document.getElementById('hist-table').innerHTML = '<div class="loading"><div class="spinner"></div> Loadingâ¦</div>';
+  document.getElementById('hist-table').innerHTML = '<div class="loading"><div class="spinner"></div> Loading…</div>';
   const data = await api({ action: 'getStockMovements' });
   const rows = Array.isArray(data) ? data : (data.movements || []);
   document.getElementById('hist-sub').textContent = `${rows.length} movement${rows.length !== 1 ? 's' : ''} recorded`;
   if (!rows.length) {
-    document.getElementById('hist-table').innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-soft)">No stock movements yet â add or remove stock from the Inventory page to start tracking.</div>';
+    document.getElementById('hist-table').innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-soft)">No stock movements yet — add or remove stock from the Inventory page to start tracking.</div>';
     return;
   }
   document.getElementById('hist-table').innerHTML = `
@@ -1413,21 +1413,21 @@ async function loadHistory() {
         ${rows.map(r => {
           const isAdd = Number(r.qty) >= 0;
           const d = r.date ? new Date(r.date) : null;
-          const dateStr = d ? d.toLocaleDateString('en-ZA', { day:'2-digit', month:'short', year:'numeric' }) + ' ' + d.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit' }) : 'â';
+          const dateStr = d ? d.toLocaleDateString('en-ZA', { day:'2-digit', month:'short', year:'numeric' }) + ' ' + d.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit' }) : '—';
           return `<tr>
             <td style="font-size:12px;color:var(--text-soft)">${dateStr}</td>
             <td><strong>${r.productName || r.productId}</strong></td>
-            <td><span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${isAdd ? 'var(--mint-light)' : '#FFE4EA'};color:${isAdd ? 'var(--mint)' : 'var(--rose)'}">${isAdd ? '+ Add' : 'â Remove'}</span></td>
+            <td><span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${isAdd ? 'var(--mint-light)' : '#FFE4EA'};color:${isAdd ? 'var(--mint)' : 'var(--rose)'}">${isAdd ? '+ Add' : '− Remove'}</span></td>
             <td><strong>${Math.abs(Number(r.qty))}</strong></td>
             <td>${r.newStock}</td>
-            <td style="font-size:12px;color:var(--text-soft)">${r.notes || 'â'}</td>
+            <td style="font-size:12px;color:var(--text-soft)">${r.notes || '—'}</td>
           </tr>`;
         }).join('')}
       </tbody>
     </table>`;
 }
 
-// ââ SEASONAL PLANNER ââââââââââââââââââââââââ
+// ── SEASONAL PLANNER ────────────────────────
 function easterDate(year) {
   const a = year % 19, b = Math.floor(year/100), c = year % 100;
   const d = Math.floor(b/4), e = b % 4, f = Math.floor((b+8)/25);
@@ -1457,7 +1457,7 @@ function loadSeasonal() {
   const urgency = days => days < 0 ? 'past' : days <= 21 ? 'urgent' : days <= 56 ? 'soon' : 'far';
   const daysLabel = days => {
     if (days < 0) return `${Math.abs(days)} days ago`;
-    if (days === 0) return 'TODAY! ð';
+    if (days === 0) return 'TODAY! 🎉';
     if (days === 1) return 'Tomorrow!';
     if (days <= 7) return `${days} days away`;
     const weeks = Math.round(days/7);
@@ -1465,22 +1465,22 @@ function loadSeasonal() {
   };
 
   const events = [
-    { emoji:'ð¹', name:"Valentine's Day",   fn: y => new Date(y, 1, 14),  tip:"Start making heart-shaped boxes & rose truffles 3 weeks before." },
-    { emoji:'ð£', name:'Easter',             fn: y => easterDate(y),       tip:"Hot Cross chocolate boxes & egg-themed hampers are bestsellers." },
-    { emoji:'ð', name:"Mother's Day",       fn: y => nthWeekday(y, 4, 0, 2), tip:"Your biggest event â order ribbon & packaging at least 6 weeks ahead." },
-    { emoji:'ð', name:"Father's Day",       fn: y => nthWeekday(y, 5, 0, 3), tip:"Dark chocolate & whisky truffles are popular. Prepare 4 weeks early." },
-    { emoji:'ð©', name:"Women's Day (SA)",   fn: y => new Date(y, 7, 9),   tip:"A great day for a special female-focused hamper promotion." },
-    { emoji:'ð¸', name:'Spring Day (SA)',    fn: y => new Date(y, 8, 1),   tip:"Launch a floral-inspired spring collection to kick off the season." },
-    { emoji:'ð', name:'Halloween',          fn: y => new Date(y, 9, 31),  tip:"Spooky packaging & dark chocolate skulls â growing fast in SA." },
-    { emoji:'ð', name:'Christmas',          fn: y => new Date(y, 11, 25), tip:"Your busiest season â start planning stock & packaging in October." },
-    { emoji:'ð', name:"New Year's Day",     fn: y => new Date(y, 0, 1),   tip:"Champagne truffles & gold-foil boxes sell well for New Year gifting." },
+    { emoji:'🌹', name:"Valentine's Day",   fn: y => new Date(y, 1, 14),  tip:"Start making heart-shaped boxes & rose truffles 3 weeks before." },
+    { emoji:'🐣', name:'Easter',             fn: y => easterDate(y),       tip:"Hot Cross chocolate boxes & egg-themed hampers are bestsellers." },
+    { emoji:'💐', name:"Mother's Day",       fn: y => nthWeekday(y, 4, 0, 2), tip:"Your biggest event — order ribbon & packaging at least 6 weeks ahead." },
+    { emoji:'👔', name:"Father's Day",       fn: y => nthWeekday(y, 5, 0, 3), tip:"Dark chocolate & whisky truffles are popular. Prepare 4 weeks early." },
+    { emoji:'👩', name:"Women's Day (SA)",   fn: y => new Date(y, 7, 9),   tip:"A great day for a special female-focused hamper promotion." },
+    { emoji:'🌸', name:'Spring Day (SA)',    fn: y => new Date(y, 8, 1),   tip:"Launch a floral-inspired spring collection to kick off the season." },
+    { emoji:'🎃', name:'Halloween',          fn: y => new Date(y, 9, 31),  tip:"Spooky packaging & dark chocolate skulls — growing fast in SA." },
+    { emoji:'🎄', name:'Christmas',          fn: y => new Date(y, 11, 25), tip:"Your busiest season — start planning stock & packaging in October." },
+    { emoji:'🎊', name:"New Year's Day",     fn: y => new Date(y, 0, 1),   tip:"Champagne truffles & gold-foil boxes sell well for New Year gifting." },
   ].map(ev => {
     const date = nextOccurrence(ev.fn);
     const days = daysUntil(date);
     return { ...ev, date, days, u: urgency(days) };
   }).sort((a,b) => a.days - b.days);
 
-  // Cards â show next 4 upcoming
+  // Cards — show next 4 upcoming
   const upcoming = events.filter(e => e.days >= 0).slice(0,4);
   document.getElementById('seasonal-grid').innerHTML = upcoming.map(ev => `
     <div class="season-card ${ev.u}">
@@ -1488,7 +1488,7 @@ function loadSeasonal() {
       <div class="sc-name">${ev.name}</div>
       <div class="sc-date">${fmtDate(ev.date)}</div>
       <div class="sc-days">${daysLabel(ev.days)}</div>
-      <div class="sc-tip">ð¡ ${ev.tip}</div>
+      <div class="sc-tip">💡 ${ev.tip}</div>
     </div>`).join('');
 
   // Full year list
@@ -1501,7 +1501,7 @@ function loadSeasonal() {
     </div>`).join('');
 }
 
-// ââ ANALYTICS ââââââââââââââââââââââââââââââ
+// ── ANALYTICS ──────────────────────────────
 function renderAnalytics() {
   const total = allOrders.filter(o => o.status !== 'Cancelled').length;
   const revenue = allOrders.filter(o => o.status !== 'Cancelled').reduce((s,o) => s + Number(o.totalPrice||0), 0);
@@ -1515,12 +1515,12 @@ function renderAnalytics() {
   const monthRev = thisMonth.reduce((s,o) => s + Number(o.totalPrice||0), 0);
 
   document.getElementById('insight-grid').innerHTML = `
-    <div class="insight"><div class="insight-emoji">ð¦</div><div class="insight-lbl">Total Orders</div><div class="insight-val">${total}</div><div class="insight-sub">All time</div></div>
-    <div class="insight"><div class="insight-emoji">ð°</div><div class="insight-lbl">Total Revenue</div><div class="insight-val">R${revenue.toLocaleString()}</div><div class="insight-sub">All time</div></div>
-    <div class="insight"><div class="insight-emoji">ð</div><div class="insight-lbl">Avg Order Value</div><div class="insight-val">R${avg}</div><div class="insight-sub">Per order</div></div>
-    <div class="insight"><div class="insight-emoji">ð</div><div class="insight-lbl">This Month</div><div class="insight-val">${thisMonth.length} orders</div><div class="insight-sub">R${monthRev.toLocaleString()} revenue</div></div>
-    <div class="insight"><div class="insight-emoji">â</div><div class="insight-lbl">Delivered</div><div class="insight-val">${allOrders.filter(o=>o.status==='Delivered').length}</div><div class="insight-sub">Completed orders</div></div>
-    <div class="insight"><div class="insight-emoji">â³</div><div class="insight-lbl">In Progress</div><div class="insight-val">${allOrders.filter(o=>['Pending','Confirmed','Packed'].includes(o.status)).length}</div><div class="insight-sub">Awaiting delivery</div></div>
+    <div class="insight"><div class="insight-emoji">📦</div><div class="insight-lbl">Total Orders</div><div class="insight-val">${total}</div><div class="insight-sub">All time</div></div>
+    <div class="insight"><div class="insight-emoji">💰</div><div class="insight-lbl">Total Revenue</div><div class="insight-val">R${revenue.toLocaleString()}</div><div class="insight-sub">All time</div></div>
+    <div class="insight"><div class="insight-emoji">📊</div><div class="insight-lbl">Avg Order Value</div><div class="insight-val">R${avg}</div><div class="insight-sub">Per order</div></div>
+    <div class="insight"><div class="insight-emoji">📅</div><div class="insight-lbl">This Month</div><div class="insight-val">${thisMonth.length} orders</div><div class="insight-sub">R${monthRev.toLocaleString()} revenue</div></div>
+    <div class="insight"><div class="insight-emoji">✅</div><div class="insight-lbl">Delivered</div><div class="insight-val">${allOrders.filter(o=>o.status==='Delivered').length}</div><div class="insight-sub">Completed orders</div></div>
+    <div class="insight"><div class="insight-emoji">⏳</div><div class="insight-lbl">In Progress</div><div class="insight-val">${allOrders.filter(o=>['Pending','Confirmed','Packed'].includes(o.status)).length}</div><div class="insight-sub">Awaiting delivery</div></div>
   `;
 }
 
@@ -1554,7 +1554,7 @@ function renderAnalyticsProducts() {
   }</div>`;
 }
 
-// ââ PRODUCTS TABLE âââââââââââââââââââââââââ
+// ── PRODUCTS TABLE ─────────────────────────
 function renderProductsTable() {
   document.getElementById('products-table').innerHTML = `
     <table class="tbl-full" style="width:100%">
@@ -1571,13 +1571,13 @@ function renderProductsTable() {
           <td><strong style="color:${isLow?'var(--rose)':'inherit'}">${p.stock}</strong></td>
           <td>${p.lowThreshold}</td>
           <td><span class="pill ${p.active==='Yes'?'pill-packed':'pill-cancelled'}">${p.active==='Yes'?'Active':'Inactive'}</span></td>
-          <td><button onclick="openEditProductModal('${p.id}')" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">âï¸ Edit</button></td>
+          <td><button onclick="openEditProductModal('${p.id}')" class="btn btn-ghost" style="padding:4px 10px;font-size:12px">✏️ Edit</button></td>
         </tr>`;
       }).join('')}
     </table>`;
 }
 
-// ââ SUPPLIERS TABLE ââââââââââââââââââââââââ
+// ── SUPPLIERS TABLE ────────────────────────
 async function loadSuppliers() {
   const data = await api({ action: 'getSuppliers' });
   if (data && data.error) return;
@@ -1591,9 +1591,9 @@ async function loadSuppliers() {
       <tr><th>Supplier</th><th>Contact Person</th><th>Phone</th><th>Notes</th></tr>
       ${suppliers.map(s => `<tr>
         <td><strong>${s.name}</strong></td>
-        <td>${s.contact || 'â'}</td>
-        <td>${s.phone || 'â'}</td>
-        <td style="font-size:12px;color:var(--text-soft)">${s.notes || 'â'}</td>
+        <td>${s.contact || '—'}</td>
+        <td>${s.phone || '—'}</td>
+        <td style="font-size:12px;color:var(--text-soft)">${s.notes || '—'}</td>
       </tr>`).join('')}
     </table>`;
 }
@@ -1606,7 +1606,7 @@ async function submitSupplier() {
   if (!name) { showToast('Please enter a supplier name', 'error'); return; }
   const res = await apiPost({ action: 'addSupplier', name, contact, phone, notes });
   if (res.success) {
-    showToast(`${name} added as a supplier! ð`, 'success');
+    showToast(`${name} added as a supplier! 🚚`, 'success');
     closeModals();
     loadSuppliers();
   } else {
@@ -1619,7 +1619,7 @@ function openAddSupplierModal() {
   document.getElementById('addsupplier-modal').classList.add('open');
 }
 
-// ââ PURCHASE ORDERS âââââââââââââââââââââââââ
+// ── PURCHASE ORDERS ─────────────────────────
 function populateComponentSelect() {
   if (!allComponents.length) return;
   const opts = allComponents.map(c =>
@@ -1637,7 +1637,7 @@ function renderPurchaseOrders() {
   const total   = allPurchaseOrders.length;
   const pending = allPurchaseOrders.filter(o => o['Status'] === 'Pending').length;
   document.getElementById('po-sub').textContent =
-    `${total} orders Â· ${pending} coming soon`;
+    `${total} orders · ${pending} coming soon`;
 
   const badge = document.getElementById('badge-po');
   if (pending > 0) { badge.style.display = 'inline-block'; badge.textContent = pending; }
@@ -1645,7 +1645,7 @@ function renderPurchaseOrders() {
 
   if (!filtered.length) {
     document.getElementById('po-table').innerHTML =
-      '<div style="padding:40px 24px;text-align:center;color:var(--text-soft)"><div style="font-size:32px;margin-bottom:10px">ð¦</div><div style="font-weight:600;font-size:15px;margin-bottom:6px;color:var(--text)">No purchase orders yet</div><div style="font-size:13px;margin-bottom:16px">Place your first order to start tracking incoming stock.</div><button class="btn-rose" style="font-size:13px;padding:8px 18px" onclick="nav(\'inventory\')">View low-stock items â</button></div>';
+      '<div style="padding:40px 24px;text-align:center;color:var(--text-soft)"><div style="font-size:32px;margin-bottom:10px">📦</div><div style="font-weight:600;font-size:15px;margin-bottom:6px;color:var(--text)">No purchase orders yet</div><div style="font-size:13px;margin-bottom:16px">Place your first order to start tracking incoming stock.</div><button class="btn-rose" style="font-size:13px;padding:8px 18px" onclick="nav(\'inventory\')">View low-stock items →</button></div>';
     return;
   }
 
@@ -1658,19 +1658,19 @@ function renderPurchaseOrders() {
       ${[...filtered].reverse().map(o => {
         const isPending = o['Status'] === 'Pending';
         const statusPill = isPending
-          ? '<span class="pill pill-coming">ð¦ Coming Soon</span>'
-          : '<span class="pill pill-received">â Received</span>';
+          ? '<span class="pill pill-coming">📦 Coming Soon</span>'
+          : '<span class="pill pill-received">✅ Received</span>';
         const action = isPending
-          ? `<button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">â Mark Received</button>`
+          ? `<button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">✓ Mark Received</button>`
           : '<span style="color:var(--text-soft);font-size:12px">Done</span>';
         return `<tr>
           <td style="font-size:12px;color:var(--text-soft)">${o['PO ID']}</td>
-          <td><strong>${o['Supplier Name'] || 'â'}</strong></td>
-          <td>${o['Component Name'] || 'â'}</td>
-          <td>${o['For Customer'] || 'â'}</td>
+          <td><strong>${o['Supplier Name'] || '—'}</strong></td>
+          <td>${o['Component Name'] || '—'}</td>
+          <td>${o['For Customer'] || '—'}</td>
           <td><strong>${o['Quantity Ordered']}</strong></td>
-          <td>${o['Order Date'] || 'â'}</td>
-          <td>${o['Expected Date'] || 'â'}</td>
+          <td>${o['Order Date'] || '—'}</td>
+          <td>${o['Expected Date'] || '—'}</td>
           <td>${statusPill}</td>
           <td>${action}</td>
         </tr>`;
@@ -1683,17 +1683,17 @@ function renderDashPendingPOs() {
   const card = document.getElementById('dash-po-card');
   if (!pending.length) {
     document.getElementById('dash-pending-pos').innerHTML =
-      '<div style="padding:8px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries. ð</div>';
+      '<div style="padding:8px 0;color:var(--text-soft);font-size:13.5px">No pending deliveries. 🎉</div>';
     return;
   }
   document.getElementById('dash-pending-pos').innerHTML = pending.map(o => `
     <div class="order-row">
-      <div class="order-av" style="background:#FFF3D0;font-size:20px">ð¦</div>
+      <div class="order-av" style="background:#FFF3D0;font-size:20px">📦</div>
       <div class="order-info">
         <div class="order-name">${o['Component Name']}</div>
-        <div class="order-detail">${o['Quantity Ordered']} units Â· from ${o['Supplier Name'] || 'Supplier'} Â· due ${o['Expected Date'] || 'â'}</div>
+        <div class="order-detail">${o['Quantity Ordered']} units · from ${o['Supplier Name'] || 'Supplier'} · due ${o['Expected Date'] || '—'}</div>
       </div>
-      <button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">â Received</button>
+      <button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}',${o['Quantity Ordered']})">✓ Received</button>
     </div>
   `).join('');
 }
@@ -1708,7 +1708,7 @@ function filterPOs(f, btn) {
 async function receivePO(poId, componentName, qty) {
   const res = await apiPost({ action: 'receivePurchaseOrder', poId });
   if (res.success) {
-    showToast(`â ${qty} units of ${componentName} added to stock!`, 'success');
+    showToast(`✅ ${qty} units of ${componentName} added to stock!`, 'success');
     // Update local state
     const po = allPurchaseOrders.find(o => o['PO ID'] === poId);
     if (po) po['Status'] = 'Received';
@@ -1745,7 +1745,7 @@ async function submitPurchaseOrder() {
 
   const res = await apiPost({ action: 'addPurchaseOrder', supplierName, componentId, componentName, quantity, expectedDate, notes, forCustomer });
   if (res.success) {
-    showToast(`Order placed! ${quantity}Ã ${componentName} coming soon. ð¦`, 'success');
+    showToast(`Order placed! ${quantity}× ${componentName} coming soon. 📦`, 'success');
     closeModals();
     const poData = await api({ action: 'getPurchaseOrders' }).catch(() => []);
     allPurchaseOrders = Array.isArray(poData) ? poData : (poData.orders || allPurchaseOrders);
@@ -1756,7 +1756,7 @@ async function submitPurchaseOrder() {
   }
 }
 
-// ââ BADGES ââââââââââââââââââââââââââââââââ
+// ── BADGES ────────────────────────────────
 function updateBadges() {
   const pending = allOrders.filter(o => ['Pending','Confirmed','Packed'].includes(o.status)).length;
   document.getElementById('badge-orders').textContent = pending;
@@ -1767,16 +1767,16 @@ function updateBadges() {
   else poBadge.style.display = 'none';
 }
 
-// ââ POPULATE SELECTS âââââââââââââââââââââââ
+// ── POPULATE SELECTS ───────────────────────
 function populateProductSelects() {
   const opts = allProducts.filter(p=>p.active==='Yes').map(p =>
-    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} â R${p.sellingPrice}</option>`
+    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} — R${p.sellingPrice}</option>`
   ).join('');
   document.getElementById('s-product').innerHTML = opts;
   addOrderItem(true);
 }
 
-// ââ ORDER ITEMS ââââââââââââââââââââââââââââ
+// ── ORDER ITEMS ────────────────────────────
 let orderItemCount = 0;
 
 function addOrderItem(first = false) {
@@ -1784,7 +1784,7 @@ function addOrderItem(first = false) {
   if (!first) orderItemCount++;
   const id = orderItemCount;
   const opts = allProducts.filter(p=>p.active==='Yes').map(p =>
-    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} â R${p.sellingPrice}</option>`
+    `<option value="${p.id}" data-price="${p.sellingPrice}">${p.name} — R${p.sellingPrice}</option>`
   ).join('');
 
   const div = document.createElement('div');
@@ -1797,7 +1797,7 @@ function addOrderItem(first = false) {
       <select class="form-select item-product" data-id="${id}" onchange="calcTotal()">${opts}</select>
     </div>
     <div class="form-group">
-      <label class="form-label">Qty ${id > 0 ? `<span style="float:right;cursor:pointer;color:var(--rose)" onclick="removeItem(${id})">â Remove</span>` : ''}</label>
+      <label class="form-label">Qty ${id > 0 ? `<span style="float:right;cursor:pointer;color:var(--rose)" onclick="removeItem(${id})">✕ Remove</span>` : ''}</label>
       <input class="form-input item-qty" data-id="${id}" type="number" min="1" value="1" oninput="calcTotal()">
     </div>`;
   document.getElementById('order-items-container').appendChild(div);
@@ -1818,10 +1818,10 @@ function calcTotal() {
     const price= parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
     total += qty * price;
   });
-  document.getElementById('order-total-preview').innerHTML = `ð° Total: <strong>R${total.toLocaleString()}</strong>`;
+  document.getElementById('order-total-preview').innerHTML = `💰 Total: <strong>R${total.toLocaleString()}</strong>`;
 }
 
-// ââ SUBMIT ORDER âââââââââââââââââââââââââââ
+// ── SUBMIT ORDER ───────────────────────────
 async function submitOrder() {
   const name     = document.getElementById('o-name').value.trim();
   const phone    = document.getElementById('o-phone').value.trim();
@@ -1841,10 +1841,10 @@ async function submitOrder() {
     const pid   = sel.value;
     const qty   = parseInt(document.querySelector(`.item-qty[data-id="${id}"]`)?.value) || 0;
     const price = parseFloat(sel.selectedOptions[0]?.dataset.price) || 0;
-    const pname = sel.selectedOptions[0]?.text.split(' â ')[0];
+    const pname = sel.selectedOptions[0]?.text.split(' — ')[0];
     if (qty > 0) {
       items.push({ productId: pid, qty });
-      prodParts.push(`${pname} Ã${qty}`);
+      prodParts.push(`${pname} ×${qty}`);
       total += qty * price;
     }
   });
@@ -1867,9 +1867,9 @@ async function submitOrder() {
     const deducted = items.map(i => {
       const p = allProducts.find(x => x.id === i.productId);
       if (p) p.stock = Math.max(0, Number(p.stock) - i.qty);
-      return p ? `${p.name} â${i.qty}` : '';
+      return p ? `${p.name} −${i.qty}` : '';
     }).filter(Boolean).join(', ');
-    showToast(`Order ${res.orderId} saved! Deducted: ${deducted} ð`, 'success');
+    showToast(`Order ${res.orderId} saved! Deducted: ${deducted} 🎉`, 'success');
     closeModals();
     loadAll();
   } else {
@@ -1877,7 +1877,7 @@ async function submitOrder() {
   }
 }
 
-// ââ SUBMIT STOCK âââââââââââââââââââââââââââ
+// ── SUBMIT STOCK ───────────────────────────
 async function submitStock() {
   const productId = document.getElementById('s-product').value;
   const qty       = parseInt(document.getElementById('s-qty').value);
@@ -1896,7 +1896,7 @@ async function submitStock() {
   }
 }
 
-// ââ SUBMIT PRODUCT âââââââââââââââââââââââââ
+// ── SUBMIT PRODUCT ─────────────────────────
 async function submitProduct() {
   const name      = document.getElementById('ap-name').value.trim();
   const desc      = document.getElementById('ap-desc').value.trim();
@@ -1910,7 +1910,7 @@ async function submitProduct() {
 
   const res = await apiPost({ action: 'addProduct', name, description: desc, sellingPrice: sell, costPrice: cost, stock, lowThreshold: threshold, category });
   if (res.success) {
-    showToast(`${name} added to your catalogue! ð`, 'success');
+    showToast(`${name} added to your catalogue! 🎁`, 'success');
     closeModals();
     loadAll();
   } else {
@@ -1918,7 +1918,7 @@ async function submitProduct() {
   }
 }
 
-// ââ MODALS âââââââââââââââââââââââââââââââââ
+// ── MODALS ─────────────────────────────────
 function openOrderModal() {
   document.getElementById('order-items-container').innerHTML = '';
   orderItemCount = 0;
@@ -1955,7 +1955,7 @@ async function submitEditProduct() {
   if (!name || isNaN(sellingPrice)) { showToast('Please fill in product name and selling price', 'error'); return; }
   const res = await apiPost({ action: 'editProduct', productId, name, description, sellingPrice, costPrice, lowThreshold, category, active });
   if (res.success) {
-    showToast(`${name} updated! â`, 'success');
+    showToast(`${name} updated! ✅`, 'success');
     closeModals();
     loadAll();
   } else {
@@ -1971,7 +1971,7 @@ document.querySelectorAll('.overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) closeModals(); });
 });
 
-// ââ LOW STOCK BANNER TOGGLES âââââââââââââââ
+// ── LOW STOCK BANNER TOGGLES ───────────────
 function toggleLowStockDetail() {
   const detail = document.getElementById('low-stock-detail');
   const toggle = document.getElementById('low-stock-toggle');
@@ -1989,15 +1989,15 @@ function toggleInvStockDetail() {
   if (toggle) toggle.textContent = showing ? `+${detail.innerHTML.split('<strong>').length - 1} more` : 'show less';
 }
 
-// ââ DATE FORMATTING ââââââââââââââââââââââââ
+// ── DATE FORMATTING ────────────────────────
 function fmtDate(val) {
-  if (!val) return 'â';
+  if (!val) return '—';
   const d = new Date(val);
-  if (isNaN(d.getTime()) || d.getFullYear() <= 1970) return 'â';
+  if (isNaN(d.getTime()) || d.getFullYear() <= 1970) return '—';
   return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-// ââ NAVIGATION âââââââââââââââââââââââââââââ
+// ── NAVIGATION ─────────────────────────────
 function nav(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
@@ -2014,7 +2014,7 @@ function nav(page) {
   if (page === 'seasonal') loadSeasonal();
 }
 
-// ââ TOAST ââââââââââââââââââââââââââââââââââ
+// ── TOAST ──────────────────────────────────
 let toastTimer;
 function showToast(msg, type='success') {
   const t = document.getElementById('toast');
@@ -2025,12 +2025,12 @@ function showToast(msg, type='success') {
   toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ââ AUTO REORDER ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── AUTO REORDER ──────────────────────────────────────────────────────────────
 async function loadReorder() {
   const tableDiv = document.getElementById('reorder-table');
   const alertsDiv = document.getElementById('reorder-alerts');
   const alertsList = document.getElementById('reorder-alerts-list');
-  tableDiv.innerHTML = '<div class="loading"><div class="spinner"></div> Loadingâ¦</div>';
+  tableDiv.innerHTML = '<div class="loading"><div class="spinner"></div> Loading…</div>';
   alertsDiv.style.display = 'none';
   try {
     const res = await gapi('getReorderRules');
@@ -2055,7 +2055,7 @@ async function loadReorder() {
 
     if (rules.length === 0) {
       tableDiv.innerHTML = `<div style="padding:32px;text-align:center;color:#9ca3af">
-        <div style="font-size:32px;margin-bottom:8px">ð</div>
+        <div style="font-size:32px;margin-bottom:8px">🔄</div>
         <div style="font-weight:600;margin-bottom:4px">No reorder rules yet</div>
         <div style="font-size:14px">Click "+ Add Rule" to set up automatic reordering for a product.</div>
       </div>`;
@@ -2080,11 +2080,11 @@ async function loadReorder() {
               <td><strong>${r.product}</strong></td>
               <td>${r.reorderPoint} units</td>
               <td>${r.reorderQty} units</td>
-              <td>${r.supplier || '<span style="color:#9ca3af">â</span>'}</td>
+              <td>${r.supplier || '<span style="color:#9ca3af">—</span>'}</td>
               <td style="color:${isLow ? '#dc2626' : '#16a34a'};font-weight:600">${r.currentStock}</td>
               <td>${isLow
-                ? '<span style="background:#fef2f2;color:#dc2626;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600">â  Low</span>'
-                : '<span style="background:#f0fdf4;color:#16a34a;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600">â OK</span>'}</td>
+                ? '<span style="background:#fef2f2;color:#dc2626;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600">⚠ Low</span>'
+                : '<span style="background:#f0fdf4;color:#16a34a;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600">✓ OK</span>'}</td>
               <td style="text-align:right">
                 <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px;margin-right:4px" onclick="openReorderModal('${r.productId}','${r.product}',${r.reorderPoint},${r.reorderQty},'${r.supplier||''}')">Edit</button>
                 <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px;color:#dc2626" onclick="deleteReorderRule('${r.productId}','${r.product}')">Delete</button>
@@ -2101,7 +2101,7 @@ async function loadReorder() {
 function openReorderModal(productId='', productName='', point='', qty='', supplier='') {
   // Populate product dropdown from existing products list
   const sel = document.getElementById('rr-product');
-  sel.innerHTML = '<option value="">â Select product â</option>';
+  sel.innerHTML = '<option value="">— Select product —</option>';
   // Try to pull from cached products if available
   const rows = document.querySelectorAll('#pg-inventory .tbl tbody tr, #pg-products .tbl tbody tr');
   const seen = new Set();
