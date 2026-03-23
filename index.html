@@ -662,7 +662,7 @@ body {
       ⚠️ <span id="low-stock-msg">Loading...</span>
     </div>
 
-    <div class="stats" id="stats-grid">
+    <div class="filter-row" id="stat-range-row">       <button class="filter-btn active" onclick="setStatRange('month',this)">This Month</button>       <button class="filter-btn" onclick="setStatRange('week',this)">This Week</button>       <button class="filter-btn" onclick="setStatRange('all',this)">All Time</button>     </div>     <div class="stats" id="stats-grid">
       <div class="loading" style="grid-column:span 4"><div class="spinner"></div> Loading stats…</div>
     </div>
 
@@ -1107,7 +1107,7 @@ body {
 const API = "https://script.google.com/macros/s/AKfycbxXczdc02AvL4wxw3wvE2Z_ZeYrwpzEff7yADI42RWeHcvv3D3PUdPwIqfKaHgiw1h7/exec";
 
 // ── STATE ──────────────────────────────────
-let allOrders        = [];
+let allOrders        = []; let statRange = 'month'; let lastStats = {};
 let allProducts      = [];
 let allComponents    = [];
 let allPurchaseOrders = [];
@@ -1163,7 +1163,7 @@ async function loadAll() {
 
   // Backend returns raw arrays directly
   allOrders = Array.isArray(ordersData) ? ordersData : (ordersData.orders || []);
-  renderRecentOrders(); renderOrdersTable(); renderAnalytics();
+  renderDashStats(); renderRecentOrders(); renderOrdersTable(); renderAnalytics();
 
   allProducts = Array.isArray(productsData) ? productsData : (productsData.products || []);
   renderDashStock(); renderInventory(); renderProductsTable(); populateProductSelects(); renderAnalyticsProducts();
@@ -1178,51 +1178,62 @@ async function loadAll() {
 }
 
 // ── STATS ──────────────────────────────────
+function setStatRange(range, btn) {
+  statRange = range;
+  document.querySelectorAll('#stat-range-row .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDashStats();
+}
+
 function renderStats(s) {
+  lastStats = s;
+  renderDashStats();
+}
+
+function renderDashStats() {
+  if (!lastStats || lastStats.pendingOrders === undefined) return;
+  const now = new Date();
+  let filtered;
+  if (statRange === 'week') {
+    const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 6);
+    filtered = allOrders.filter(o => new Date(o.orderDate) >= weekAgo && o.status !== 'Cancelled');
+  } else if (statRange === 'month') {
+    filtered = allOrders.filter(o => {
+      const d = new Date(o.orderDate);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && o.status !== 'Cancelled';
+    });
+  } else {
+    filtered = allOrders.filter(o => o.status !== 'Cancelled');
+  }
+  const orders = filtered.length;
+  const revenue = filtered.reduce((s,o) => s + Number(o.totalPrice||0), 0);
+  const label = statRange === 'week' ? 'This week' : statRange === 'month' ? 'This month' : 'All time';
   document.getElementById('stats-grid').innerHTML = `
-    <divclass="stat s1" onclick="nav('orders')">
+    <div class="stat s1" onclick="nav('orders')">
       <div class="stat-icon">📦</div>
-      <div class="stat-lbl">Orders This Month</div>
-      <div class="stat-val">${s.monthOrders}</div>
-      <div class="stat-note">Active this month</div>
+      <div class="stat-lbl">Orders</div>
+      <div class="stat-val">${orders}</div>
+      <div class="stat-note">${label}</div>
     </div>
     <div class="stat s2" onclick="nav('analytics')">
       <div class="stat-icon">💰</div>
-      <div class="stat-lbl">Revenue This Month</div>
-      <div class="stat-val">R${s.monthRevenue.toLocaleString()}</div>
-      <div class="stat-note">From confirmed orders</div>
+      <div class="stat-lbl">Revenue</div>
+      <div class="stat-val">R${revenue.toLocaleString()}</div>
+      <div class="stat-note">${label}</div>
     </div>
     <div class="stat s3" onclick="nav('orders')">
       <div class="stat-icon">⏳</div>
       <div class="stat-lbl">Pending Deliveries</div>
-      <div class="stat-val">${s.pendingOrders}</div>
-      <div class="stat-note ${s.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
+      <div class="stat-val">${lastStats.pendingOrders}</div>
+      <div class="stat-note ${lastStats.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
     </div>
-    <divclass="stat s4" onclick="nav('inventory')">
+    <div class="stat s4" onclick="nav('inventory')">
       <div class="stat-icon">🚨</div>
       <div class="stat-lbl">Low Stock Alerts</div>
-      <div class="stat-val">${s.lowStockCount}</div>
-      <div class="stat-note ${s.lowStockCount > 0 ? 'warn' : ''}">Products need restocking</div>
+      <div class="stat-val">${lastStats.lowStockCount}</div>
+      <div class="stat-note ${lastStats.lowStockCount > 0 ? 'warn' : ''}">Products need restocking</div>
     </div>
   `;
-
-  if (s.lowStockCount > 0) {
-    const items = s.lowStockItems;
-    const preview = items.slice(0, 3).map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
-    const remaining = items.length > 3 ? ` <span id="low-stock-toggle" onclick="toggleLowStockDetail()" style="cursor:pointer;text-decoration:underline;white-space:nowrap">+${items.length - 3} more</span>` : '';
-    const allNames = items.map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
-    const detailHtml = `<span id="low-stock-detail" style="display:none"> · ${allNames}</span>`;
-
-    document.getElementById('low-stock-alert').classList.remove('hidden');
-    document.getElementById('low-stock-msg').innerHTML = `${items.length} products low on stock: ${preview}${remaining}${detailHtml}`;
-    document.getElementById('badge-stock').style.display = 'inline-block';
-
-    const invPreview = items.slice(0, 3).map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ');
-    const invRemaining = items.length > 3 ? ` <span id="inv-stock-toggle" onclick="toggleInvStockDetail()" style="cursor:pointer;text-decoration:underline;white-space:nowrap">+${items.length - 3} more</span>` : '';
-    const invDetail = `<span id="inv-stock-detail" style="display:none"> ${items.slice(3).map(i => `<strong>${i.name}</strong> (${i.stock} left)`).join(', ')}</span>`;
-    document.getElementById('inv-alert').classList.remove('hidden');
-    document.getElementById('inv-alert-msg').innerHTML = `${items.length} product(s) running low: ${invPreview}${invRemaining}${invDetail}`;
-  }
 }
 
 // ── RECENT ORDERS (dashboard) ──────────────
