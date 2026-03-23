@@ -260,6 +260,7 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
     <div class="sb-item" onclick="nav('inventory')"><span class="si">🗃️</span> Inventory <span class="sb-badge alert" id="badge-stock" style="display:none">!</span></div>
     <div class="sb-section">Insights</div>
     <div class="sb-item" onclick="nav('analytics')"><span class="si">📊</span> Analytics</div>
+    <a class="sb-link" onclick="nav('draft-orders')">&#128231; Draft Orders</a>
     <div class="sb-section">Settings</div>
     <div class="sb-item" onclick="nav('products')"><span class="si">🎁</span> Products</div>
     <div class="sb-item" onclick="nav('suppliers')"><span class="si">🚚</span> Suppliers</div>
@@ -470,6 +471,13 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
       <div class="card-hd"><div class="card-title">📅 Full Year Overview</div></div>
       <div id="seasonal-year" style="padding:4px 0"></div>
     </div>
+  </div>
+  <div id="pg-draft-orders" class="pg" style="display:none">
+    <div class="page-hd"><h2>Draft Orders</h2><p class="page-sub">Emails detected as potential orders</p></div>
+    <div style="display:flex;gap:10px;margin-bottom:16px">
+      <button class="btn-rose" onclick="checkEmails()">&#128231; Scan Emails</button>
+    </div>
+    <div id="draft-orders-list"></div>
   </div>
 
 </main>
@@ -1455,6 +1463,7 @@ function nav(page) {
   if(page==='reorder') loadReorder();
   if(page==='seasonal') loadSeasonal();
   if(page==='analytics') { renderAnalytics(); renderAnalyticsCharts(); }
+  else if (p === 'draft-orders') loadDraftOrders();
 }
 
 // TOAST
@@ -1471,6 +1480,60 @@ function fmtDate(val) {
   const d=new Date(val);
   if(isNaN(d.getTime())||d.getFullYear()<=1970) return '—';
   return d.toLocaleDateString('en-ZA',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function loadDraftOrders() {
+  const list = document.getElementById('draft-orders-list');
+  list.innerHTML = '<p style="color:var(--text-soft)">Loading...</p>';
+  fetch(API + '&action=getDraftOrders')
+    .then(r => r.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+        list.innerHTML = '<p style="color:var(--text-soft);text-align:center;padding:40px">No draft orders yet. Click Scan Emails to check for new orders.</p>';
+        return;
+      }
+      list.innerHTML = data.map(d => `
+        <div style="background:var(--white);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div>
+              <strong style="font-size:15px">${d['Subject'] || 'No subject'}</strong>
+              <div style="font-size:12px;color:var(--text-soft);margin-top:2px">${d['Sender Name']} &lt;${d['Sender Email']}&gt; &mdash; ${d['Date Received'] ? new Date(d['Date Received']).toLocaleDateString() : ''}</div>
+            </div>
+            <span style="padding:3px 10px;border-radius:20px;font-size:11px;background:${d['Confidence']==='High'?'#d1fae5':'#fef3c7'};color:${d['Confidence']==='High'?'#065f46':'#92400e'}">${d['Confidence']} confidence</span>
+          </div>
+          <div style="background:var(--cream);border-radius:8px;padding:10px;font-size:13px;margin-bottom:10px;color:var(--text-soft)">${d['Body Snippet'] || ''}</div>
+          ${d['Extracted Products'] ? `<div style="margin-bottom:10px"><strong>Detected:</strong> ${d['Extracted Products']} &mdash; Qty: ${d['Extracted Quantities']}</div>` : '<div style="color:var(--text-soft);margin-bottom:10px">No products detected automatically</div>'}
+          <div style="display:flex;gap:8px">
+            ${d['Status']==='Pending' ? `<button class="btn-rose" onclick="approveDraft('${d['Draft ID']}')">&#10003; Approve</button><button onclick="rejectDraft('${d['Draft ID']}')" style="padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:transparent;cursor:pointer">&#10007; Reject</button>` : `<span style="color:var(--text-soft);font-size:13px">Status: ${d['Status']}</span>`}
+          </div>
+        </div>`).join('');
+    })
+    .catch(() => { list.innerHTML = '<p style="color:var(--rose)">Failed to load draft orders.</p>'; });
+}
+
+function checkEmails() {
+  const btn = event.target;
+  btn.textContent = 'Scanning...';
+  btn.disabled = true;
+  fetch(API + '&action=processEmails')
+    .then(r => r.json())
+    .then(() => { btn.textContent = '\u2709\uFE0F Scan Emails'; btn.disabled = false; loadDraftOrders(); })
+    .catch(() => { btn.textContent = '\u2709\uFE0F Scan Emails'; btn.disabled = false; alert('Error scanning emails.'); });
+}
+
+function approveDraft(id) {
+  fetch(API + '&action=updateDraftStatus&draftId=' + id + '&status=Approved')
+    .then(r => r.json())
+    .then(() => { nav('orders'); })
+    .catch(() => alert('Error approving draft.'));
+}
+
+function rejectDraft(id) {
+  if (!confirm('Reject this draft order?')) return;
+  fetch(API + '&action=updateDraftStatus&draftId=' + id + '&status=Rejected')
+    .then(r => r.json())
+    .then(() => loadDraftOrders())
+    .catch(() => alert('Error rejecting draft.'));
 }
 </script>
 </body>
