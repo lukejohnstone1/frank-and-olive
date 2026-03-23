@@ -210,8 +210,13 @@ body {
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
+.stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
 .stat::after {
   content:'';
   position: absolute;
@@ -1175,25 +1180,25 @@ async function loadAll() {
 // ── STATS ──────────────────────────────────
 function renderStats(s) {
   document.getElementById('stats-grid').innerHTML = `
-    <div class="stat s1">
+    <divclass="stat s1" onclick="nav('orders')">
       <div class="stat-icon">📦</div>
       <div class="stat-lbl">Orders This Month</div>
       <div class="stat-val">${s.monthOrders}</div>
       <div class="stat-note">Active this month</div>
     </div>
-    <div class="stat s2">
+    <div class="stat s2" onclick="nav('analytics')">
       <div class="stat-icon">💰</div>
       <div class="stat-lbl">Revenue This Month</div>
       <div class="stat-val">R${s.monthRevenue.toLocaleString()}</div>
       <div class="stat-note">From confirmed orders</div>
     </div>
-    <div class="stat s3">
+    <div class="stat s3" onclick="nav('orders')">
       <div class="stat-icon">⏳</div>
       <div class="stat-lbl">Pending Deliveries</div>
       <div class="stat-val">${s.pendingOrders}</div>
       <div class="stat-note ${s.pendingOrders > 0 ? 'warn' : ''}">Need attention</div>
     </div>
-    <div class="stat s4">
+    <divclass="stat s4" onclick="nav('inventory')">
       <div class="stat-icon">🚨</div>
       <div class="stat-lbl">Low Stock Alerts</div>
       <div class="stat-val">${s.lowStockCount}</div>
