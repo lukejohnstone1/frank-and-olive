@@ -1297,7 +1297,7 @@ function renderOrdersTable() {
       </tr>
       ${[...filtered].reverse().map(o => `
         <tr>
-          <td><strong>${o.id}</strong></td>
+          <td onclick="viewOrderDetail('${o.id}')" style="cursor:pointer;color:var(--rose)"><strong>${o.id}</strong></td>
           <td>${o.customerName}<br><span style="font-size:11px;color:var(--text-soft)">${o.customerPhone}</span></td>
           <td style="max-width:180px">${o.products}</td>
           <td>${fmtDate(o.orderDate)}</td>
@@ -1321,7 +1321,7 @@ function filterOrders(f, btn) {
   renderOrdersTable();
 }
 
-function searchOrders(val) {   orderSearch = val;   renderOrdersTable(); }  async function changeStatus(orderId, newStatus) {
+function viewOrderDetail(id) {   const o = allOrders.find(x => x.id === id);   if (!o) return;   document.getElementById('order-detail-content').innerHTML = `     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">       <strong style="font-size:17px">${o.id}</strong>       <span class="pill pill-${o.status.toLowerCase()}">${o.status}</span>     </div>     <div style="margin-bottom:10px"><strong>Customer:</strong> ${o.customerName} · ${o.customerPhone}</div>     <div style="margin-bottom:10px"><strong>Products:</strong><div style="margin-top:6px;color:var(--text-soft)">${o.products}</div></div>     <div style="margin-bottom:10px"><strong>Order date:</strong> ${fmtDate(o.orderDate)}</div>     <div style="margin-bottom:16px"><strong>Delivery date:</strong> ${fmtDate(o.deliveryDate)}</div>     <div style="font-size:18px;font-weight:700;color:var(--choc)">R${Number(o.totalPrice).toLocaleString()}</div>     <div style="margin-top:20px;text-align:right">       <button class="btn btn-ghost" onclick="document.getElementById('order-detail-modal').style.display='none'">Close</button>     </div>   `;   document.getElementById('order-detail-modal').style.display = 'flex'; }  function searchOrders(val) {   orderSearch = val;   renderOrdersTable(); }  async function changeStatus(orderId, newStatus) {
   const res = await apiPost({ action: 'updateOrderStatus', orderId, status: newStatus });
   if (res.success) {
     const o = allOrders.find(x => x.id === orderId);
@@ -2204,5 +2204,5 @@ async function createReorderPO(productId) {
   }
 }
 </script>
-</body>
+<div id="order-detail-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center" onclick="this.style.display='none'">   <div id="order-detail-content" style="background:var(--white);border-radius:var(--radius);padding:28px;max-width:520px;width:90%;box-shadow:var(--shadow-lg)" onclick="event.stopPropagation()">   </div> </div> </body>
 </html>
