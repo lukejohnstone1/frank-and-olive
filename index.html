@@ -710,7 +710,7 @@ body {
       <button class="filter-btn" onclick="filterOrders('Delivered',this)">Delivered</button>
     </div>
     <div class="card">
-      <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading orders…</div></div>
+      <input id="order-search" type="text" placeholder="🔍  Search by name, order ID or product…" oninput="searchOrders(this.value)" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:Outfit,sans-serif;font-size:13.5px;outline:none;box-sizing:border-box;margin-bottom:14px;display:block">       <div id="orders-table"><div class="loading"><div class="spinner"></div> Loading orders…</div></div>
     </div>
   </div>
 
@@ -1111,7 +1111,7 @@ let allOrders        = []; let statRange = 'month'; let lastStats = {};
 let allProducts      = [];
 let allComponents    = [];
 let allPurchaseOrders = [];
-let currentFilter    = 'all';
+let currentFilter    = 'all'; let orderSearch      = '';
 let currentPOFilter  = 'all';
 
 // ── INIT ───────────────────────────────────
@@ -1321,7 +1321,7 @@ function filterOrders(f, btn) {
   renderOrdersTable();
 }
 
-async function changeStatus(orderId, newStatus) {
+function searchOrders(val) {   orderSearch = val;   renderOrdersTable(); }  async function changeStatus(orderId, newStatus) {
   const res = await apiPost({ action: 'updateOrderStatus', orderId, status: newStatus });
   if (res.success) {
     const o = allOrders.find(x => x.id === orderId);
