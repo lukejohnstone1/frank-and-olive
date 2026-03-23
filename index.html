@@ -728,7 +728,7 @@ body {
     <div class="alert-bar hidden" id="inv-alert">
       🚨 <span id="inv-alert-msg"></span>
     </div>
-    <div id="inv-grid" class="prod-grid">
+     <div class="filter-row" id="inv-sort-row" style="margin-bottom:14px">       <button class="filter-btn active" onclick="setInvSort('low',this)">⚠️ Low Stock First</button>       <button class="filter-btn" onclick="setInvSort('az',this)">A–Z</button>       <button class="filter-btn" onclick="setInvSort('asc',this)">Stock ↑</button>       <button class="filter-btn" onclick="setInvSort('desc',this)">Stock ↓</button>     </div>     <div id="inv-grid" class="prod-grid">
       <div class="loading" style="grid-column:span 3"><div class="spinner"></div> Loading…</div>
     </div>
   </div>
@@ -1111,7 +1111,7 @@ let allOrders        = []; let statRange = 'month'; let lastStats = {};
 let allProducts      = [];
 let allComponents    = [];
 let allPurchaseOrders = [];
-let currentFilter    = 'all'; let orderSearch      = ''; let selectedOrders   = new Set();
+let currentFilter    = 'all'; let orderSearch      = ''; let selectedOrders   = new Set(); let invSort          = 'low';
 let currentPOFilter  = 'all';
 
 // ── INIT ───────────────────────────────────
@@ -1334,13 +1334,13 @@ function toggleOrderSelect(id, cb) {   if (cb.checked) selectedOrders.add(id); e
 }
 
 // ── INVENTORY ──────────────────────────────
-function renderInventory() {
-  const active = allProducts.filter(p => p.active === 'Yes');
+function setInvSort(sort, btn) {   invSort = sort;   document.querySelectorAll('#inv-sort-row .filter-btn').forEach(b => b.classList.remove('active'));   btn.classList.add('active');   renderInventory(); }  function renderInventory() {
+   const active = allProducts.filter(p => p.active === 'Yes');   let sorted = [...active];   if (invSort === 'az') sorted.sort((a,b) => a.name.localeCompare(b.name));   else if (invSort === 'asc') sorted.sort((a,b) => Number(a.stock) - Number(b.stock));   else if (invSort === 'desc') sorted.sort((a,b) => Number(b.stock) - Number(a.stock));   else sorted.sort((a,b) => ((Number(a.stock)<=Number(a.lowThreshold)?0:1)-(Number(b.stock)<=Number(b.lowThreshold)?0:1)) || Number(a.stock)-Number(b.stock));
   document.getElementById('inv-sub').textContent = `${active.length} products · ${active.filter(p => Number(p.stock) <= Number(p.lowThreshold)).length} need restocking`;
 
   const emojis = { 'Gift Box':'🎁','Mini':'🍬','Bundle':'🎀','Budget':'💝','default':'🍫' };
 
-  document.getElementById('inv-grid').innerHTML = active.map(p => {
+  document.getElementById('inv-grid').innerHTML = sorted.map(p => {
     const stock     = Number(p.stock);
     const threshold = Number(p.lowThreshold);
     const maxVal    = Math.max(threshold * 6, 30);
