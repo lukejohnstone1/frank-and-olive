@@ -954,6 +954,25 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
   </div>
 </div>
 
+<!-- EDIT PURCHASE ORDER MODAL -->
+<div class="overlay" id="editpo-modal">
+  <div class="modal">
+    <div class="modal-title">&#9998;&#65039; Edit Purchase Order</div>
+    <input type="hidden" id="epo-id">
+    <div class="form-group"><label class="form-label">Supplier Name</label><input class="form-input" id="epo-supplier" placeholder="e.g. SA Confectionery Wholesale"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Quantity Ordered</label><input class="form-input" id="epo-qty" type="number" min="1" placeholder="30"></div>
+      <div class="form-group"><label class="form-label">Expected Arrival Date</label><input class="form-input" id="epo-expected" type="date"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="epo-status"><option>Pending</option><option>Received</option></select></div>
+    <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="epo-notes" placeholder="e.g. February restock"></div>
+    <div class="btn-row" style="justify-content:flex-end;gap:10px;margin-top:12px">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditPO()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <!-- AUTO REORDER MODAL -->
 <div class="overlay" id="reorder-modal">
   <div class="modal">
@@ -1465,7 +1484,7 @@ function renderPurchaseOrders() {
   if(!filtered.length){document.getElementById('po-table').innerHTML=`<div style="padding:40px 24px;text-align:center;color:var(--text-soft)"><div style="font-size:32px;margin-bottom:10px">📦</div><div style="font-weight:600;font-size:15px;margin-bottom:6px;color:var(--text)">No purchase orders yet</div><div style="font-size:13px;margin-bottom:16px">Place your first order to start tracking incoming stock.</div><button class="btn btn-ghost" style="font-size:13px;padding:8px 18px" onclick="nav('inventory')">View low-stock items →</button></div>`;return;}
   document.getElementById('po-table').innerHTML=`
     <table class="tbl-full" style="width:100%">
-      <tr><th>PO ID</th><th>Supplier</th><th>Component</th><th>For</th><th>Qty</th><th>Ordered</th><th>Expected</th><th>Status</th><th>Action</th></tr>
+      <tr><th>PO ID</th><th>Supplier</th><th>Component</th><th>For</th><th>Qty</th><th>Ordered</th><th>Expected</th><th>Status</th><th>Action</th><th>Edit</th></tr>
       ${[...filtered].reverse().map(o=>{
         const isPending=o['Status']==='Pending';
         return `<tr>
@@ -1476,6 +1495,7 @@ function renderPurchaseOrders() {
           <td>${o['Order Date']||'—'}</td><td>${o['Expected Date']||'—'}</td>
           <td>${isPending?'<span class="pill pill-coming">📦 Coming Soon</span>':'<span class="pill pill-received">✅ Received</span>'}</td>
           <td>${isPending?`<button class="btn-receive" onclick="receivePO('${o['PO ID']}','${o['Component Name']}','${o['Quantity Ordered']}')">✓ Mark Received</button>`:'<span style="color:var(--text-soft);font-size:12px">Done</span>'}</td>
+          <td><button onclick="openEditPOModal(''+o['PO ID']+'')" style="background:var(--rose-pale);color:var(--rose);border:1.5px solid var(--rose-light);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:Outfit,sans-serif;font-size:12px;font-weight:500;white-space:nowrap">&#9998; Edit</button></td>
         </tr>`;
       }).join('')}
     </table>`;
@@ -1626,6 +1646,30 @@ async function submitEditProduct() {
   if(res.success){showToast(`${name} updated! ✅`,'success');closeModals();loadAll();}
   else showToast('Error: '+(res.error||'Something went wrong'),'error');
 }
+function openEditPOModal(poId) {
+  const o=allPurchaseOrders.find(x=>x['PO ID']===poId);
+  if(!o){showToast('Purchase order not found','error');return;}
+  document.getElementById('epo-id').value=o['PO ID'];
+  document.getElementById('epo-supplier').value=o['Supplier Name']||'';
+  document.getElementById('epo-qty').value=o['Quantity Ordered']||'';
+  document.getElementById('epo-expected').value=o['Expected Date']?o['Expected Date'].split('T')[0]:'';
+  document.getElementById('epo-status').value=o['Status']||'Pending';
+  document.getElementById('epo-notes').value=o['Notes']||'';
+  document.getElementById('editpo-modal').classList.add('open');
+}
+async function saveEditPO() {
+  const poId=document.getElementById('epo-id').value;
+  const supplierName=document.getElementById('epo-supplier').value.trim();
+  const qty=document.getElementById('epo-qty').value;
+  const expectedDate=document.getElementById('epo-expected').value;
+  const status=document.getElementById('epo-status').value;
+  const notes=document.getElementById('epo-notes').value.trim();
+  if(!supplierName){showToast('Supplier name is required','error');return;}
+  const res=await apiPost({action:'editPurchaseOrder',poId,supplierName,qty,expectedDate,status,notes});
+  if(res.success){showToast('Purchase order updated! ✅','success');closeModals();const pd=await api({action:'getPurchaseOrders'});allPurchaseOrders=Array.isArray(pd)?pd:(pd.orders||[]);renderPurchaseOrders();}
+  else showToast('Error: '+(res.error||'Something went wrong'),'error');
+}
+
 function openEditOrderModal(orderId) {
   const o=allOrders.find(x=>x.id===orderId);
   if(!o){showToast('Order not found','error');return;}
