@@ -868,6 +868,32 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
   </div>
 </div>
 
+<!-- EDIT ORDER MODAL -->
+<div class="overlay" id="editorder-modal">
+  <div class="modal">
+    <div class="modal-title">&#9998;&#65039; Edit Order</div>
+    <input type="hidden" id="eo-id">
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Customer Name</label><input class="form-input" id="eo-name" placeholder="e.g. Sarah Joubert"></div>
+      <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="eo-phone" placeholder="Phone number"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Order Date</label><input class="form-input" id="eo-date" type="date"></div>
+      <div class="form-group"><label class="form-label">Delivery Date</label><input class="form-input" id="eo-delivery" type="date"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Status</label><select class="form-select" id="eo-status"><option>Pending</option><option>Confirmed</option><option>Packed</option><option>Delivered</option><option>Cancelled</option></select></div>
+      <div class="form-group"><label class="form-label">Total Price (R)</label><input class="form-input" id="eo-total" type="number" step="0.01"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Products</label><textarea class="form-input" id="eo-products" rows="2" style="resize:vertical;font-family:Outfit,sans-serif"></textarea></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-input" id="eo-notes" rows="2" style="resize:vertical;font-family:Outfit,sans-serif"></textarea></div>
+    <div class="btn-row" style="justify-content:flex-end;gap:10px;margin-top:12px">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditOrder()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <!-- ADD SUPPLIER MODAL -->
 <div class="overlay" id="addsupplier-modal">
   <div class="modal">
@@ -1091,7 +1117,7 @@ function renderOrdersTable() {
     <table class="tbl-full" style="width:100%">
       <tr>
         <th><input type="checkbox" id="select-all-orders" onclick="selectAllOrders(this)" style="cursor:pointer;width:16px;height:16px"></th>
-        <th>Order ID</th><th>Customer</th><th>Products</th><th>Order Date</th><th>Delivery</th><th>Total</th><th>Status</th><th>Update</th>
+        <th>Order ID</th><th>Customer</th><th>Products</th><th>Order Date</th><th>Delivery</th><th>Total</th><th>Status</th><th>Update</th><th>Edit</th>
       </tr>
       ${[...filtered].reverse().map(o=>`
         <tr>
@@ -1105,6 +1131,7 @@ function renderOrdersTable() {
           <td><select onchange="changeStatus('${o.id}',this.value)" style="padding:5px 8px;border-radius:7px;border:1.5px solid var(--border);font-family:Outfit,sans-serif;font-size:12px;cursor:pointer">
             ${statuses.map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}
           </select></td>
+          <td><button onclick="openEditOrderModal('${o.id}')" style="background:var(--rose-pale);color:var(--rose);border:1.5px solid var(--rose-light);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:Outfit,sans-serif;font-size:12px;font-weight:500;white-space:nowrap">&#9998; Edit</button></td>
         </tr>`).join('')}
     </table>`;
 }
@@ -1576,6 +1603,35 @@ async function submitEditProduct() {
   if(!name||isNaN(sellingPrice)){showToast('Please fill in product name and selling price','error');return;}
   const res=await apiPost({action:'editProduct',productId,name,description,sellingPrice,costPrice,lowThreshold,category,active});
   if(res.success){showToast(`${name} updated! ✅`,'success');closeModals();loadAll();}
+  else showToast('Error: '+(res.error||'Something went wrong'),'error');
+}
+function openEditOrderModal(orderId) {
+  const o=allOrders.find(x=>x.id===orderId);
+  if(!o){showToast('Order not found','error');return;}
+  document.getElementById('eo-id').value=o.id;
+  document.getElementById('eo-name').value=o.customerName||'';
+  document.getElementById('eo-phone').value=o.customerPhone||'';
+  document.getElementById('eo-date').value=o.orderDate?o.orderDate.split('T')[0]:'';
+  document.getElementById('eo-delivery').value=o.deliveryDate?o.deliveryDate.split('T')[0]:'';
+  document.getElementById('eo-status').value=o.status||'Pending';
+  document.getElementById('eo-total').value=o.totalPrice||'';
+  document.getElementById('eo-products').value=o.products||'';
+  document.getElementById('eo-notes').value=o.notes||'';
+  document.getElementById('editorder-modal').classList.add('open');
+}
+async function saveEditOrder() {
+  const orderId=document.getElementById('eo-id').value;
+  const customerName=document.getElementById('eo-name').value.trim();
+  const customerPhone=document.getElementById('eo-phone').value.trim();
+  const orderDate=document.getElementById('eo-date').value;
+  const deliveryDate=document.getElementById('eo-delivery').value;
+  const status=document.getElementById('eo-status').value;
+  const totalPrice=document.getElementById('eo-total').value;
+  const products=document.getElementById('eo-products').value.trim();
+  const notes=document.getElementById('eo-notes').value.trim();
+  if(!customerName||!orderDate){showToast('Customer name and order date are required','error');return;}
+  const res=await apiPost({action:'editOrder',orderId,customerName,customerPhone,orderDate,deliveryDate,status,totalPrice,products,notes});
+  if(res.success){showToast('Order updated! ✅','success');closeModals();loadAll();}
   else showToast('Error: '+(res.error||'Something went wrong'),'error');
 }
 function closeModals() { document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
