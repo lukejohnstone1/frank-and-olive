@@ -551,6 +551,7 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
     <div class="sb-item" onclick="nav('reorder')"><span class="si">🔄</span> Auto Reorder <span class="sb-badge alert" id="badge-reorder" style="display:none">!</span></div>
     <div class="sb-section">Planning</div>
     <div class="sb-item" onclick="nav('seasonal')"><span class="si">🗓️</span> Seasonal Planner</div>
+    <div class="sb-item" onclick="nav('settings')"><span class="si">⚙️</span> Appearance</div>
   </div>
   <div class="sb-footer"><span class="status-dot"></span>Live · Google Sheets</div>
 </nav>
@@ -769,6 +770,49 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
       <button class="btn btn-primary" onclick="checkEmails()">✉️ Scan Emails Now</button>
     </div>
     <div id="draft-orders-list"></div>
+  </div>
+
+
+  <!-- SETTINGS / APPEARANCE -->
+  <div id="pg-settings" class="page">
+    <div class="ph">
+      <div><div class="ph-title">⚙️ Appearance</div><div class="ph-sub">Customise your dashboard look and feel</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:780px">
+      <div class="card" style="grid-column:1/-1;padding:24px">
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:16px">🏷️ Business Details</div>
+        <div class="form-group" style="margin-bottom:12px"><label class="form-label">Business Name</label><input class="form-input" id="set-bizname" placeholder="Frank &amp; Olive"></div>
+        <div class="form-group"><label class="form-label">Tagline</label><input class="form-input" id="set-tagline" placeholder="Luxury Confectioners"></div>
+      </div>
+      <div class="card" style="padding:24px">
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px">🎨 Accent Colour</div>
+        <div style="font-size:12px;color:var(--text-soft);margin-bottom:14px">Choose a theme or pick your own colour</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px" id="set-swatches">
+          <button onclick="pickPreset('#D4526E','rgba(212,82,110,0.08)','rgba(212,82,110,0.22)','#B4324E')" title="Rose (default)" style="width:32px;height:32px;border-radius:50%;background:#D4526E;border:3px solid transparent;cursor:pointer"></button>
+          <button onclick="pickPreset('#7B5EA7','rgba(123,94,167,0.08)','rgba(123,94,167,0.22)','#5B3E87')" title="Purple" style="width:32px;height:32px;border-radius:50%;background:#7B5EA7;border:3px solid transparent;cursor:pointer"></button>
+          <button onclick="pickPreset('#2E86AB','rgba(46,134,171,0.08)','rgba(46,134,171,0.22)','#0E668B')" title="Ocean" style="width:32px;height:32px;border-radius:50%;background:#2E86AB;border:3px solid transparent;cursor:pointer"></button>
+          <button onclick="pickPreset('#3AAA6A','rgba(58,170,106,0.08)','rgba(58,170,106,0.22)','#1A8A4A')" title="Sage" style="width:32px;height:32px;border-radius:50%;background:#3AAA6A;border:3px solid transparent;cursor:pointer"></button>
+          <button onclick="pickPreset('#E07B39','rgba(224,123,57,0.08)','rgba(224,123,57,0.22)','#C05B19')" title="Amber" style="width:32px;height:32px;border-radius:50%;background:#E07B39;border:3px solid transparent;cursor:pointer"></button>
+          <button onclick="pickPreset('#C0392B','rgba(192,57,43,0.08)','rgba(192,57,43,0.22)','#A0190B')" title="Crimson" style="width:32px;height:32px;border-radius:50%;background:#C0392B;border:3px solid transparent;cursor:pointer"></button>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <label class="form-label" style="margin:0">Custom:</label>
+          <input type="color" id="set-colorpicker" style="width:40px;height:36px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;background:white" oninput="applyAccentColor(this.value)">
+        </div>
+      </div>
+      <div class="card" style="padding:24px">
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:12px">👁️ Preview</div>
+        <div style="background:var(--rose-pale);border:1.5px solid var(--rose-light);border-radius:10px;padding:14px;margin-bottom:12px">
+          <div style="font-size:13px;color:var(--rose);font-weight:600">Sample Highlight Card</div>
+          <div style="font-size:12px;color:var(--text-soft);margin-top:4px">Your accent colour applied to cards and tags</div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;font-size:13px">Sample Primary Button</button>
+      </div>
+    </div>
+    <div style="margin-top:20px;max-width:780px;display:flex;gap:10px">
+      <button class="btn btn-primary" onclick="saveSettings()">💾 Save Changes</button>
+      <button class="btn btn-ghost" onclick="resetSettings()">↩️ Reset to Default</button>
+    </div>
   </div>
 
 </main>
@@ -1043,7 +1087,7 @@ let prodSortCol=null, prodSortDir=1;
 
 // INIT
 window.addEventListener('DOMContentLoaded', () => {
-  setGreeting(); loadAll();
+  setGreeting(); loadAll(); initSettings();
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('o-date').value = today;
 });
@@ -1723,6 +1767,60 @@ async function saveEditSupplier() {
   else showToast('Error: '+(res.error||'Something went wrong'),'error');
 }
 
+function initSettings() {
+  const s = JSON.parse(localStorage.getItem('fo_settings')||'{}');
+  if (s.accentHex) applyAccentColor(s.accentHex, false);
+  if (s.bizName) { const el=document.querySelector('.sb-name'); if(el) el.textContent=s.bizName; }
+  if (s.tagline) { const el=document.querySelector('.sb-tagline'); if(el) el.textContent=s.tagline; }
+}
+function loadSettingsPage() {
+  const s = JSON.parse(localStorage.getItem('fo_settings')||'{}');
+  const hex = s.accentHex || '#D4526E';
+  const cp = document.getElementById('set-colorpicker');
+  if (cp) cp.value = hex;
+  const biz = document.getElementById('set-bizname');
+  if (biz) biz.value = s.bizName || '';
+  const tgl = document.getElementById('set-tagline');
+  if (tgl) tgl.value = s.tagline || '';
+}
+function saveSettings() {
+  const bizName = (document.getElementById('set-bizname').value||'').trim();
+  const tagline = (document.getElementById('set-tagline').value||'').trim();
+  const hex = document.getElementById('set-colorpicker').value;
+  const s = { accentHex: hex, bizName, tagline };
+  localStorage.setItem('fo_settings', JSON.stringify(s));
+  if (bizName) { const el=document.querySelector('.sb-name'); if(el) el.textContent=bizName; }
+  if (tagline) { const el=document.querySelector('.sb-tagline'); if(el) el.textContent=tagline; }
+  showToast('Appearance saved! ✅','success');
+}
+function resetSettings() {
+  localStorage.removeItem('fo_settings');
+  location.reload();
+}
+function applyAccentColor(hex, updatePicker=true) {
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  const pale='rgba('+r+','+g+','+b+',0.08)';
+  const light='rgba('+r+','+g+','+b+',0.22)';
+  const hR=Math.max(0,r-20),hG=Math.max(0,g-20),hB=Math.max(0,b-20);
+  const hover='#'+hR.toString(16).padStart(2,'0')+hG.toString(16).padStart(2,'0')+hB.toString(16).padStart(2,'0');
+  const root=document.documentElement;
+  root.style.setProperty('--rose',hex);
+  root.style.setProperty('--rose-hover',hover);
+  root.style.setProperty('--rose-pale',pale);
+  root.style.setProperty('--rose-light',light);
+  if(updatePicker){const cp=document.getElementById('set-colorpicker');if(cp)cp.value=hex;}
+}
+function pickPreset(hex,pale,light,hover) {
+  const root=document.documentElement;
+  root.style.setProperty('--rose',hex);
+  root.style.setProperty('--rose-hover',hover);
+  root.style.setProperty('--rose-pale',pale);
+  root.style.setProperty('--rose-light',light);
+  const cp=document.getElementById('set-colorpicker');
+  if(cp)cp.value=hex;
+  document.querySelectorAll('#set-swatches button').forEach(b=>b.style.borderColor='transparent');
+  event.currentTarget.style.borderColor='#2C1810';
+}
 function closeModals() { document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
 document.querySelectorAll('.overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)closeModals();});});
 
@@ -1897,7 +1995,7 @@ function nav(page) {
   document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
   const pgEl = document.getElementById('pg-'+page);
   if(pgEl) pgEl.classList.add('active');
-  const map={dashboard:0,orders:1,inventory:2,analytics:3,products:4,suppliers:5,purchaseorders:6,history:7,reorder:8,seasonal:9};
+  const map={dashboard:0,orders:1,inventory:2,analytics:3,products:4,suppliers:5,purchaseorders:6,history:7,reorder:8,seasonal:9,settings:10};
   const items=document.querySelectorAll('.sb-item');
   if(map[page]!==undefined) items[map[page]].classList.add('active');
   if(page==='suppliers') loadSuppliers();
@@ -1907,7 +2005,8 @@ function nav(page) {
   if(page==='analytics') { renderAnalytics(); renderAnalyticsCharts(); }
   else if(page==='draft-orders') loadDraftOrders();
   // Update mobile bottom nav
-  updateMobileNav(page);
+    if(page==='settings') loadSettingsPage();
+updateMobileNav(page);
 }
 
 function updateMobileNav(page) {
