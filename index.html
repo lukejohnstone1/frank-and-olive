@@ -1820,7 +1820,7 @@ function loadDraftOrders() {
       if (badge) { badge.textContent = n; badge.style.display = n > 0 ? 'inline' : 'none'; }
       if (countEl) countEl.textContent = n + ' pending from clients';
       if (!data || data.length === 0) {
-        list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-soft)"><div style="font-size:40px;margin-bottom:12px">📭</div><div style="font-weight:600;font-size:16px;color:var(--choc);margin-bottom:6px">No draft orders yet</div><div style="font-size:13px;margin-bottom:16px">When emails come in from approved senders, they'll appear here for review.</div><button class="btn btn-ghost" onclick="checkEmails()">✉️ Scan Emails Now</button></div>';
+        list.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-soft)"><div style="font-size:40px;margin-bottom:12px">📭</div><div style="font-weight:600;font-size:16px;color:var(--choc);margin-bottom:6px">No draft orders yet</div><div style="font-size:13px;margin-bottom:16px">When emails come in from approved senders, they\'ll appear here for review.</div><button class="btn btn-ghost" onclick="checkEmails()">✉️ Scan Emails Now</button></div>';
         return;
       }
       list.innerHTML = data.map(d => `
