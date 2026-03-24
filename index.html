@@ -915,6 +915,25 @@ body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--tex
   </div>
 </div>
 
+<!-- EDIT SUPPLIER MODAL -->
+<div class="overlay" id="editsupplier-modal">
+  <div class="modal">
+    <div class="modal-title">&#9998;&#65039; Edit Supplier</div>
+    <input type="hidden" id="es-id">
+    <div class="form-group"><label class="form-label">Supplier Name</label><input class="form-input" id="es-name" placeholder="e.g. SA Confectionery Wholesale"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Contact Person</label><input class="form-input" id="es-contact" placeholder="e.g. John Smith"></div>
+      <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" id="es-phone" placeholder="082 xxx xxxx"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="es-email" type="email" placeholder="e.g. orders@supplier.co.za"></div>
+    <div class="form-group"><label class="form-label">Notes</label><input class="form-input" id="es-notes" placeholder="e.g. Delivery takes 3-5 days"></div>
+    <div class="btn-row" style="justify-content:flex-end;gap:10px;margin-top:12px">
+      <button class="btn btn-ghost" onclick="closeModals()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditSupplier()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <!-- NEW PURCHASE ORDER MODAL -->
 <div class="overlay" id="newpo-modal">
   <div class="modal">
@@ -994,6 +1013,7 @@ const API = "https://script.google.com/macros/s/AKfycbxXczdc02AvL4wxw3wvE2Z_ZeYr
 
 // STATE
 let allOrders=[], statRange='month', lastStats={};
+let allSuppliers=[];
 let allProducts=[], allComponents=[], allPurchaseOrders=[];
 let currentFilter='all', orderSearch='', selectedOrders=new Set(), invSort='low';
 let prodSearch='', currentPOFilter='all';
@@ -1400,18 +1420,19 @@ function searchProducts(val) { prodSearch=val; renderProductsTable(); }
 async function loadSuppliers() {
   const data=await api({action:'getSuppliers'});
   if(data&&data.error) return;
-  const suppliers=Array.isArray(data)?data:(data.suppliers||[]);
-  if(!suppliers.length){document.getElementById('suppliers-table').innerHTML='<div style="padding:24px;text-align:center;color:var(--text-soft)">No suppliers yet. Add your first one!</div>';return;}
+  allSuppliers=Array.isArray(data)?data:(data.suppliers||[]);
+  if(!allSuppliers.length){document.getElementById('suppliers-table').innerHTML='<div style="padding:24px;text-align:center;color:var(--text-soft)">No suppliers yet. Add your first one!</div>';return;}
   document.getElementById('suppliers-table').innerHTML=`
     <table class="tbl-full" style="width:100%">
-      <tr><th>Supplier</th><th>Contact</th><th>Phone</th><th>Email</th><th>Products Supplied</th><th>Notes</th></tr>
-      ${suppliers.map(s=>`<tr>
+      <tr><th>Supplier</th><th>Contact</th><th>Phone</th><th>Email</th><th>Products Supplied</th><th>Notes</th><th>Edit</th></tr>
+      ${allSuppliers.map(s=>`<tr>
         <td><strong>${s.name}</strong></td>
-        <td>${s.contact||'—'}</td>
-        <td>${s.phone||'—'}</td>
-        <td>${s.email?`<a href="mailto:${s.email}" class="sup-email">${s.email}</a>`:'—'}</td>
-        <td style="font-size:12px;color:var(--text-soft)">${s.products||'—'}</td>
-        <td style="font-size:12px;color:var(--text-soft)">${s.notes||'—'}</td>
+        <td>${s.contact||'&#8212;'}</td>
+        <td>${s.phone||'&#8212;'}</td>
+        <td>${s.email?'<a href="mailto:'+s.email+'" class="sup-email">'+s.email+'</a>':'&#8212;'}</td>
+        <td style="font-size:12px;color:var(--text-soft)">${s.products||'&#8212;'}</td>
+        <td style="font-size:12px;color:var(--text-soft)">${s.notes||'&#8212;'}</td>
+        <td><button onclick="openEditSupplierModal('${s.id}')" style="background:var(--rose-pale);color:var(--rose);border:1.5px solid var(--rose-light);border-radius:8px;padding:5px 11px;cursor:pointer;font-family:Outfit,sans-serif;font-size:12px;font-weight:500;white-space:nowrap">&#9998; Edit</button></td>
       </tr>`).join('')}
     </table>`;
 }
@@ -1634,6 +1655,30 @@ async function saveEditOrder() {
   if(res.success){showToast('Order updated! ✅','success');closeModals();loadAll();}
   else showToast('Error: '+(res.error||'Something went wrong'),'error');
 }
+function openEditSupplierModal(suppId) {
+  const s=allSuppliers.find(x=>String(x.id)===String(suppId));
+  if(!s){showToast('Supplier not found','error');return;}
+  document.getElementById('es-id').value=s.id;
+  document.getElementById('es-name').value=s.name||'';
+  document.getElementById('es-contact').value=s.contact||'';
+  document.getElementById('es-phone').value=s.phone||'';
+  document.getElementById('es-email').value=s.email||'';
+  document.getElementById('es-notes').value=s.notes||'';
+  document.getElementById('editsupplier-modal').classList.add('open');
+}
+async function saveEditSupplier() {
+  const suppId=document.getElementById('es-id').value;
+  const name=document.getElementById('es-name').value.trim();
+  const contact=document.getElementById('es-contact').value.trim();
+  const phone=document.getElementById('es-phone').value.trim();
+  const email=document.getElementById('es-email').value.trim();
+  const notes=document.getElementById('es-notes').value.trim();
+  if(!name){showToast('Supplier name is required','error');return;}
+  const res=await apiPost({action:'editSupplier',suppId,name,contact,phone,email,notes});
+  if(res.success){showToast('Supplier updated! ✅','success');closeModals();loadSuppliers();}
+  else showToast('Error: '+(res.error||'Something went wrong'),'error');
+}
+
 function closeModals() { document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
 document.querySelectorAll('.overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)closeModals();});});
 
